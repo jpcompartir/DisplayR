@@ -27,7 +27,7 @@ The goal of DisplayR is to ...
 
 You can install the development version of DisplayR from [GitHub](https://github.com/) with:
 
-``` r
+```{r, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("jpcompartir/DisplayR")
 ```
@@ -41,3 +41,4 @@ library(DisplayR)
 ## basic example code
 ```
 
+placeholder
