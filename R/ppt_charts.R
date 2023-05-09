@@ -44,7 +44,7 @@ disp_ms_vot <-function(data,
 #'
 #' This function generates a time series chart of grouped data volume over the specified time period.
 #' The chart is created using the mschart package and is based on the provided data, date column, time period, and date format.
-#' data should be unsummarised, as there is counting under the hood, i.e. your data should be in long form and the date and group columns should not already be counted.
+#' data should be unsummarised, as there is counting under the hood, i.e. your data should be in long form and the date and group column should not already be counted.
 #'
 #' @param data A data frame containing the data to be plotted.
 #' @param date The name of the date column in the data frame.
@@ -85,4 +85,23 @@ disp_ms_vot_grouped <- function(data,
     mschart::chart_ax_x(num_fmt = date_format)
 
   return(chart)
+}
+
+
+disp_ms_sent_grouped <- function(data, sentiment_var, group_var){
+
+  sentiment_sym <- rlang::ensym(sentiment_var)
+  sentiment_string <- rlang::as_string(sentiment_sym)
+
+  group_sym <- rlang::ensym(group_var)
+  group_string <- rlang::as_string(group_sym)
+
+  plotting_data <- data %>%
+    dplyr::filter(!is.na(!!sentiment_sym)) %>%
+    dplyr::count({{group_var}}, {{sentiment_var}}) %>%
+    dplyr::mutate(percent = n / sum(n), .by = !!group_sym)
+
+  plotting_data %>%
+    mschart::ms_barchart(x = group_string, y = "percent", group = sentiment_string) %>%
+    mschart::as_bar_stack(dir = "horizontal", percent = TRUE)
 }

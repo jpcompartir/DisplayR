@@ -8,7 +8,7 @@
 A data frame with 5,000 observations of 15 variables.
 \describe{
 \item{document}{A document id}
-\item{data}{placeholder}
+\item{date}{placeholder}
 \item{text_copy}{placeholder}
 \item{text}{placeholder}
 \item{topic}{placeholder}
@@ -30,4 +30,4 @@ disp_example
 \description{
 Data frame with some useful variables for demonstration purposes/
 }
-\keyword{datasets}
+\keyword{internal}

@@ -30,5 +30,5 @@ A mschart object representing the time series chart of data volume over the spec
 \description{
 This function generates a time series chart of grouped data volume over the specified time period.
 The chart is created using the mschart package and is based on the provided data, date column, time period, and date format.
-data should be unsummarised, as there is counting under the hood, i.e. your data should be in long form and the date and group columns should not already be counted.
+data should be unsummarised, as there is counting under the hood, i.e. your data should be in long form and the date and group column should not already be counted.
 }

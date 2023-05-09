@@ -110,3 +110,11 @@ grouped_vot_plot <- grouped_vot_plot %>%
 # Sentiment Distribution
 
 We often need to create horizontal bars to display the sentiment distributions for groups.
+
+```{r}
+
+```
+
+
+## Sentiment bar charts function
+
