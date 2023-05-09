@@ -4,9 +4,8 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Jack", "Penzer", , "jack.penzer@sharecreative.com", role = c("aut", "cre"),
            comment = c(ORCID = "Capture Intelligence"))
-Description: Aims to provide re-usable functions for various data visualisation challenges. There are functions for creating beautiful tables built on {gt}, interactive plots with {plotly} and static images using {ggplot2}
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: Aims to provide re-usable functions for various data visualisation challenges. There are functions for creating beautiful tables built on {gt}, interactive plots with {plotly} and static images using {ggplot2}.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
@@ -15,4 +14,19 @@ Imports:
     dplyr (>= 1.1.0),
     ggplot2 (>= 3.4.0),
     gt (>= 0.8.0),
-    plotly (>= 4.10.1)
+    magrittr,
+    mschart (>= 0.4.0),
+    plotly (>= 4.10.1),
+    rlang (>= 1.1.1)
+Suggests: 
+    knitr,
+    officer (>= 0.6.2),
+    rmarkdown,
+    testthat (>= 3.1.4),
+    tidyverse,
+    viridis (>= 0.6.2)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+LazyData: true

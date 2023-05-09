@@ -1,0 +1,120 @@
+---
+title: "Charts for Excel & Powerpoint"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+  
+vignette: >
+  %\VignetteIndexEntry{Charts for Excel & Powerpoint}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(DisplayR)
+library(tidyverse)
+library(officer)
+library(mschart)
+```
+
+These charts are built on top of the mschart and officer packages, which form a portion of the 'officeverse': <https://ardata-fr.github.io/officeverse/index.html>
+
+Our use of this package will mainly be for industrialising the process of exporting R charts to PowerPoint, such that the data is visible inside the presentation. This cuts down the burden on manual work and reduces the likelihood of error when working in Excel/PowerPoint.
+
+Charts in initial automation:
+
+Volume over time - line chart Grouped volume over time - line chart (Grouped) sentiment distribution - horizontal bar chart
+
+# Volume Over Time
+
+Let's get some data. We're going to plot the data by week, and by month
+
+```{r}
+df <- DisplayR::disp_example
+```
+
+we'll use the `disp_ms_vot` function, which creates a line chart from a data frame. Type `?disp_ms_vot` to access the documentation.
+
+The function counts our date variable for us, and buckets the date variable into day, week, month, quarter, or year. The function uses two
+
+```{r, eval = FALSE}
+vot_plot <- df %>%
+  disp_ms_vot(date = date, time = "week") 
+```
+
+We can preview our plot in a temporary PowerPoint by printing it and setting preview = TRUE
+
+```{r, eval = FALSE}
+vot_plot %>%
+  print(preview = TRUE)
+```
+
+![vot](../man/figures/ms_vot_output.png){width="600" height="400"}
+
+# Grouped Volume Over Time
+
+Usually when creating Volume Over Time charts we want to create a chart which shows the volume for multiple groups, for example we may want to create a sentiment over time chart to show positive, negative and neutral, or the volume over time for each topic in a topic modelling output. Here we should use `disp_ms_vot_grouped`
+
+```{r, eval = FALSE}
+grouped_vot_plot <- df %>%
+  disp_ms_vot_grouped(date = date, group_var = topic, time = "week") 
+
+grouped_vot_plot %>%
+  print(preview = TRUE)
+```
+
+![grouped_vot](../man/figures/ms_topics_vot.png){width="600" height="400"}
+
+Now we have a line for each topic, charting its weekly volume. However, the colours are the default colours and may not be what we want to output into PowerPoint.
+
+## Changing the colours
+
+To pass in custom colours we need a named list/vector of colours. We'll use the viridis palette for demonstrative purposes:
+
+```{r, eval = FALSE}
+colours <- viridis::viridis_pal()(9)
+topics <- sort(unique(df$topic))
+names(colours)  <- topics
+print(colours)
+
+grouped_vot_plot <- grouped_vot_plot %>%
+  chart_data_stroke(values = colours) #use chart_data_stroke for line charts, chart_data_fill for bar charts.
+
+grouped_vot_plot %>%
+  print(preview = TRUE)
+```
+
+![topic_viridis](../man/figures/ms_topics_vot_viridis.png){width="600" height="400"}
+
+Now each line has a colour on the viridis scale. We could have used a named vector/list with a different, custom palette - the principle remains the same, we take a named list of values and colours and feed them into the `chart_data_stroke` function. We can make sure the values are correct by extracting them from the data frame, as we did with topics by `toics <- sort(unique(df$topic))`
+
+## Adding titles
+
+Another likely customisation you'll want to make is to programmtically add titles to your charts. You can use mschart's `chart_labels` function:
+
+```{r, eval = FALSE}
+grouped_vot_plot <- grouped_vot_plot %>%
+  chart_labels(title = "Volume over time plot coloured in Viridis scale", xlab = "Date", ylab = "Weekly volume")
+```
+
+
+# Sentiment Distribution
+
+We often need to create horizontal bars to display the sentiment distributions for groups.
+
+```{r}
+
+```
+
+
+## Sentiment bar charts function
+
