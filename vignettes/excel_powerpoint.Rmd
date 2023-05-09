@@ -58,7 +58,7 @@ vot_plot %>%
   print(preview = TRUE)
 ```
 
-![vot](../inst/images/ms_vot_output.png){width="600" height="400"}
+![vot](../man/figures/ms_vot_output.png){width="600" height="400"}
 
 # Grouped Volume Over Time
 
@@ -72,7 +72,7 @@ grouped_vot_plot %>%
   print(preview = TRUE)
 ```
 
-![grouped_vot](../inst/images/ms_topics_vot.png){width="600" height="400"}
+![grouped_vot](../man/figures/ms_topics_vot.png){width="600" height="400"}
 
 Now we have a line for each topic, charting its weekly volume. However, the colours are the default colours and may not be what we want to output into PowerPoint.
 
@@ -93,7 +93,7 @@ grouped_vot_plot %>%
   print(preview = TRUE)
 ```
 
-![topic_viridis](../inst/images/ms_topics_vot_viridis.png){width="600" height="400"}
+![topic_viridis](../man/figures/ms_topics_vot_viridis.png){width="600" height="400"}
 
 Now each line has a colour on the viridis scale. We could have used a named vector/list with a different, custom palette - the principle remains the same, we take a named list of values and colours and feed them into the `chart_data_stroke` function. We can make sure the values are correct by extracting them from the data frame, as we did with topics by `toics <- sort(unique(df$topic))`
 

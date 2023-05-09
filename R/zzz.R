@@ -1,1 +1,1 @@
-globals <- utils::globalVariables(c("plot_date"))
+globals <- utils::globalVariables(c("plot_date", "n"))
