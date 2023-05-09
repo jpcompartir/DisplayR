@@ -28,6 +28,12 @@ reference:
   desc: "Functions for visualising continuous data"
 - contents:
 
+- title: "PowerPoint & Excel"
+  desc: "Functions for exporting common & basic charts to PowerPoint"
+- contents:
+  - disp_ms_vot
+  - disp_ms_vot_grouped
+
 repo:
   url:
     home: https://jpcompartir.github.io/DisplayR/
