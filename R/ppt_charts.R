@@ -88,7 +88,24 @@ disp_ms_vot_grouped <- function(data,
 }
 
 
-disp_ms_sent_grouped <- function(data, sentiment_var, group_var){
+#' Display a Stacked Bar Chart of Sentiments Grouped by a Variable
+#'
+#' This function takes a data frame, a sentiment variable, and a group variable,
+#' and creates a stacked bar chart representing the distribution of sentiment.
+#' within each group, with the bars displayed horizontally and the percentage
+#' of each sentiment shown.
+#'
+#' @param data A data frame containing the sentiment and group variables.
+#' @param sentiment_var The name of the sentiment variable in the data frame (as a string or unquoted symbol).
+#' @param group_var The name of the group variable in the data frame (as a string or unquoted symbol).
+#' @param plot_type Where raw volumes or percentages should be plotted.
+#'
+#' @return A \code{mschart::ms_barchart} object representing the stacked bar chart.
+#' @export
+
+disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("percent", "volume")){
+
+  plot_type <- match.arg(plot_type)
 
   sentiment_sym <- rlang::ensym(sentiment_var)
   sentiment_string <- rlang::as_string(sentiment_sym)
@@ -96,12 +113,30 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var){
   group_sym <- rlang::ensym(group_var)
   group_string <- rlang::as_string(group_sym)
 
+
   plotting_data <- data %>%
+    dplyr::mutate({{sentiment_var}} := tolower(!!sentiment_sym)) %>%
     dplyr::filter(!is.na(!!sentiment_sym)) %>%
     dplyr::count({{group_var}}, {{sentiment_var}}) %>%
-    dplyr::mutate(percent = n / sum(n), .by = !!group_sym)
+    dplyr::mutate(percent = n / sum(n), .by = !!group_sym) %>%
+    dplyr::mutate(percent = round(percent, 2))
 
-  plotting_data %>%
-    mschart::ms_barchart(x = group_string, y = "percent", group = sentiment_string) %>%
-    mschart::as_bar_stack(dir = "horizontal", percent = TRUE)
+  # browser()
+
+  plot <- plotting_data %>%
+    mschart::ms_barchart(x = group_string, y = "n", group = sentiment_string)
+
+  if(plot_type == "percent"){
+    plot <- plot %>%
+      mschart::as_bar_stack(dir = "horizontal", percent = TRUE)
+  } else {
+    plot <- plot %>%
+      mschart::as_bar_stack(dir = "horizontal", percent = FALSE)
+  }
+
+  plot <- plot %>%
+    mschart::chart_data_fill(values = c("negative" = "#D83B01",
+                                        "neutral" = "#FFB900",
+                                        "positive" = "#107C10"))
+  return(plot)
 }
