@@ -1,38 +1,12 @@
+template:
+  bootstrap: 5
+
 navbar:
   structure:
-    left:  [intro, reference, articles, github]
-    right: [search, github]
-  components:
-    - id: github
-      icon: "fab fa-github"
-      href: https://github.com/jpcompartir/DisplayR
+    left:  [home, reference, articles]
+    right: [github]
 
 reference:
-- title: "Theme Functions"
-  desc: "Functions for styling plot themes."
-- contents:
-  - disp_ms_vot
-  - disp_ms_vot_grouped
-- title: "Tables"
-  desc: "Functions for creating beautiful tables."
-- contents:
-  - disp_ms_vot
-  - disp_ms_vot_grouped
-- title: "Time Series"
-  desc: "Functions for visualising time series data."
-- contents:
-  - disp_ms_vot
-  - disp_ms_vot_grouped
-- title: "Categorical"
-  desc: "Functions for visualising categorical data."
-- contents:
-  - disp_ms_vot
-  - disp_ms_vot_grouped
-- title: "Continuous"
-  desc: "Functions for visualising continuous data"
-- contents:
-  - disp_ms_vot
-  - disp_ms_vot_grouped
 - title: "PowerPoint Plotting"
   desc: "Functions for exporting common & basic charts to PowerPoint"
 - contents:
@@ -44,10 +18,12 @@ reference:
 - contents:
   - disp_add_slide
 
+
 repo:
   url:
-    home: https://jpcompartir.github.io/DisplayR/
-    source: https://github.com/jpcompartir/DisplayR
+    home: https://github.com/jpcompartir/DisplayR
+    source: https://github.com/jpcompartir/DisplayR/tree/main
+
 home:
   links:
   - text: Report an issue
