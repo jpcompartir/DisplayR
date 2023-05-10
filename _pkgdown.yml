@@ -1,7 +1,3 @@
-url: https://jpcompartir.github.io/DisplayR/
-template:
-  bootstrap: 5
-
 navbar:
   structure:
     left:  [home, reference, articles]
@@ -53,4 +49,4 @@ reference:
 repo:
   url:
     home: https://jpcompartir.github.io/DisplayR/
-    source: https://jpcompartir.github.io/DisplayR/tree/main
+    source: https://github.com/jpcompartir/DisplayR

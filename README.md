@@ -7,7 +7,6 @@
 
 [![R-CMD-check](https://github.com/jpcompartir/DisplayR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jpcompartir/DisplayR/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/jpcompartir/DisplayR/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/jpcompartir/DisplayR/actions/workflows/pkgdown.yaml)
-[![render_readme](https://github.com/jpcompartir/DisplayR/actions/workflows/render_readme.yaml/badge.svg)](https://github.com/jpcompartir/DisplayR/actions/workflows/render_readme.yaml)
 <!-- badges: end -->
 
 The goal of DisplayR is to …

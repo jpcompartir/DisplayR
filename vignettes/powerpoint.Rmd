@@ -196,7 +196,7 @@ However, you need to know the path to your PowerPoint presentation, PowerPoint t
 
 First we need to initialise a PowerPoint presentation. I have a demo presentation stored at a specific file path, we'll use that one for now. We can store the filepath in a variable and re-use that variable.
 
-```{r}
+```{r, eval = FALSE}
 presentation_path <- "~/Documents/presentations/officer_demo.pptx"
 
 presentation <- read_pptx(presentation_path)
