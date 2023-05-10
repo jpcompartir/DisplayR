@@ -2,7 +2,7 @@
 % Please edit documentation in R/ppt_charts.R
 \name{disp_ms_sent_grouped}
 \alias{disp_ms_sent_grouped}
-\title{Display a Stacked Bar Chart of Sentiments Grouped by a Variable}
+\title{Display a Stacked Bar Chart of Sentiment Grouped by a Variable}
 \usage{
 disp_ms_sent_grouped(
   data,
@@ -24,8 +24,5 @@ disp_ms_sent_grouped(
 A \code{mschart::ms_barchart} object representing the stacked bar chart.
 }
 \description{
-This function takes a data frame, a sentiment variable, and a group variable,
-and creates a stacked bar chart representing the distribution of sentiment.
-within each group, with the bars displayed horizontally and the percentage
-of each sentiment shown.
+This function takes a data frame, a sentiment variable, and a group variable, and creates a stacked bar chart representing the distribution of sentiment. within each group, with the bars displayed horizontally and the percentage of each sentiment shown.
 }
