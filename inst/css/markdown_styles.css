@@ -1,0 +1,15 @@
+.tip {
+  border: 1px solid #007bff;
+  background-color: #e9f2ff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.warning {
+  border: 1px solid #ffc107;
+  background-color: #fff3cd;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}

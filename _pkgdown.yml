@@ -38,11 +38,17 @@ reference:
   - disp_ms_vot
   - disp_ms_vot_grouped
 
-- title: "PowerPoint & Excel"
+- title: "PowerPoint Plotting"
   desc: "Functions for exporting common & basic charts to PowerPoint"
 - contents:
   - disp_ms_vot
   - disp_ms_vot_grouped
+  - disp_ms_sent_grouped
+
+- title: "PowerPoint Utility Functions"
+  desc: "Utility functions for working with PowerPoint from R"
+- contents:
+  - disp_add_slide
 
 repo:
   url:
