@@ -3,7 +3,7 @@
 export("%>%")
 export(disp_add_slide)
 export(disp_flextable)
-export(disp_gt_summary)
+export(disp_gt)
 export(disp_ms_sent_grouped)
 export(disp_ms_vot)
 export(disp_ms_vot_grouped)
