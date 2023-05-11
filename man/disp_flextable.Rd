@@ -31,4 +31,6 @@ This function takes a data frame, the grouping variable, and the sentiment varia
 }
 \details{
 The output of this function can be exported directly to PowerPoint.
+
+The unique values within the sentiment variable should be c("positive", "negative", "neutral"), the function will try to remove NAs, and lower case the sentiment variable, but if you have values such as 'pos', 'neg', 'neu', you'll need to replace them with the vlaues the function expects.
 }

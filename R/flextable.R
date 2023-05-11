@@ -4,6 +4,8 @@
 #'
 #' The output of this function can be exported directly to PowerPoint.
 #'
+#' The unique values within the sentiment variable should be c("positive", "negative", "neutral"), the function will try to remove NAs, and lower case the sentiment variable, but if you have values such as 'pos', 'neg', 'neu', you'll need to replace them with the vlaues the function expects.
+#'
 #' @param data A data frame containing the group variable and sentiment variable.
 #' @param group_var The name of the column in the data frame used for grouping.
 #' @param sentiment_var The name of the column in the data frame containing sentiment values.
@@ -23,13 +25,13 @@ disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#1
     #Lower case to keep things simple
     dplyr::mutate({{sentiment_var}} := tolower(!!sentiment_sym)) %>%
     #Remove NA's at sentiment to keep things simple
-    dplyr::filter(!is.na({{sentiment_var}})) %>%
+    dplyr::filter(!is.na(!!sentiment_sym)) %>%
     #Get counts of sentiment per category in group
-    dplyr::count({{group_var}}, {{sentiment_var}}) %>%
+    dplyr::count(!!group_sym, !!sentiment_sym) %>%
     #Create a % column and round it for later, group by group_var
     dplyr::mutate(percent = round(100 * n / sum(n), 1), .by = !!group_sym) %>%
     #Get volume from a weighted sum of group n
-    dplyr::add_count({{group_var}}, name = "volume", wt = n) %>%
+    dplyr::add_count(!!group_sym, name = "volume", wt = n) %>%
     #Reposition volume for table
     dplyr::relocate(volume, .after = 1) %>%
     #Remove within group sentiment n

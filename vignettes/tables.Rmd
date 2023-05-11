@@ -1,6 +1,14 @@
 ---
 title: "Creating Beautiful Tables"
-output: rmarkdown::html_vignette
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    highlight: tango
+    theme: cosmo
+    
+    
 vignette: >
   %\VignetteIndexEntry{Creating Beautiful Tables}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,6 +22,101 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message = FALSE}
 library(DisplayR)
+library(tidyverse)
+library(gt)
 ```
+
+The functions in this package are built to mesh seamlessly with the {tidyverse} set of packages, created by Posit: https://posit.co/,  particularly {gt} which gives R users the tools to create beautiful tables:
+https://gt.rstudio.com/
+
+# Introduction
+
+Tables are an essential and often under-appreciated method of visualising data. Many data visualisation professionals eschew their usage as they are not considered visually engaging. However, they are often the ideal tool for the job. Many of us would do well to ask ourselves 'Do I need these charts or should this be a table?'
+
+You should consider using a table when:
+
+* You need to display precise values
+* You need to display multiple raw volumes and percentages in the same place
+* You want users to compare individual elements
+* Your data has multiple dimensions and plotting becomes convoluted
+* You're slide-limited e.g. because need to provide an executive summary of complex data
+
+Apart from using tables to display or communicate findings, it's important to be aware of how tables can aid hypothesis generation, showing you where to dig next in the data mining process. 
+
+# Tabular Data
+
+We'll use the example data frame which ships with {DisplayR} and the {tidyverse} to create some summary tables, then we'll use {gt} and some {DisplayR} functions to create aesthetically-pleasing tables.
+
+```{r}
+df <- DisplayR::disp_example
+```
+
+Let's say we need to visualise volume - raw numbers and %, as well as sentiment counts for a categorical variable - in this case we'll use topic. We can create a summary table like so:
+
+```{r}
+( summary_table <- df %>%
+  filter(!is.na(sentiment)) %>%
+  count(topic, sentiment, name = "sent_n") %>%
+  add_count(topic, wt = sent_n, name = "volume") %>%
+  pivot_wider(names_from = sentiment, values_from = sent_n) %>%
+  mutate(percent = round(volume / sum(volume) * 100, 2), .after = volume) %>%
+  arrange(desc(volume))
+)
+```
+
+We could use various means to visualise this table, let's try a data table, which is fairly common. We'll style it with bootstrap allow filtering at the top of the table.
+
+```{r}
+DT::datatable(summary_table, style = "bootstrap", filter = "top")
+```
+
+Whilst functional, the table is lacking in visual appeal; it's better used for exploring data internally than it is for communicating findings or including in a deck.
+
+Despite making it clear which topic has the highest volume, it would require considerable mental work to figure out which topic had the highest proportion of positive or negative sentiment. We're also lacking vital elements such as titles, subtitles, and captions; as well as additional flourishes such as icons which can bring the table to life. Let's see how we could visualise the output with gt.
+
+## GT
+
+```{r}
+library(gt)
+(my_gt <- df %>%
+  JPackage::disp_gt_summary(date_var = date,
+                            group_var = topic, 
+                            sentiment_var = sentiment,
+                            sentiment_max_colours = 
+                              list("negative" = "#D83B01",
+                                   "neutral" = "#FFB900",
+                                   "positive" = "#107C10"),
+                            time_unit = "day",
+                            table_title = "Topic Modelling Summary Table", source_note = "Data Source: xxx" ) %>%
+  gt::cols_hide('Sentiment x Time')
+)
+  
+```
+
+This table is preferable to me for multiple reason: 
+
+The gradient fill for the positive & negative columns make comparison easy. 
+The Volume x Time charts are a nice addition, and allow us to compare the trends of multiple topics at a glance, whilst also keeping volume + sentiment information an eye movement away. 
+The overall styling is just more pleasant than the Data Table.
+
+*note, there is a Sentiment x Time chart which has been hidden from view, we're still experimenting with which charts work/ don't work for the default outputs.
+
+One of the drawbacks with gt is that we cannot easily output to PowerPoint, step forward flextable
+
+## Flextable & Exporting to PowerPoint
+
+The function will not inclkude the Volume x Time chart, but we will get a nice gradient fill for the Positive + Negative columns which we can export to PowerPoint.
+
+```{r}
+(my_ft <- df %>%
+  disp_flextable(topic, sentiment))
+```
+
+We can preview how this would look in powerpoint with:
+
+```{r}
+print(my_ft, preview = "pptx")
+```
+
