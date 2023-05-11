@@ -12,11 +12,15 @@ RoxygenNote: 7.2.3
 URL: https://jpcompartir.github.io/DisplayR/
 Imports: 
     dplyr (>= 1.1.0),
+    flextable,
+    gt (== 0.8.0),
     lubridate (>= 1.8.0),
     magrittr,
     mschart (>= 0.4.0),
-    rlang (>= 1.1.1)
+    rlang (>= 1.1.1),
+    scales
 Suggests: 
+    DT,
     kableExtra,
     knitr,
     officer (>= 0.6.2),
