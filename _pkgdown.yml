@@ -7,6 +7,11 @@ navbar:
     right: [github]
 
 reference:
+- title: "Tabular Data"
+  desc: "gt and flextable functions for creating beautiful tables in R"
+- contents:
+  - disp_flextable
+
 - title: "PowerPoint Plotting"
   desc: "Functions for exporting common & basic charts to PowerPoint"
 - contents:

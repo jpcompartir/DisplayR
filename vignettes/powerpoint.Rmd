@@ -210,6 +210,7 @@ Before we begin, the pptx_summary function outputs:
 
 ```{r, eval = FALSE}
 pptx_summary(presentation)
+layout_summary(presentation)
 ```
 
 ```{r, echo = FALSE, message = FALSE}
@@ -299,5 +300,25 @@ print(presentation, target = "~/Documents/tmp_ppt_pres.pptx")
 ```
 
 You can now open the presentation again and copy charts across.
+
+## Creating a gradient-filled volume + sentiment chart
+
+```{r}
+(my_ft <- df %>%
+  disp_flextable(topic, sentiment))
+```
+
+We can preview how this would look in powerpoint with:
+
+```{r}
+print(my_ft, preview = "pptx")
+```
+
+And we can export similarly to how we exported the charts.
+
+<div class="tip">
+**Tip**: When in PowerPoint you can remove the gradient fill in the total row on the Positive + Negative columns via 'format shape'
+</div>
+
 
 That's it for now, see the {officer} and {mschart} packages for further tips on styling and exporting plots.

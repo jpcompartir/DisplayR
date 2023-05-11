@@ -46,8 +46,8 @@ disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#1
   max_negative <- max(summary_table$negative)
 
   #Create scales for positive & negative columns
-  positive_colorer <- col_numeric(palette = c("transparent", positive_colour), domain = c(min_positive, max_positive))
-  negative_colorer <- col_numeric(palette = c("transparent", negative_colour), domain = c(min_negative, max_negative))
+  positive_colorer <- scales::col_numeric(palette = c("transparent", positive_colour), domain = c(min_positive, max_positive))
+  negative_colorer <- scales::col_numeric(palette = c("transparent", negative_colour), domain = c(min_negative, max_negative))
 
 
   #Reformat the names to be title case
