@@ -1,5 +1,7 @@
 template:
   bootstrap: 5
+  extra_css:
+    - ./inst/css/style.css
 
 navbar:
   structure:
@@ -11,6 +13,7 @@ reference:
   desc: "gt and flextable functions for creating beautiful tables in R"
 - contents:
   - disp_flextable
+  - disp_gt
 
 - title: "PowerPoint Plotting"
   desc: "Functions for exporting common & basic charts to PowerPoint"
@@ -18,6 +21,7 @@ reference:
   - disp_ms_vot
   - disp_ms_vot_grouped
   - disp_ms_sent_grouped
+
 - title: "PowerPoint Utility Functions"
   desc: "Utility functions for working with PowerPoint from R"
 - contents:
