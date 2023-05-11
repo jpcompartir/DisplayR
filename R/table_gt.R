@@ -61,7 +61,7 @@ make_gt_summary_table <- function(data,
 #'                 list("negative" = "#C00000","positive" = "#107C10"),
 #'                 NULL, "My Summary", "source_note")
 #' }
-disp_gt_summary <- function(data,
+disp_gt<- function(data,
                             sentiment_var,
                             group_var,
                             date_var,
