@@ -81,7 +81,7 @@ Despite making it clear which topic has the highest volume, it would require con
 ```{r}
 library(gt)
 (my_gt <- df %>%
-  JPackage::disp_gt_summary(date_var = date,
+  disp_gt_summary(date_var = date,
                             group_var = topic, 
                             sentiment_var = sentiment,
                             sentiment_max_colours = 
