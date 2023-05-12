@@ -34,6 +34,21 @@
     <loc>/reference/disp_example.html</loc>
   </url>
   <url>
+    <loc>/reference/disp_flextable.html</loc>
+  </url>
+  <url>
+    <loc>/reference/disp_gt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/disp_gt_sent_time.html</loc>
+  </url>
+  <url>
+    <loc>/reference/disp_gt_theme.html</loc>
+  </url>
+  <url>
+    <loc>/reference/disp_gt_vot.html</loc>
+  </url>
+  <url>
     <loc>/reference/disp_ms_sent_grouped.html</loc>
   </url>
   <url>
@@ -44,6 +59,9 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/make_gt_summary_table.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
