@@ -1,7 +1,5 @@
 template:
   bootstrap: 5
-  extra_css:
-    -./inst/css/style.css
 
 navbar:
   structure:

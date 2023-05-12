@@ -20,11 +20,13 @@ make_gt_summary_table <- function(data,
   summary_table <- data %>%
     dplyr::count({{group_var}},
                  {{sentiment_var}}) %>%
+    dplyr::add_count({{group_var}}, wt = n, name = "group_n") %>%
     dplyr::mutate(volume = sum(n),
                   percent = n / sum(n) * 100,
                   .by = {{group_var}}) %>%
     dplyr::mutate({{sentiment_var}} := tolower({{sentiment_var}})) %>% #convert to lower case, can convert back later
-    dplyr::select(-n) %>%
+    dplyr::arrange(dplyr::desc(group_n)) %>%
+    dplyr::select(-n, -group_n) %>%
     tidyr::pivot_wider(names_from = {{sentiment_var}},
                        values_from = percent)
 
@@ -146,13 +148,16 @@ disp_gt<- function(data,
   #Break this up for debugging - the long pipe is no good for people new to function. summary_rows functions differently in gt 0.9, as do cells_grand_summary & cells_stub_grand_summary
   table <- table %>%
     gt::data_color(columns = Positive,
-                   colors = positive_colorer) %>%
+                   fn = positive_colorer) %>%
     gt::data_color(columns = Negative,
-                   colors = negative_colorer) %>%
-    gt::summary_rows(columns = c(Volume),
-                     fns = list(Total = "sum"),
-                     decimals = 0,
-                     missing_text = "")
+                   fn = negative_colorer)
+
+  #Use grand_summary_rows instead of summary_rows as no grouping. Use named list formula syntax in fns = and fmt_number usinf formulate syntax too.
+  table <-  table %>%
+    gt::grand_summary_rows(
+      columns = c(Volume),
+      fns = list(Total ~ sum(.)),
+      fmt = ~ fmt_number(.x, use_seps = TRUE, decimals = 0))
 
   #Add the Volume x Time and Sentiment x Time plots (TODO)
   table <- table %>%
@@ -199,11 +204,11 @@ disp_gt<- function(data,
                                         transform = "capitalize"),
                   locations = gt::cells_column_labels(tidyselect::everything())) %>%
     gt::tab_style(style = gt::cell_text(style = "italic"),
-                  locations = gt::cells_stub_grand_summary()) %>%
+                  locations = gt::cells_stub_grand_summary(tidyselect::everything())) %>%
     gt::tab_style(style = gt::cell_text(style = "italic"),
                   locations = gt::cells_source_notes()) %>%
     gt::tab_style(style = gt::cell_text(weight = "600"),
-                  locations = gt::cells_grand_summary())
+                  locations = gt::cells_grand_summary(tidyselect::everything()))
 
   return(table)
 }

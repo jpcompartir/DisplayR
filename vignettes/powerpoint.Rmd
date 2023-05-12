@@ -6,7 +6,6 @@ output:
     toc_float: true
     toc_depth: 2
     highlight: tango
-    css: "../inst/css/styles.css"
   
 vignette: >
   %\VignetteIndexEntry{Charts for Excel & Powerpoint}
@@ -23,7 +22,8 @@ knitr::opts_chunk$set(
 
 ```{r setup, echo = FALSE, results='hide', message = FALSE}
 library(DisplayR)
-library(tidyverse)
+library(dplyr)
+library(purrr)
 library(officer)
 library(mschart)
 ```
