@@ -24,7 +24,8 @@ knitr::opts_chunk$set(
 
 ```{r setup, message = FALSE}
 library(DisplayR)
-library(tidyverse)
+library(dplyr)
+library(tidyr)
 library(gt)
 ```
 
@@ -107,7 +108,7 @@ One of the drawbacks with gt is that we cannot easily output to PowerPoint, step
 
 ## Flextable & Exporting to PowerPoint
 
-The function will not inclkude the Volume x Time chart, but we will get a nice gradient fill for the Positive + Negative columns which we can export to PowerPoint.
+The function will not include the Volume x Time chart, but we will get a nice gradient fill for the Positive + Negative columns which we can export to PowerPoint.
 
 ```{r}
 (my_ft <- df %>%
