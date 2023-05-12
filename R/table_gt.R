@@ -18,16 +18,17 @@ make_gt_summary_table <- function(data,
 
 
   summary_table <- data %>%
-    dplyr::count({{group_var}},
-                 {{sentiment_var}}) %>%
-    dplyr::add_count({{group_var}}, wt = n, name = "group_n") %>%
+    dplyr::filter(!is.na(!!sent_sym)) %>%
+    dplyr::count(!!group_sym,
+                 !!sent_sym) %>%
+    dplyr::add_count(!!group_sym, wt = n, name = "group_n") %>%
     dplyr::mutate(volume = sum(n),
                   percent = n / sum(n) * 100,
-                  .by = {{group_var}}) %>%
-    dplyr::mutate({{sentiment_var}} := tolower({{sentiment_var}})) %>% #convert to lower case, can convert back later
+                  .by =  !!group_sym) %>%
+    dplyr::mutate(!!sent_sym := tolower(!!sent_sym)) %>% #convert to lower case, can convert back later
     dplyr::arrange(dplyr::desc(group_n)) %>%
     dplyr::select(-n, -group_n) %>%
-    tidyr::pivot_wider(names_from = {{sentiment_var}},
+    tidyr::pivot_wider(names_from = !!sent_sym,
                        values_from = percent)
 
   return(summary_table)
