@@ -5,7 +5,7 @@
 \title{Create volume over time charts for use in gt tables}
 \usage{
 disp_gt_vot(
-  df,
+  data,
   date_var,
   time_unit = c("week", "day", "month", "quarter", "year"),
   bar_colour = "#628EFD",
@@ -14,7 +14,7 @@ disp_gt_vot(
 )
 }
 \arguments{
-\item{df}{The input data frame.}
+\item{data}{The input data frame.}
 
 \item{date_var}{The name of the variable in the data frame containing the dates.}
 

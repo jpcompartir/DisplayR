@@ -5,7 +5,7 @@
 \title{Display Sentiment Over Time}
 \usage{
 disp_gt_sent_time(
-  df,
+  data,
   sentiment_var = sentiment,
   date_var = date,
   chart_type = c("lines", "bars"),
@@ -15,7 +15,7 @@ disp_gt_sent_time(
 )
 }
 \arguments{
-\item{df}{The input data frame.}
+\item{data}{The input data frame.}
 
 \item{sentiment_var}{The name of the variable in the data frame containing the sentiment values.}
 

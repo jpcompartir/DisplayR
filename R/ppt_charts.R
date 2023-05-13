@@ -26,7 +26,7 @@ disp_ms_vot <-function(data,
   date_string <- rlang::as_string(date_sym)
 
   plotting_data <- data %>%
-    dplyr::mutate(plot_date = as.Date({{date}}),
+    dplyr::mutate(plot_date = as.Date(!!date_sym),
                   plot_date = lubridate::floor_date(x = plot_date, unit = time))
 
   plotting_data <- plotting_data %>%
@@ -73,11 +73,11 @@ disp_ms_vot_grouped <- function(data,
 
 
   plotting_data <- data %>%
-    dplyr::mutate({{date}} := as.Date({{date}}),
-                  {{date}} := lubridate::floor_date(x = {{date}}, unit = time))
+    dplyr::mutate(!!date_sym := as.Date(!!date_sym),
+                 !!date_sym := lubridate::floor_date(x = !!date_sym, unit = time))
 
   plotting_data <- plotting_data %>%
-    dplyr::count({{date}}, {{group_var}})
+    dplyr::count(!!date_sym, !!group_sym)
 
   chart <- plotting_data %>%
     mschart::ms_linechart(x = date_string, y = "n", group = group_string) %>%
@@ -102,6 +102,7 @@ disp_ms_vot_grouped <- function(data,
 
 disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("percent", "volume")){
 
+
   plot_type <- match.arg(plot_type)
 
   sentiment_sym <- rlang::ensym(sentiment_var)
@@ -112,9 +113,9 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("
 
 
   plotting_data <- data %>%
-    dplyr::mutate({{sentiment_var}} := tolower(!!sentiment_sym)) %>%
+    dplyr::mutate(!!sentiment_sym := tolower(!!sentiment_sym)) %>%
     dplyr::filter(!is.na(!!sentiment_sym)) %>%
-    dplyr::count({{group_var}}, {{sentiment_var}}) %>%
+    dplyr::count(!!group_sym, !!sentiment_sym) %>%
     dplyr::mutate(percent = n / sum(n), .by = !!group_sym) %>%
     dplyr::mutate(percent = round(percent, 2))
 
@@ -136,7 +137,7 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("
                                         "neutral" = "#FFB900",
                                         "positive" = "#107C10")) %>%
     mschart::chart_data_labels(show_val = TRUE) %>%
-    mschart::chart_labels_text(values = fp_text(color = "white"))
+    mschart::chart_labels_text(values = officer::fp_text(color = "white"))
 
   if(plot_type == "percent"){
     plot <- plot%>%
