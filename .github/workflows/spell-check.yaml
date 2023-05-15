@@ -1,0 +1,28 @@
+name: Spell Check
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: r-lib/actions/setup-r@v1
+
+    - name: Install dependencies
+      run: |
+        install.packages('spelling')
+      shell: Rscript {0}
+
+    - name: Run spell check
+      run: |
+        spelling::spell_check_package()
+        spelling::spell_check_testthat()
+        spelling::spell_check_rmds()
+      shell: Rscript {0}
