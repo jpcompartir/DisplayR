@@ -31,6 +31,7 @@ Suggests:
     knitr (>= 1.42),
     officer (>= 0.6.2),
     rmarkdown (>= 2.21),
+    spelling,
     testthat (>= 3.1.4),
     viridis (>= 0.6.2)
 VignetteBuilder: knitr
@@ -38,3 +39,4 @@ Config/testthat/edition: 3
 Depends: 
     R (>= 3.20)
 LazyData: true
+Language: en-GB

@@ -1,18 +1,18 @@
-#' Create a flextable for volume + sentiment with a graident fill.
+#' Create a flextable for volume + sentiment with a gradient fill.
 #'
 #' This function takes a data frame, the grouping variable, and the sentiment variable to create a summary table and display it as a flextable. The table contains the count and percentage of positive, negative, and neutral sentiments per group. The positive and negative columns are filled with a gradient color.
 #'
 #' The output of this function can be exported directly to PowerPoint.
 #'
-#' The unique values within the sentiment variable should be c("positive", "negative", "neutral"), the function will try to remove NAs, and lower case the sentiment variable, but if you have values such as 'pos', 'neg', 'neu', you'll need to replace them with the vlaues the function expects.
+#' The unique values within the sentiment variable should be c("positive", "negative", "neutral"), the function will try to remove NAs, and lower case the sentiment variable, but if you have values such as 'pos', 'neg', 'neu', you'll need to replace them with the values the function expects.
 #'
 #' @param data A data frame containing the group variable and sentiment variable.
 #' @param group_var The name of the column in the data frame used for grouping.
 #' @param sentiment_var The name of the column in the data frame containing sentiment values.
-#' @param positive_colour (Optional) The color for the positive gradient. Default is "#107C10".
-#' @param negative_colour (Optional) The color for the negative gradient. Default is "#D83B01".
+#' @param positive_colour (Optional) The colour for the positive gradient. Default is "#107C10".
+#' @param negative_colour (Optional) The colour for the negative gradient. Default is "#D83B01".
 #'
-#' @return A flextable object displaying the summary table with gradient coloring for positive and negative sentiments.
+#' @return A flextable object displaying the summary table with gradient colouring for positive and negative sentiments.
 #' @export
 #'
 disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#107C10", negative_colour = "#D83B01") {
@@ -49,8 +49,8 @@ disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#1
   max_negative <- max(summary_table$negative)
 
   # Create scales for positive & negative columns
-  positive_colorer <- scales::col_numeric(palette = c("transparent", positive_colour), domain = c(min_positive, max_positive))
-  negative_colorer <- scales::col_numeric(palette = c("transparent", negative_colour), domain = c(min_negative, max_negative))
+  positive_colourer <- scales::col_numeric(palette = c("transparent", positive_colour), domain = c(min_positive, max_positive))
+  negative_colourer <- scales::col_numeric(palette = c("transparent", negative_colour), domain = c(min_negative, max_negative))
 
 
   # Reformat the names to be title case
@@ -64,12 +64,12 @@ disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#1
   ft <- summary_table %>%
     flextable::flextable() %>%
     flextable::bg(
-      bg = positive_colorer(summary_table$Positive),
+      bg = positive_colourer(summary_table$Positive),
       j = "Positive",
       part = "body"
     ) %>%
     flextable::bg(
-      bg = negative_colorer(summary_table$Negative),
+      bg = negative_colourer(summary_table$Negative),
       j = "Negative",
       part = "body"
     ) %>%

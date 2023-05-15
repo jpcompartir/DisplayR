@@ -48,7 +48,7 @@ df <- DisplayR::disp_example
 
 we'll use the `disp_ms_vot` function, which creates a line chart from a data frame. Type `?disp_ms_vot` to access the documentation.
 
-The function counts our date variable for us, and buckets the date variable into day, week, month, quarter, or year, accoding to the input of the time argument.
+The function counts our date variable for us, and buckets the date variable into day, week, month, quarter, or year, according to the input of the time argument.
 
 ```{r, eval = FALSE}
 vot_plot <- df %>%
@@ -158,7 +158,7 @@ grouped_sent_chart %>%
   print(preview = TRUE)
 ```
 
-Notice that we removed many of the grid lines, this has not been included as defualts within the charting functions presently.
+Notice that we removed many of the grid lines, this has not been included as defaults within the charting functions presently.
 
 ## Creating Stacked Sentiment Barcharts - Volume
 
@@ -172,7 +172,7 @@ grouped_sent_chart <- df %>%
 
 ### Restyling The Plot - Removing Data Labels
 
-However, we notie that the data labels are now not feasible - some categories have bars which are too small to fit the labels. In this case we can remove with:
+However, we notice that the data labels are now not feasible - some categories have bars which are too small to fit the labels. In this case we can remove with:
 
 ```{r, eval = FALSE}
 grouped_sent_chart %>%
