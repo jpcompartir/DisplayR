@@ -89,15 +89,16 @@ disp_gt<- function(data,
   group_string <- rlang::as_string(group_sym)
 
   #Stop if columns not in data frame and provide more informative error messages
-  if(!sent_string %in% colnames(df)){
+  if(!sent_string %in% colnames(data)){
     stop(paste0("Cannot find '", sent_string, "' in the data frame, did you mean `sentiment_var = sentiment`?"))
   }
-  if(!date_string %in% colnames(df)){
+
+  if(!date_string %in% colnames(data)){
     stop(paste0("Cannot find '", date_string, "' in the data frame, did you mean `date_var = date`?"))
   }
 
-  if(!group_string %in% colnames(df)){
-    if(!group %in% colnames(df)){
+  if(!group_string %in% colnames(data)){
+    if(!group %in% colnames(data)){
       stop(paste0("Cannot find '", group_string, "' in the data frame, specify the correct column with 'group_var = ' `?"))
     }
   }
@@ -105,8 +106,8 @@ disp_gt<- function(data,
   #Create the summary table with the make_gt_summary_table function
   summary <- data %>%
     dplyr::filter(!is.na(!!sent_sym)) %>%
-    make_gt_summary_table(group_var = {{group_var}},
-                          sentiment_var = {{sentiment_var}})
+  make_gt_summary_table(group_var = !!group_sym,
+                          sentiment_var = !!sent_sym)
 
   #Rename the columns so that they look prettier later on + add blank columns for volume + sentiment x time plots.
   summary <- summary %>%
@@ -239,7 +240,7 @@ disp_gt_theme <- function(){
 #'
 #' The plot this function output appears in the cells of a gt table. There is custom styling applied to remove much of the detail, the output is not
 #'
-#' @param df The input data frame.
+#' @param data The input data frame.
 #' @param date_var The name of the variable in the data frame containing the dates.
 #' @param time_unit The time unit to group the data by. Default is "week".
 #' @param bar_colour The color of the bars in the plot. Default is "#628EFD".
@@ -248,16 +249,16 @@ disp_gt_theme <- function(){
 #'
 #' @return A ggplot object representing the bar plot.
 #' @keywords internal
-disp_gt_vot <- function(df, date_var,  time_unit = c("week", "day", "month", "quarter", "year"), bar_colour =  "#628EFD", date_breaks = "4 months",date_labels = "%b"){
+disp_gt_vot <- function(data, date_var,  time_unit = c("week", "day", "month", "quarter", "year"), bar_colour =  "#628EFD", date_breaks = "4 months",date_labels = "%b"){
 
   unit <- match.arg(time_unit)
   date_sym <- rlang::ensym(date_var)
 
-  df <- df %>%
+  data <- data %>%
     dplyr::mutate(plot_date = as.Date(!!date_sym),
                   plot_date = lubridate::floor_date(plot_date, unit = unit))
 
-  plot <- df %>%
+  plot <- data %>%
     dplyr::count(plot_date) %>%
     ggplot2::ggplot(ggplot2::aes(x = plot_date, y = n)) +
     ggplot2::geom_col(fill = bar_colour) +
@@ -272,7 +273,7 @@ disp_gt_vot <- function(df, date_var,  time_unit = c("week", "day", "month", "qu
 #'
 #' This function generates a chart showing the sentiment distribution over time based on a data frame, styled for gt.
 #'
-#' @param df The input data frame.
+#' @param data The input data frame.
 #' @param sentiment_var The name of the variable in the data frame containing the sentiment values.
 #' @param date_var The name of the variable in the data frame containing the dates.
 #' @param chart_type The type of chart to be plotted. Default is "lines".
@@ -282,7 +283,7 @@ disp_gt_vot <- function(df, date_var,  time_unit = c("week", "day", "month", "qu
 #'
 #' @return A ggplot object representing the plotted chart.
 #' @keywords internal
-disp_gt_sent_time <- function(df,
+disp_gt_sent_time <- function(data,
                               sentiment_var = sentiment,
                               date_var = date,
                               chart_type = c("lines", "bars"),
@@ -300,19 +301,19 @@ disp_gt_sent_time <- function(df,
   sent_string <- rlang::as_string(sent_sym)
   date_string <- rlang::as_string(date_sym)
 
-  if(!sent_string %in% colnames(df)){
+  if(!sent_string %in% colnames(data)){
     stop(paste0("Cannot find '", sent_string, "' in the data frame, did you mean `sentiment_var = sentiment`?"))
   }
-  if(!date_string %in% colnames(df)){
+  if(!date_string %in% colnames(data)){
     stop(paste0("Cannot find '", date_string, "' in the data frame, did you mean `date_var = date`?"))
   }
 
-  df <- df %>% dplyr:: mutate(
+  data <- data %>% dplyr:: mutate(
     plot_date = as.Date(!!date_sym),
     plot_date = lubridate::floor_date(plot_date, unit = unit),
     !!sent_sym := tolower(!!sent_sym))
 
-  plot <- df %>%
+  plot <- data %>%
     dplyr::count(plot_date,!!sent_sym) %>%
     ggplot2::ggplot(ggplot2::aes(x = plot_date, y = n, fill = !!sent_sym, colour = !!sent_sym))
 
