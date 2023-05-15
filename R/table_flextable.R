@@ -15,51 +15,52 @@
 #' @return A flextable object displaying the summary table with gradient coloring for positive and negative sentiments.
 #' @export
 #'
-disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#107C10", negative_colour = "#D83B01"){
-
+disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#107C10", negative_colour = "#D83B01") {
   group_sym <- rlang::ensym(group_var)
   sentiment_sym <- rlang::ensym(sentiment_var)
 
-  #Create a summary table with columns group_var, volume, negative, neutral, positive
+  # Create a summary table with columns group_var, volume, negative, neutral, positive
   summary_table <- data %>%
-    #Lower case to keep things simple
-    dplyr::mutate({{sentiment_var}} := tolower(!!sentiment_sym)) %>%
-    #Remove NA's at sentiment to keep things simple
+    # Lower case to keep things simple
+    dplyr::mutate({{ sentiment_var }} := tolower(!!sentiment_sym)) %>%
+    # Remove NA's at sentiment to keep things simple
     dplyr::filter(!is.na(!!sentiment_sym)) %>%
-    #Get counts of sentiment per category in group
+    # Get counts of sentiment per category in group
     dplyr::count(!!group_sym, !!sentiment_sym) %>%
-    #Create a % column and round it for later, group by group_var
+    # Create a % column and round it for later, group by group_var
     dplyr::mutate(percent = round(100 * n / sum(n), 1), .by = !!group_sym) %>%
-    #Get volume from a weighted sum of group n
+    # Get volume from a weighted sum of group n
     dplyr::add_count(!!group_sym, name = "volume", wt = n) %>%
-    #Reposition volume for table
+    # Reposition volume for table
     dplyr::relocate(volume, .after = 1) %>%
-    #Remove within group sentiment n
+    # Remove within group sentiment n
     dplyr::select(-n) %>%
-    #Pivot for table viz
-    tidyr::pivot_wider(names_from = {{sentiment_var}},
-                       values_from = percent) %>%
+    # Pivot for table viz
+    tidyr::pivot_wider(
+      names_from = {{ sentiment_var }},
+      values_from = percent
+    ) %>%
     dplyr::arrange(dplyr::desc(volume))
 
-  #Extract the min & max values for positive & negative for colouring
+  # Extract the min & max values for positive & negative for colouring
   min_positive <- min(summary_table$positive)
   max_positive <- max(summary_table$positive)
   min_negative <- min(summary_table$negative)
   max_negative <- max(summary_table$negative)
 
-  #Create scales for positive & negative columns
+  # Create scales for positive & negative columns
   positive_colorer <- scales::col_numeric(palette = c("transparent", positive_colour), domain = c(min_positive, max_positive))
   negative_colorer <- scales::col_numeric(palette = c("transparent", negative_colour), domain = c(min_negative, max_negative))
 
 
-  #Reformat the names to be title case
+  # Reformat the names to be title case
   names(summary_table) <- stringr::str_to_title(names(summary_table))
 
-  #Hacky workaround to add tbales whilst maintaining gradient fill
+  # Hacky workaround to add tbales whilst maintaining gradient fill
   total_volume <- scales::comma(sum(summary_table$Volume))
   footer_values <- c("Total", paste0(total_volume), "-", "-", "-")
 
-  #Create the flextable and add the colouring
+  # Create the flextable and add the colouring
   ft <- summary_table %>%
     flextable::flextable() %>%
     flextable::bg(
@@ -72,7 +73,7 @@ disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#1
       j = "Negative",
       part = "body"
     ) %>%
-    #add the total of the volume column as a footer
+    # add the total of the volume column as a footer
     flextable::add_body_row(footer_values, colwidths = rep(1, 5), top = FALSE)
 
   return(ft)

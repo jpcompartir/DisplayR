@@ -13,27 +13,28 @@
 #' @return A mschart object representing the time series chart of data volume over the specified time period.
 #' @export
 #'
-disp_ms_vot <-function(data,
-                       date,
-                       time =c( "week","day", "month", "quarter", "year"),
-                       date_format = "d/m/yy"){
-
-  #Make sure our time and plot_type arguments are input correctly
+disp_ms_vot <- function(data,
+                        date,
+                        time = c("week", "day", "month", "quarter", "year"),
+                        date_format = "d/m/yy") {
+  # Make sure our time and plot_type arguments are input correctly
   time <- match.arg(time)
 
-  #Tidy-evaluate ready variables
+  # Tidy-evaluate ready variables
   date_sym <- rlang::ensym(date)
-  date_string <- rlang::as_string(date_sym)
 
   plotting_data <- data %>%
-    dplyr::mutate(plot_date = as.Date(!!date_sym),
-                  plot_date = lubridate::floor_date(x = plot_date, unit = time))
+    dplyr::mutate(
+      plot_date = as.Date(!!date_sym),
+      plot_date = lubridate::floor_date(x = plot_date, unit = time)
+    )
 
   plotting_data <- plotting_data %>%
     dplyr::count(plot_date)
 
   chart <- plotting_data %>%
-    mschart::ms_linechart(x = "plot_date", y = "n") %>% mschart::chart_settings(style = "line") %>%
+    mschart::ms_linechart(x = "plot_date", y = "n") %>%
+    mschart::chart_settings(style = "line") %>%
     mschart::chart_ax_x(num_fmt = date_format)
 
   return(chart)
@@ -59,13 +60,12 @@ disp_ms_vot <-function(data,
 disp_ms_vot_grouped <- function(data,
                                 date,
                                 group_var,
-                                time =c("week", "day", "month", "quarter", "year"),
-                                date_format = "yyyy/dd/mm"){
-
-  #Make sure our time and plot_type arguments are input correctly
+                                time = c("week", "day", "month", "quarter", "year"),
+                                date_format = "yyyy/dd/mm") {
+  # Make sure our time and plot_type arguments are input correctly
   time <- match.arg(time)
 
-  #Tidy-evaluate ready variables
+  # Tidy-evaluate ready variables
   date_sym <- rlang::ensym(date)
   date_string <- rlang::as_string(date_sym)
   group_sym <- rlang::ensym(group_var)
@@ -73,8 +73,10 @@ disp_ms_vot_grouped <- function(data,
 
 
   plotting_data <- data %>%
-    dplyr::mutate(!!date_sym := as.Date(!!date_sym),
-                 !!date_sym := lubridate::floor_date(x = !!date_sym, unit = time))
+    dplyr::mutate(
+      !!date_sym := as.Date(!!date_sym),
+      !!date_sym := lubridate::floor_date(x = !!date_sym, unit = time)
+    )
 
   plotting_data <- plotting_data %>%
     dplyr::count(!!date_sym, !!group_sym)
@@ -100,9 +102,7 @@ disp_ms_vot_grouped <- function(data,
 #' @return A \code{mschart::ms_barchart} object representing the stacked bar chart.
 #' @export
 
-disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("percent", "volume")){
-
-
+disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("percent", "volume")) {
   plot_type <- match.arg(plot_type)
 
   sentiment_sym <- rlang::ensym(sentiment_var)
@@ -124,7 +124,7 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("
   plot <- plotting_data %>%
     mschart::ms_barchart(x = group_string, y = "n", group = sentiment_string)
 
-  if(plot_type == "percent"){
+  if (plot_type == "percent") {
     plot <- plot %>%
       mschart::as_bar_stack(dir = "horizontal", percent = TRUE)
   } else {
@@ -133,18 +133,21 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("
   }
 
   plot <- plot %>%
-    mschart::chart_data_fill(values = c("negative" = "#D83B01",
-                                        "neutral" = "#FFB900",
-                                        "positive" = "#107C10")) %>%
+    mschart::chart_data_fill(values = c(
+      "negative" = "#D83B01",
+      "neutral" = "#FFB900",
+      "positive" = "#107C10"
+    )) %>%
     mschart::chart_data_labels(show_val = TRUE) %>%
     mschart::chart_labels_text(values = officer::fp_text(color = "white"))
 
-  if(plot_type == "percent"){
-    plot <- plot%>%
-    mschart::chart_labels(ylab = "%", xlab = "Category", title = "Stacked horizontal sentiment distribution")} else if(plot_type == "volume"){
-      plot <- plot%>%
-        mschart::chart_labels(ylab = "n", xlab = "Category", title = "Stacked horizontal sentiment distribution")
-    }
+  if (plot_type == "percent") {
+    plot <- plot %>%
+      mschart::chart_labels(ylab = "%", xlab = "Category", title = "Stacked horizontal sentiment distribution")
+  } else if (plot_type == "volume") {
+    plot <- plot %>%
+      mschart::chart_labels(ylab = "n", xlab = "Category", title = "Stacked horizontal sentiment distribution")
+  }
 
 
   return(plot)
@@ -162,7 +165,7 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("
 #'
 #' @return A modified officer::pptx object with the new slide and chart added.
 #' @export
-disp_add_slide <- function(presentation, chart, layout = "Title and Content", master = "Office Theme"){
+disp_add_slide <- function(presentation, chart, layout = "Title and Content", master = "Office Theme") {
   presentation %>%
     officer::add_slide(layout = layout, master = master) %>%
     officer::ph_with(value = chart, location = officer::ph_location_type(type = "body"))

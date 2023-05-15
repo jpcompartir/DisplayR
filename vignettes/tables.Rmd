@@ -57,7 +57,7 @@ df <- DisplayR::disp_example
 Let's say we need to visualise volume - raw numbers and %, as well as sentiment counts for a categorical variable - in this case we'll use topic. We can create a summary table like so:
 
 ```{r}
-( summary_table <- df %>%
+(summary_table <- df %>%
   filter(!is.na(sentiment)) %>%
   count(topic, sentiment, name = "sent_n") %>%
   add_count(topic, wt = sent_n, name = "volume") %>%
@@ -82,18 +82,21 @@ Despite making it clear which topic has the highest volume, it would require con
 ```{r}
 library(gt)
 (my_gt <- df %>%
-  disp_gt(date_var = date,
-                            group_var = topic, 
-                            sentiment_var = sentiment,
-                            sentiment_max_colours = 
-                              list("negative" = "#D83B01",
-                                   "neutral" = "#FFB900",
-                                   "positive" = "#107C10"),
-                            time_unit = "day",
-                            table_title = "Topic Modelling Summary Table", source_note = "Data Source: xxx" ) %>%
-  gt::cols_hide('Sentiment x Time')
+  disp_gt(
+    date_var = date,
+    group_var = topic,
+    sentiment_var = sentiment,
+    sentiment_max_colours =
+      list(
+        "negative" = "#D83B01",
+        "neutral" = "#FFB900",
+        "positive" = "#107C10"
+      ),
+    time_unit = "day",
+    table_title = "Topic Modelling Summary Table", source_note = "Data Source: xxx"
+  ) %>%
+  gt::cols_hide("Sentiment x Time")
 )
-  
 ```
 
 This table is preferable to me for multiple reason: 

@@ -49,8 +49,10 @@ customised with a specified title and source note.
 }
 \examples{
 \dontrun{
-disp_gt_summary(my_data, "sentiment", "group", "date", "month",
-                list("negative" = "#C00000","positive" = "#107C10"),
-                NULL, "My Summary", "source_note")
+disp_gt_summary(
+  my_data, "sentiment", "group", "date", "month",
+  list("negative" = "#C00000", "positive" = "#107C10"),
+  NULL, "My Summary", "source_note"
+)
 }
 }

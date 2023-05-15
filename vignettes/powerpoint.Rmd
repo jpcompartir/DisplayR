@@ -52,7 +52,7 @@ The function counts our date variable for us, and buckets the date variable into
 
 ```{r, eval = FALSE}
 vot_plot <- df %>%
-  disp_ms_vot(date = date, time = "week") 
+  disp_ms_vot(date = date, time = "week")
 ```
 
 We can preview our plot in a temporary PowerPoint by printing it and setting preview = TRUE
@@ -70,7 +70,7 @@ Usually when creating Volume Over Time charts we want to create a chart which sh
 
 ```{r, eval = FALSE}
 grouped_vot_plot <- df %>%
-  disp_ms_vot_grouped(date = date, group_var = topic, time = "week") 
+  disp_ms_vot_grouped(date = date, group_var = topic, time = "week")
 
 grouped_vot_plot %>%
   print(preview = TRUE)
@@ -87,11 +87,11 @@ To pass in custom colours we need a named list/vector of colours. We'll use the 
 ```{r, eval = FALSE}
 colours <- viridis::viridis_pal()(9)
 topics <- sort(unique(df$topic))
-names(colours)  <- topics
+names(colours) <- topics
 print(colours)
 
 grouped_vot_plot <- grouped_vot_plot %>%
-  chart_data_stroke(values = colours) #use chart_data_stroke for line charts, chart_data_fill for bar charts.
+  chart_data_stroke(values = colours) # use chart_data_stroke for line charts, chart_data_fill for bar charts.
 
 grouped_vot_plot %>%
   print(preview = TRUE)
@@ -128,13 +128,14 @@ You also need to input a topic variable, and you can decide whether the output i
 
 ```{r, eval = FALSE}
 library(ggplot2)
-grouped_sent_chart <- df %>% 
+grouped_sent_chart <- df %>%
   disp_ms_sent_grouped(sentiment, topic, plot_type = "percent") %>%
   # chart_data_labels(show_val = TRUE)  %>%
   chart_theme(
     grid_major_line_x = fp_border(style = "none"),
     grid_major_line_y = fp_border(style = "none"),
-    axis_ticks_y = fp_border(style = "none"))
+    axis_ticks_y = fp_border(style = "none")
+  )
 
 grouped_sent_chart %>% print(preview = TRUE)
 ```
@@ -151,7 +152,8 @@ grouped_sent_chart <- df %>%
   chart_theme(
     grid_major_line_x = fp_border(style = "none"),
     grid_major_line_y = fp_border(style = "none"),
-    axis_ticks_y = fp_border(style = "none"))
+    axis_ticks_y = fp_border(style = "none")
+  )
 grouped_sent_chart %>%
   print(preview = TRUE)
 ```
@@ -263,11 +265,12 @@ Let's say we had a list of plots, we'll go with volume over time for now. We cou
 topic_names <- unique(sort(df$topic))
 plot_list <- df %>%
   group_split(topic) %>%
-  map(~ .x %>% disp_ms_vot(date = date, time = "week") %>%
-        chart_theme(legend_position = "n")) %>%
+  map(~ .x %>%
+    disp_ms_vot(date = date, time = "week") %>%
+    chart_theme(legend_position = "n")) %>%
   setNames(topic_names) %>% # set the name of the list just in case
   map2(.x = ., .y = topic_names, ~ .x %>%
-         chart_labels(title = paste0("Volume over time - ", .y))) # add a title to each plot
+    chart_labels(title = paste0("Volume over time - ", .y))) # add a title to each plot
 
 presentation <- purrr::reduce(plot_list, disp_add_slide, layout = "Two Content", .init = presentation)
 
