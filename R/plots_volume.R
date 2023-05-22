@@ -88,17 +88,17 @@ dr_plot_vot <- function(data, date_var = date, plot_type = c("line", "bar"), col
 }
 
 
-#' Quickly plot faceted volume of groups over time
+#' Quickly make a line plot of volume over time for a grouping variable
 #'
 #' @param data Data frame or tibble
 #' @param group_var grouping variable e.g. country, cluster, topic etc.
 #' @param date_var Variable which contains date information (can be datetime too I think)
 #' @param time_unit A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"
-#' @param nrow How many rows the plot should be shown in
+
 #'
-#' @return ggplot object of facetted bar charts
+#' @return ggplot object
 #' @export
-dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("day", "week", "month", "quarter", "year"), nrow = 2){
+dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("day", "week", "month", "quarter", "year")){
 
   time_unit <- match.arg(time_unit)
 
@@ -119,6 +119,10 @@ dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("d
   data <- data %>% dplyr::mutate(
     plot_date = lubridate::floor_date(!!date_sym, unit = time_unit))
 
+  #Get the number of colours for the viridis palette
+  n_colours <- data %>% dplyr::pull(!!group_sym) %>% unique() %>% length()
+  colours <- viridis::viridis_pal()(n_colours)
+
   #Set the plot up
   plot <- data %>%
     dplyr::count(plot_date, !!group_sym) %>%
@@ -127,8 +131,9 @@ dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("d
 
   #Style the plot
   plot <- plot +
-    ggplot2::theme_minimal() +
     ggplot2::scale_x_date(date_breaks = date_breaks, date_labels = date_labels) +
+    ggplot2::scale_colour_manual(values = colours) +
+    ggplot2::theme_minimal() +
     ggplot2::theme(
       legend.position = "bottom",
       plot.title.position = "plot",
