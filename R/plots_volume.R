@@ -17,6 +17,10 @@
 #' DisplayR::disp_example %>% disp_plot_vot(date = date, colour = "midnightblue", time_unit = "week")
 disp_plot_vot <- function(data, date = date, plot_type = c("line", "bar"), colour = "#440154FF", time_unit = c("day", "week", "month", "quarter", "year"), smooth = FALSE){
 
+  #Match the unit and error check
+  time_unit <- match.arg(time_unit)
+  plot_type <- match.arg(plot_type)
+
   #Quick error checking, other parts taken care of by match.arg
   stopifnot(
     is.character(colour),
@@ -62,16 +66,12 @@ disp_plot_vot <- function(data, date = date, plot_type = c("line", "bar"), colou
     )
   )
 
-  #Get the values from the list according to the input of time_uni
+  #Get the right unit mapping value - then call in scale_x_date,  from the list according to the input of time_unit
   unit_data <- unit_mapping[[time_unit]]
   date_breaks <- unit_data$date_breaks
   date_labels <- unit_data$date_labels
   title <- unit_data$title
   yaxis <- unit_data$yaxis
-
-  #Match the unit and error check
-  time_unit <- match.arg(time_unit)
-  plot_type <- match.arg(plot_type)
 
   #Bin the date variable
   data <- data %>% dplyr::mutate(plot_date = lubridate::floor_date(!!date_sym, unit = time_unit))
@@ -101,7 +101,7 @@ disp_plot_vot <- function(data, date = date, plot_type = c("line", "bar"), colou
                    panel.grid.minor = ggplot2::element_blank(),
                    panel.grid.major = ggplot2::element_blank(),
                    panel.border = ggplot2::element_blank(),
-                   axis.line = ggplot2::element_line(size = 0.5)) +
+                   axis.line = ggplot2::element_line(linewidth = 0.5)) +
     ggplot2::labs(x = NULL,
                   y = yaxis,
                   title = title)
@@ -114,3 +114,4 @@ disp_plot_vot <- function(data, date = date, plot_type = c("line", "bar"), colou
     return(plot)
   }
 }
+
