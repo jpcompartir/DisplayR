@@ -7,6 +7,11 @@ navbar:
     right: [github]
 
 reference:
+- title: "Plotting in R - ggplot2"
+  desc: "Functions built upon the {ggplot2} R Package"
+- contents:
+  - disp_plot_vot
+
 - title: "Tabular Data"
   desc: "gt and flextable functions for creating beautiful tables in R"
 - contents:

@@ -1,0 +1,65 @@
+---
+title: "Plotting & Themeing Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting & Themeing Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ggplot2)
+library(DisplayR)
+```
+
+# Plotting Functions
+
+When working on research projects or Understand phases, there is often a set of charts you will create at the beginning, and then at multiple points throughout the project. These charts will help you perform common exploratory data analysis (EDA) tasks to better understand your data and identify areas of investigation. Some of these charts sit naturally in other packages such as:
+
+* {ParseR} - descriptive plots of text distributions e.g. Pairwise Correlations, n-gram plots, Weighted log-odds
+* {SegmentR} - plots for topic modelling outputs e.g. top terms
+* {ConnectR} - network visualisations e.g. Retweet network, mention network
+
+Other plots which do not have a clear and obvious location, e.g. sentiment distributions, volume over time etc. will sit here in {DisplayR}. They most likely will *not* be the centrepiece of a delivery, and they should not be used as a substitute for thinking about the problem at hand and creating bespoke graphics when called for*. They do however represent valuable efficiency gains in the EDA workflow, and prime clients for a Capture Intelligence deck or delivery.
+
+*See the Capture Cookbook and Visualisation Guidelines for more information on creating Bespoke graphics and adhering to good data visualisation principles.
+
+## Volume Over Time
+
+When working with the data from various Social Media APIs (Twitter, Facebook, Reddit etc.) there is usually a time stamp or date/time column, this column can be used to visualise when the conversation takes place and to identify when important changes in volume occur.
+
+We'll use {DisplayR}'s dataset:
+```{r}
+df <- DisplayR::disp_example
+```
+
+### Single Element - Ungrouped Data Frame
+
+We feed the dataset into the `disp_plot_vot` function, setting `date = date`, plot_type = "line" and time_unit = "day".
+
+```{r}
+df %>%
+  disp_plot_vot(date = date, plot_type = "bar", time_unit = "week")
+```
+
+
+### Multiple Element - Grouped Data Frame
+ 
+## Subtopic
+
+## Subtopic
+
+## Subtopic
+
+# Theme Functions
+
+There are a number of theme functions included in {DisplayR}, they are to be applied according to the nature of the project and tend to take care of colour palettes and fonts. If you think there is a theme, or a number of themes missing, submit an issue at: (https://github.com/jpcompartir/DisplayR/issues). 
+
+The general idea is to add the theme you need after rendering your plot.

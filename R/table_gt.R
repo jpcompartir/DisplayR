@@ -272,6 +272,8 @@ disp_gt_theme <- function() {
     ),
     plot.margin = ggplot2::margin(30, 0, 0, 0)
   )
+
+  return(ggplot_theme)
 }
 
 #' Create volume over time charts for use in gt tables
