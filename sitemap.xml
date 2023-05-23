@@ -16,6 +16,9 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/plotting_theme_functions.html</loc>
+  </url>
+  <url>
     <loc>/articles/powerpoint.html</loc>
   </url>
   <url>
@@ -58,6 +61,18 @@
     <loc>/reference/disp_ms_vot_grouped.html</loc>
   </url>
   <url>
+    <loc>/reference/dr_plot_sent.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dr_plot_sent_group.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dr_plot_vot.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dr_plot_vot_group.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -65,5 +80,8 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/vot_unit_data.html</loc>
   </url>
 </urlset>
