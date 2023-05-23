@@ -100,7 +100,7 @@ df %>%
 
 As there are only three sentiment categories, we could map sentiment more simply, and use the `scale_colour_manual` function to re-colour our lines:
 ```{r}
-sentiment_colours <- DisplayR:::sentiment_colours
+sentiment_colours <- c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")
 
 df %>%
   filter(!is.na(sentiment)) %>%
