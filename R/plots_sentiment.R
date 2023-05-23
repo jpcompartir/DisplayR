@@ -34,7 +34,7 @@ dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percen
 
   #Initialise plot
   plot <- data %>%
-    ggplot2::ggplot(aes(x = !!sentiment_sym, y = n, fill = !!sentiment_sym)) +
+    ggplot2::ggplot(ggplot2::aes(x = !!sentiment_sym, y = n, fill = !!sentiment_sym)) +
     ggplot2::geom_col()
 
   #Style plot
@@ -79,6 +79,7 @@ dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percen
 #' @param sentiment_var The sentiment variable. Default is "sentiment".
 #' @param type The type of plot. Default is "percent".
 #' @param bar_labels The type of labels to display on bars. Default is "volume".
+#' @param sentiment_colours Colour mapping for the sentiment categories
 #'
 #' @return A ggplot2 object.
 #' @export
@@ -115,11 +116,11 @@ dr_plot_sent_group <- function(data,
   # Generate the plot based on the chosen type
   plot <- switch(type,
                  "percent" = data %>%
-                   ggplot2::ggplot(ggplot2::aes(x = reorder(!!group_sym, n), y = percent, fill = {{ sentiment_var }})) +
+                   ggplot2::ggplot(ggplot2::aes(x = stats::reorder(!!group_sym, n), y = percent, fill = {{ sentiment_var }})) +
                    ggplot2::geom_col() +
                    ggplot2::labs(fill = NULL, y = NULL, x = "% of Posts"),
                  "volume" = data %>%
-                   ggplot2::ggplot(ggplot2::aes(x = reorder(!!group_sym, n), y = n, fill = {{ sentiment_var }})) +
+                   ggplot2::ggplot(ggplot2::aes(x = stats::reorder(!!group_sym, n), y = n, fill = {{ sentiment_var }})) +
                    ggplot2::geom_col() +
                    ggplot2::labs(fill = NULL, y = NULL, x = "Number of Posts")
   )

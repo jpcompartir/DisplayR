@@ -23,6 +23,8 @@ dr_plot_sent_group(
 \item{type}{The type of plot. Default is "percent".}
 
 \item{bar_labels}{The type of labels to display on bars. Default is "volume".}
+
+\item{sentiment_colours}{Colour mapping for the sentiment categories}
 }
 \value{
 A ggplot2 object.
