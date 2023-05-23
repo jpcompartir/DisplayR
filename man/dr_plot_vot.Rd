@@ -33,6 +33,6 @@ ggplot object
 You can use the \code{time_unit} argument to display counts for different time frames, e.g. \code{time = "day"} will give a chart where each bar represents the volume counts for a day. To give the bars new colours, enter a string into \verb{bar_colour =  }, the string should be a hexcode e.g. "#440154FF" or the name of a colour e.g. "midnightblue"
 }
 \examples{
-DisplayR::disp_example \%>\% disp_plot_vot(date = date, time_unit = "day")
-DisplayR::disp_example \%>\% disp_plot_vot(date = date, colour = "midnightblue", time_unit = "week")
+DisplayR::disp_example \%>\% dr_plot_vot(date = date, time_unit = "day")
+DisplayR::disp_example \%>\% dr_plot_vot(date = date, colour = "midnightblue", time_unit = "week")
 }

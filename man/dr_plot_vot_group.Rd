@@ -2,14 +2,13 @@
 % Please edit documentation in R/plots_volume.R
 \name{dr_plot_vot_group}
 \alias{dr_plot_vot_group}
-\title{Quickly plot faceted volume of groups over time}
+\title{Quickly make a line plot of volume over time for a grouping variable}
 \usage{
 dr_plot_vot_group(
   data,
   group_var,
   date_var = date,
-  time_unit = c("day", "week", "month", "quarter", "year"),
-  nrow = 2
+  time_unit = c("day", "week", "month", "quarter", "year")
 )
 }
 \arguments{
@@ -20,12 +19,10 @@ dr_plot_vot_group(
 \item{date_var}{Variable which contains date information (can be datetime too I think)}
 
 \item{time_unit}{A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"}
-
-\item{nrow}{How many rows the plot should be shown in}
 }
 \value{
-ggplot object of facetted bar charts
+ggplot object
 }
 \description{
-Quickly plot faceted volume of groups over time
+Quickly make a line plot of volume over time for a grouping variable
 }
