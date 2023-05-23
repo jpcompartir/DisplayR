@@ -1,5 +1,5 @@
 ---
-title: "Plotting & Themeing Functions"
+title: "Plotting & Theme Functions"
 output:
   html_document:
     toc: true

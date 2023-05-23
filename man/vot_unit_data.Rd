@@ -24,3 +24,4 @@ depending on the time unit. This includes date breaks, date labels, plot title,
 and y-axis label. The 'variable' and 'unit' parameters allow for flexibility in
 describing the data being plotted.
 }
+\keyword{internal}

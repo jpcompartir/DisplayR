@@ -10,8 +10,8 @@ reference:
 - title: "Plotting in R - ggplot2"
   desc: "Functions built upon the {ggplot2} R Package"
 - contents:
-  - dr_plot_vot, dr_plot_vot_grouped
-  - dr_plot_sent, dr_plot_sent_grouped
+  - contains("dr_plot_vot")
+  - contains("dr_plot_sent")
 
 - title: "Tabular Data"
   desc: "gt and flextable functions for creating beautiful tables in R"
@@ -22,8 +22,7 @@ reference:
 - title: "PowerPoint Plotting"
   desc: "Functions for exporting common & basic charts to PowerPoint"
 - contents:
-  - disp_ms_vot
-  - disp_ms_vot_grouped
+  - contains('ms_vot')
   - disp_ms_sent_grouped
 
 - title: "PowerPoint Utility Functions"

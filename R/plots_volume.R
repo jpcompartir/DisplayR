@@ -167,7 +167,7 @@ dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("d
 #' @param vot_variable Will form part of plot's title, should describe type of plot
 #'
 #' @return A list with elements 'date_breaks', 'date_labels', 'title', 'yaxis'
-#'
+#' @keywords internal
 vot_unit_data <- function(time_unit, vot_variable = "Volume of Mentions", unit = "Count"){
   unit_mapping <- list(
     day = list(
