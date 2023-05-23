@@ -13,8 +13,8 @@
 #' @export
 #'
 #' @examples
-#' DisplayR::disp_example %>% disp_plot_vot(date = date, time_unit = "day")
-#' DisplayR::disp_example %>% disp_plot_vot(date = date, colour = "midnightblue", time_unit = "week")
+#' DisplayR::disp_example %>% dr_plot_vot(date = date, time_unit = "day")
+#' DisplayR::disp_example %>% dr_plot_vot(date = date, colour = "midnightblue", time_unit = "week")
 dr_plot_vot <- function(data, date_var = date, plot_type = c("line", "bar"), colour = "#440154FF", time_unit = c("day", "week", "month", "quarter", "year"), smooth = FALSE) {
 
   #Match the unit and error check
@@ -150,4 +150,60 @@ dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("d
       colour = NULL)
 
   return(plot)
+}
+
+
+#' Get unit-specific data for plotting and switch o reduce complexity
+#'
+#' This function returns a list of values used for configuring the ggplot2 plot
+#' depending on the time unit. This includes date breaks, date labels, plot title,
+#' and y-axis label. The 'variable' and 'unit' parameters allow for flexibility in
+#' describing the data being plotted.
+#'
+#' @param time_unit A character string specifying the time unit.
+#' One of "day", "week", "month", "quarter", or "year".
+#' @param unit A character string used to describe the unit of the data in the y-axis label.
+#' Default is "Count".
+#' @param vot_variable Will form part of plot's title, should describe type of plot
+#'
+#' @return A list with elements 'date_breaks', 'date_labels', 'title', 'yaxis'
+#'
+vot_unit_data <- function(time_unit, vot_variable = "Volume of Mentions", unit = "Count"){
+  unit_mapping <- list(
+    day = list(
+      date_breaks = "1 weeks",
+      date_labels = "%d-%m-%y",
+      title = paste0(vot_variable, " per Day"),
+      yaxis = paste0(unit, " per day")
+    ),
+    week = list(
+      date_breaks = "1 weeks",
+      date_labels = "%d-%m-%y",
+      title = paste0(vot_variable, " per Week"),
+      yaxis = paste0(unit, " per week")
+    ),
+    month = list(
+      date_breaks = "1 months",
+      date_labels = "%b-%Y",
+      title = paste0(vot_variable, " per Month"),
+      yaxis = paste0(unit, " per month")
+    ),
+    quarter = list(
+      date_breaks = "3 months",
+      date_labels = "%b-%Y",
+      title = paste0(vot_variable, " per Quarter"),
+      yaxis = paste0(unit, " per quarter")
+    ),
+    year = list(
+      date_breaks = "1 years",
+      date_labels = "%Y",
+      title = paste0(vot_variable, " per Year"),
+      yaxis = paste0(unit, " per year")
+    )
+  )
+
+  # Get the values from the list according to the input of time_unit
+  unit_data <- unit_mapping[[time_unit]]
+
+  return(unit_data)
 }
