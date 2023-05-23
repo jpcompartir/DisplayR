@@ -70,3 +70,84 @@ dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percen
   return(plot)
 
 }
+
+
+#' Plot sentiment grouped by a certain variable.
+#'
+#' @param data A data frame that includes the grouping and sentiment variables.
+#' @param group_var The variable to group by. Default is "topic".
+#' @param sentiment_var The sentiment variable. Default is "sentiment".
+#' @param type The type of plot. Default is "percent".
+#' @param bar_labels The type of labels to display on bars. Default is "volume".
+#'
+#' @return A ggplot2 object.
+#' @export
+dr_plot_sent_group <- function(data,
+                            group_var = topic,
+                            sentiment_var = sentiment,
+                            type = c("percent", "volume"),
+                            bar_labels = c( "volume", "none", "percent"),
+                            sentiment_colours = c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")) {
+
+  if(!is.character(sentiment_colours)) { stop("sentiment_colours = should be a character vector containing the colour mapping for positive, negative and neutral")}
+
+  #Get variables for tidy evalute
+  group_sym <- rlang::ensym(group_var)
+  sentiment_sym <- rlang::ensym(sentiment_var)
+
+  group_string <- rlang::as_string(group_sym)
+  sentiment_string <- rlang::as_string(sentiment_sym)
+
+
+  bar_labels <- match.arg(bar_labels)
+  type <- match.arg(type)
+
+  #Summarise data for plotting
+  data <- data %>%
+    dplyr::filter(!is.na(!!sentiment_sym)) %>%
+    dplyr::count({{ group_var }}, {{ sentiment_var }}) %>%
+    dplyr::add_count({{ group_var }}, wt = n, name = ".total") %>%
+    dplyr::mutate(
+      percent = n / .total * 100,
+      percent_character = paste0(round(percent, digits = 1), "%")
+    )
+
+  # Generate the plot based on the chosen type
+  plot <- switch(type,
+                 "percent" = data %>%
+                   ggplot2::ggplot(ggplot2::aes(x = reorder(!!group_sym, n), y = percent, fill = {{ sentiment_var }})) +
+                   ggplot2::geom_col() +
+                   ggplot2::labs(fill = NULL, y = NULL, x = "% of Posts"),
+                 "volume" = data %>%
+                   ggplot2::ggplot(ggplot2::aes(x = reorder(!!group_sym, n), y = n, fill = {{ sentiment_var }})) +
+                   ggplot2::geom_col() +
+                   ggplot2::labs(fill = NULL, y = NULL, x = "Number of Posts")
+  )
+
+  #Style the plot
+  plot <- plot +
+    ggplot2::theme_minimal() +
+    ggplot2::coord_flip() +
+    ggplot2::theme(legend.position = "bottom",
+                   panel.grid.major = ggplot2::element_blank(),
+                   panel.grid.minor = ggplot2:: element_blank()) +
+    ggplot2::scale_x_discrete(expand = c(0, 0)) +
+    ggplot2::scale_y_discrete(expand = c(0, 0)) +
+    ggplot2::scale_fill_manual(values = sentiment_colours)
+
+  # Add bar labels based on the chosen type
+  plot <- switch(bar_labels,
+                 "percent" = plot +
+                   ggplot2::geom_text(ggplot2::aes(label = percent_character),
+                                      colour = "white",
+                                      position = ggplot2::position_stack(0.5),
+                                      check_overlap = TRUE),
+                 "volume" = plot +
+                   ggplot2::geom_text(ggplot2::aes(label = scales::comma(n)),
+                                      colour = "white",
+                                      position = ggplot2::position_stack(0.5),
+                                      check_overlap = TRUE),
+                 plot
+  )
+  return(plot)
+}

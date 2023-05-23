@@ -10,7 +10,8 @@ reference:
 - title: "Plotting in R - ggplot2"
   desc: "Functions built upon the {ggplot2} R Package"
 - contents:
-  - disp_plot_vot
+  - dr_plot_vot, dr_plot_vot_grouped
+  - dr_plot_sent, dr_plot_sent_grouped
 
 - title: "Tabular Data"
   desc: "gt and flextable functions for creating beautiful tables in R"
