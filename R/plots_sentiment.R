@@ -241,14 +241,15 @@ dr_plot_sent_vot <- function(data,
     ggplot2::scale_fill_manual(aesthetics = c("fill", "colour"),
                                values = sentiment_colours) +
     ggplot2::theme_minimal() +
-    ggplot2::theme(legend.position = "none",
+    ggplot2::theme(legend.position = "bottom",
                    panel.grid.major = ggplot2::element_blank(),
                    panel.grid.minor = ggplot2::element_blank(),
                    panel.border = ggplot2::element_blank(),
                    axis.line = ggplot2::element_line(linewidth = 0.5)) +
     ggplot2::labs(y = yaxis,
                   title = title,
-                  x = NULL)
+                  x = NULL,
+                  fill = NULL)
 
   return(plot)
 }

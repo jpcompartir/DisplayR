@@ -186,7 +186,20 @@ df %>%
   scale_y_continuous()
 ```
 
-## Subtopic
+### Sentiment VOT
+
+We showed an example of using the `dr_plot_vot_group` function to visualise sentiment over time, there is also the `dr_plot_sent_vot` function, made specifically for sentiment and can provide bars or lines. As we've already seen lines for sentiment, we'll show bars. This function allows the user to enter the sentiment mapping directly, so let's switch to a more accessibility-friendly colour palette.
+
+```{r}
+df %>%
+  dr_plot_sent_vot(sentiment_var = sentiment, 
+                   date_var = date, 
+                   plot_type = "bar", 
+                   time_unit = "day",
+                   sentiment_colours = c("positive" = "#007fff",
+                                         "negative" = "#D83B01",
+                                         "neutral" =  "#a89797"))
+```
 
 ## Subtopic
 
