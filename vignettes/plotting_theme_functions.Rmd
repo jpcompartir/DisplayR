@@ -4,11 +4,11 @@ output:
   html_document:
     toc: true
     toc_float: true
-    toc_depth: 2
+    toc_depth: 3
     highlight: tango
     theme: cosmo
 vignette: >
-  %\VignetteIndexEntry{Plotting & Themeing Functions}
+  %\VignetteIndexEntry{Plotting & Theming Functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -148,15 +148,15 @@ df %>%
                bar_labels = "none")
 ```
 
-### Grouped sentiment
+### Grouped 
 
 More often than not, we won't want to create just one sentiment chart, so we've created a function for plotting grouped sentiment charts.
 
-The `dr_plot_sent_group` function comes with the additional argument, `group_var = `. When setting `type = "percent"` and `bar_labels = "volume"`, we can add the y-axis (now x visually) ticks back and give a title to make the plot more explicit, 
+The `dr_plot_sent_group` function comes with the additional argument, `group_var = `. When setting `plot_type = "percent"` and `bar_labels = "volume"`, we can add the y-axis (now x visually) ticks back and give a title to make the plot more explicit, 
 
 ```{r}
 df %>%
-  dr_plot_sent_group(group_var = topic, type = "percent", bar_labels = "volume") +
+  dr_plot_sent_group(group_var = topic, plot_type = "percent", bar_labels = "volume") +
   scale_y_continuous() + # Add the percentage back to the axis ticks
   labs(y = "Percentage of posts")  #Add the label back
 ```
@@ -164,7 +164,7 @@ df %>%
 There are other options, we can set the bar's labels to percent, and titles or change the axis labels, move the legend etc.
 ```{r}
 df %>%
-  dr_plot_sent_group(group_var = topic, type = "percent", bar_labels = "percent") +
+  dr_plot_sent_group(group_var = topic, plot_type = "percent", bar_labels = "percent") +
   labs(x = "Percentage of posts", #We use x = because the plot has had its axes reversed
        title = "Risks & Challenges drive negative sentiment",
        subtitle = "Plot ordered by overall volume", #Just an example
@@ -175,18 +175,31 @@ df %>%
 We can also plot the volumes rather than percentages on the bars themselves:
 ```{r}
 df %>%
-  dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, type = "volume", bar_labels = "percent")
+  dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "volume", bar_labels = "percent")
 ```
 
 However, as we can see, this can lead to unwanted results, especially when using bar_labels. So we could remove the labels and add the gridlines back.
 ```{r}
 df %>%
-  dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, type = "volume", bar_labels = "none") +
+  dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "volume", bar_labels = "none") +
   theme(panel.grid.major.x = element_line()) +
   scale_y_continuous()
 ```
 
-## Subtopic
+### Sentiment over time
+
+We showed an example of using the `dr_plot_vot_group` function to visualise sentiment over time, there is also the `dr_plot_sent_vot` function, made specifically for sentiment and can provide bars or lines. As we've already seen lines for sentiment, we'll show bars. This function allows the user to enter the sentiment mapping directly, so let's switch to a more accessibility-friendly colour palette.
+
+```{r}
+df %>%
+  dr_plot_sent_vot(sentiment_var = sentiment, 
+                   date_var = date, 
+                   plot_type = "bar", 
+                   time_unit = "day",
+                   sentiment_colours = c("positive" = "#007fff",
+                                         "negative" = "#D83B01",
+                                         "neutral" =  "#a89797"))
+```
 
 ## Subtopic
 

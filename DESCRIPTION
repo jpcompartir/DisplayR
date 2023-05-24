@@ -24,15 +24,15 @@ Imports:
     stringr (>= 1.5.0),
     tidyr (>= 1.3.0),
     tidyselect (>= 1.2.0),
-    viridis
+    viridis (>= 0.6.2)
 Suggests: 
-    covr,
+    covr (>= 3.6.2),
     DT (>= 0.26),
     kableExtra (>= 1.3.4),
     knitr (>= 1.42),
     officer (>= 0.6.2),
     rmarkdown (>= 2.21),
-    spelling,
+    spelling (>= 2.2.1),
     testthat (>= 3.1.4)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
