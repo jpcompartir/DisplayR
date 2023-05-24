@@ -15,19 +15,19 @@ dr_theme_samy(
 \arguments{
 \item{scale_type}{A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".}
 
-\item{index}{An optional numeric index or vector of indices to select specific colors from the SAMY color palette.}
+\item{index}{An optional numeric index or vector of indices to select specific colours from the SAMY colour palette.}
 
-\item{direction}{An optional numeric value (1 or -1) specifying the direction of the color gradient for continuous scales. Default is 1.}
+\item{direction}{An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.}
 
 \item{guide}{An optional character string specifying the type of guide to use for continuous scales. Default is 'legend'.}
 
 \item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font.}
 }
 \value{
-A list containing the ggplot2 theme, fill scale, and color scale.
+A list containing the ggplot2 theme, fill scale, and colour scale.
 }
 \description{
-This function provides a convenient way to apply Microsoft themed color scales and aesthetics to ggplot2 plots.
+This function provides a convenient way to apply Microsoft themed colour scales and aesthetics to ggplot2 plots.
 The user can specify whether they want a continuous or discrete theme by providing the \code{scale_type} argument.
 }
 \examples{
@@ -36,12 +36,12 @@ The user can specify whether they want a continuous or discrete theme by providi
 library(ggplot2)
 
 # Example with continuous theme
-ggplot(mtcars, aes(x = wt, y = mpg, color = qsec)) +
+ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
   geom_point() +
   theme_samy(scale_type = "continuous")
 
 # Example with discrete theme
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
   geom_point() +
   theme_samy(scale_type = "discrete")
 }
