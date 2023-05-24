@@ -16,7 +16,8 @@ dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percen
                            sentiment_colours = c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")){
 
 
-  stopifnot(is.character(sentiment_colours))
+  stopifnot(is.character(sentiment_colours),
+            is.data.frame(data))
 
   # #Set bar_labels and raise error if not appropriate
   bar_labels <- match.arg(bar_labels)
@@ -101,6 +102,10 @@ dr_plot_sent_group <- function(data,
                             sentiment_colours = c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")) {
 
   if(!is.character(sentiment_colours)) { stop("sentiment_colours = should be a character vector containing the colour mapping for positive, negative and neutral")}
+
+
+  stopifnot(is.character(sentiment_colours),
+            is.data.frame(data))
 
   #Get variables for tidy evalute
   group_sym <- rlang::ensym(group_var)
@@ -188,6 +193,9 @@ dr_plot_sent_vot <- function(data,
                              sentiment_colours = c("positive" = "#107C10","negative" = "#D83B01", "neutral" = "#FFB900"),
                              plot_type = c("bar", "line"),
                              time_unit = c("week", "day","month", "quarter", "year")){
+
+  stopifnot(is.character(sentiment_colours),
+            is.data.frame(data))
 
   #Error checking and argument setting
   time_unit <- match.arg(time_unit)
