@@ -7,8 +7,7 @@
 vot_unit_data(time_unit, vot_variable = "Volume of Mentions", unit = "Count")
 }
 \arguments{
-\item{time_unit}{A character string specifying the time unit.
-One of "day", "week", "month", "quarter", or "year".}
+\item{time_unit}{A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"}
 
 \item{vot_variable}{Will form part of plot's title, should describe type of plot}
 

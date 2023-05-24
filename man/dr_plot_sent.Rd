@@ -28,6 +28,8 @@ We prefer bars over pie charts or donuts, end.
 }
 \examples{
 {
-DisplayR::disp_example \%>\% dr_plot_sent(sentiment_var = sentiment, bar_labels = "percent")
+DisplayR::disp_example \%>\% dr_plot_sent(sentiment_var =
+sentiment,
+bar_labels = "percent")
 }
 }

@@ -24,7 +24,7 @@ dr_plot_sent_vot(
 
 \item{plot_type}{The type of plot. Default is "percent".}
 
-\item{bar_labels}{The type of labels to display on bars. Default is "volume".}
+\item{time_unit}{A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"}
 }
 \value{
 ggplot object
@@ -34,7 +34,9 @@ Plot a bar or line chart of sentiment over time
 }
 \examples{
 {
-DisplayR::disp_example \%>\% dr_plot_sent_vot(plot_type = "bar", time_unit = "day")
-DisplayR::disp_example \%>\% dr_plot_sent_vot(plot_type = "line", time_unit = "day")
+DisplayR::disp_example \%>\% dr_plot_sent_vot(plot_type = "bar",
+time_unit = "day")
+DisplayR::disp_example \%>\% dr_plot_sent_vot(plot_type = "line",
+time_unit = "day")
 }
 }

@@ -6,7 +6,7 @@
 #' @param date_var Date column
 #' @param plot_type Should the plot be shown as a line or a bar chart?
 #' @param colour Colour of line/bars - string, name of hexcode
-#' @param time_unit select unit e.g. ("day", "week", "month", "quarter", "year")
+#' @param time_unit A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"
 #' @param smooth Add a smoothing line (geom_smooth) to the plot?
 #'
 #' @return ggplot object
@@ -160,8 +160,7 @@ dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("d
 #' and y-axis label. The 'variable' and 'unit' parameters allow for flexibility in
 #' describing the data being plotted.
 #'
-#' @param time_unit A character string specifying the time unit.
-#' One of "day", "week", "month", "quarter", or "year".
+#' @param time_unit A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"
 #' @param unit A character string used to describe the unit of the data in the y-axis label.
 #' Default is "Count".
 #' @param vot_variable Will form part of plot's title, should describe type of plot

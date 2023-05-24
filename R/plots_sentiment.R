@@ -10,7 +10,9 @@
 #' @export
 #'
 #' @examples {
-#' DisplayR::disp_example %>% dr_plot_sent(sentiment_var = sentiment, bar_labels = "percent")
+#' DisplayR::disp_example %>% dr_plot_sent(sentiment_var =
+#' sentiment,
+#' bar_labels = "percent")
 #' }
 dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percent", "volume", "none"),
                            sentiment_colours = c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")){
@@ -89,10 +91,15 @@ dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percen
 #' @export
 #'
 #' @examples {
-#' DisplayR::disp_example %>% dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "percent", bar_labels = "volume")
+#' DisplayR::disp_example %>% dr_plot_sent_group(group_var = topic,
+#' sentiment_var = sentiment,
+#' plot_type = "percent",
+#' bar_labels = "volume")
 #'
-#' DisplayR::disp_example %>% dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "volume", bar_labels = "none")
-#'
+#' DisplayR::disp_example %>% dr_plot_sent_group(group_var = topic,
+#'  sentiment_var = sentiment,
+#'  plot_type = "volume",
+#'  bar_labels = "none")
 #' }
 dr_plot_sent_group <- function(data,
                             group_var = topic,
@@ -175,16 +182,18 @@ dr_plot_sent_group <- function(data,
 #' @param data A data frame that includes the grouping and sentiment variables.
 #' @param sentiment_var The sentiment variable. Default is "sentiment".
 #' @param date_var The variable to date by. Default is "date".
-#' @param plot_type The type of plot. Default is "percent".
-#' @param bar_labels The type of labels to display on bars. Default is "volume".
 #' @param sentiment_colours Colour mapping for the sentiment categories
+#' @param plot_type The type of plot. Default is "percent".
+#' @param time_unit A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"
 #'
 #' @return ggplot object
 #' @export
 #'
 #' @examples {
-#' DisplayR::disp_example %>% dr_plot_sent_vot(plot_type = "bar", time_unit = "day")
-#' DisplayR::disp_example %>% dr_plot_sent_vot(plot_type = "line", time_unit = "day")
+#' DisplayR::disp_example %>% dr_plot_sent_vot(plot_type = "bar",
+#' time_unit = "day")
+#' DisplayR::disp_example %>% dr_plot_sent_vot(plot_type = "line",
+#' time_unit = "day")
 #' }
 
 dr_plot_sent_vot <- function(data,

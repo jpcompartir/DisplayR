@@ -4,11 +4,11 @@ output:
   html_document:
     toc: true
     toc_float: true
-    toc_depth: 2
+    toc_depth: 3
     highlight: tango
     theme: cosmo
 vignette: >
-  %\VignetteIndexEntry{Plotting & Themeing Functions}
+  %\VignetteIndexEntry{Plotting & Theming Functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -148,7 +148,7 @@ df %>%
                bar_labels = "none")
 ```
 
-### Grouped sentiment
+### Grouped 
 
 More often than not, we won't want to create just one sentiment chart, so we've created a function for plotting grouped sentiment charts.
 
@@ -186,7 +186,7 @@ df %>%
   scale_y_continuous()
 ```
 
-### Sentiment VOT
+### Sentiment over time
 
 We showed an example of using the `dr_plot_vot_group` function to visualise sentiment over time, there is also the `dr_plot_sent_vot` function, made specifically for sentiment and can provide bars or lines. As we've already seen lines for sentiment, we'll show bars. This function allows the user to enter the sentiment mapping directly, so let's switch to a more accessibility-friendly colour palette.
 

@@ -34,9 +34,14 @@ Plot sentiment grouped by a certain variable.
 }
 \examples{
 {
-DisplayR::disp_example \%>\% dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "percent", bar_labels = "volume")
+DisplayR::disp_example \%>\% dr_plot_sent_group(group_var = topic,
+sentiment_var = sentiment,
+plot_type = "percent",
+bar_labels = "volume")
 
-DisplayR::disp_example \%>\% dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "volume", bar_labels = "none")
-
+DisplayR::disp_example \%>\% dr_plot_sent_group(group_var = topic,
+ sentiment_var = sentiment,
+ plot_type = "volume",
+ bar_labels = "none")
 }
 }

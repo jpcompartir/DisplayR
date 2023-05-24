@@ -22,7 +22,7 @@ dr_plot_vot(
 
 \item{colour}{Colour of line/bars - string, name of hexcode}
 
-\item{time_unit}{select unit e.g. ("day", "week", "month", "quarter", "year")}
+\item{time_unit}{A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"}
 
 \item{smooth}{Add a smoothing line (geom_smooth) to the plot?}
 }
