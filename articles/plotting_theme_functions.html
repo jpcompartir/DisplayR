@@ -239,19 +239,20 @@ descriptive title:</p>
 <p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div class="section level4">
-<h4 id="grouped-sentiment">Grouped sentiment<a class="anchor" aria-label="anchor" href="#grouped-sentiment"></a>
+<h4 id="grouped">Grouped<a class="anchor" aria-label="anchor" href="#grouped"></a>
 </h4>
 <p>More often than not, we won’t want to create just one sentiment
 chart, so we’ve created a function for plotting grouped sentiment
 charts.</p>
 <p>The <code>dr_plot_sent_group</code> function comes with the
 additional argument, <code>group_var =</code>. When setting
-<code>type = "percent"</code> and <code>bar_labels = "volume"</code>, we
-can add the y-axis (now x visually) ticks back and give a title to make
-the plot more explicit,</p>
+<code>plot_type = "percent"</code> and
+<code>bar_labels = "volume"</code>, we can add the y-axis (now x
+visually) ticks back and give a title to make the plot more
+explicit,</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, type <span class="op">=</span> <span class="st">"percent"</span>, bar_labels <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, plot_type <span class="op">=</span> <span class="st">"percent"</span>, bar_labels <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Add the percentage back to the axis ticks</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Percentage of posts"</span><span class="op">)</span>  <span class="co">#Add the label back</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">y</span> is already present.</span></span>
@@ -261,7 +262,7 @@ the plot more explicit,</p>
 titles or change the axis labels, move the legend etc.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, type <span class="op">=</span> <span class="st">"percent"</span>, bar_labels <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, plot_type <span class="op">=</span> <span class="st">"percent"</span>, bar_labels <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Percentage of posts"</span>, <span class="co">#We use x = because the plot has had its axes reversed</span></span>
 <span>       title <span class="op">=</span> <span class="st">"Risks &amp; Challenges drive negative sentiment"</span>,</span>
 <span>       subtitle <span class="op">=</span> <span class="st">"Plot ordered by overall volume"</span>, <span class="co">#Just an example</span></span>
@@ -272,27 +273,45 @@ titles or change the axis labels, move the legend etc.</p>
 themselves:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, type <span class="op">=</span> <span class="st">"volume"</span>, bar_labels <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, plot_type <span class="op">=</span> <span class="st">"volume"</span>, bar_labels <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <p>However, as we can see, this can lead to unwanted results, especially
 when using bar_labels. So we could remove the labels and add the
 gridlines back.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, type <span class="op">=</span> <span class="st">"volume"</span>, bar_labels <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, plot_type <span class="op">=</span> <span class="st">"volume"</span>, bar_labels <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">y</span> is already present.</span></span>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span></span></code></pre></div>
 <p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
+<div class="section level4">
+<h4 id="sentiment-over-time">Sentiment over time<a class="anchor" aria-label="anchor" href="#sentiment-over-time"></a>
+</h4>
+<p>We showed an example of using the <code>dr_plot_vot_group</code>
+function to visualise sentiment over time, there is also the
+<code>dr_plot_sent_vot</code> function, made specifically for sentiment
+and can provide bars or lines. As we’ve already seen lines for
+sentiment, we’ll show bars. This function allows the user to enter the
+sentiment mapping directly, so let’s switch to a more
+accessibility-friendly colour palette.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/dr_plot_sent_vot.html">dr_plot_sent_vot</a></span><span class="op">(</span>sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, </span>
+<span>                   date_var <span class="op">=</span> <span class="va">date</span>, </span>
+<span>                   plot_type <span class="op">=</span> <span class="st">"bar"</span>, </span>
+<span>                   time_unit <span class="op">=</span> <span class="st">"day"</span>,</span>
+<span>                   sentiment_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span> <span class="op">=</span> <span class="st">"#007fff"</span>,</span>
+<span>                                         <span class="st">"negative"</span> <span class="op">=</span> <span class="st">"#D83B01"</span>,</span>
+<span>                                         <span class="st">"neutral"</span> <span class="op">=</span>  <span class="st">"#a89797"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 rows containing missing values (`position_stack()`).</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="subtopic">Subtopic<a class="anchor" aria-label="anchor" href="#subtopic"></a>
-</h3>
-</div>
-<div class="section level3">
-<h3 id="subtopic-1">Subtopic<a class="anchor" aria-label="anchor" href="#subtopic-1"></a>
 </h3>
 </div>
 </div>

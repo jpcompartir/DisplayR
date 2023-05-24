@@ -61,7 +61,7 @@
 <span>  <span class="va">data</span>,</span>
 <span>  group_var <span class="op">=</span> <span class="va">topic</span>,</span>
 <span>  sentiment_var <span class="op">=</span> <span class="va">sentiment</span>,</span>
-<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"percent"</span>, <span class="st">"volume"</span><span class="op">)</span>,</span>
+<span>  plot_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"percent"</span>, <span class="st">"volume"</span><span class="op">)</span>,</span>
 <span>  bar_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"volume"</span>, <span class="st">"none"</span>, <span class="st">"percent"</span><span class="op">)</span>,</span>
 <span>  sentiment_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>positive <span class="op">=</span> <span class="st">"#107C10"</span>, negative <span class="op">=</span> <span class="st">"#D83B01"</span>, neutral <span class="op">=</span> <span class="st">"#FFB900"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -81,7 +81,7 @@
 <dd><p>The sentiment variable. Default is "sentiment".</p></dd>
 
 
-<dt>type</dt>
+<dt>plot_type</dt>
 <dd><p>The type of plot. Default is "percent".</p></dd>
 
 
@@ -100,6 +100,22 @@
 <p>A ggplot2 object.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">DisplayR</span><span class="fu">::</span><span class="va"><a href="disp_example.html">disp_example</a></span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dr_plot_sent_group</span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>,</span></span>
+<span class="r-in"><span>sentiment_var <span class="op">=</span> <span class="va">sentiment</span>,</span></span>
+<span class="r-in"><span>plot_type <span class="op">=</span> <span class="st">"percent"</span>,</span></span>
+<span class="r-in"><span>bar_labels <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">DisplayR</span><span class="fu">::</span><span class="va"><a href="disp_example.html">disp_example</a></span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dr_plot_sent_group</span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>,</span></span>
+<span class="r-in"><span> sentiment_var <span class="op">=</span> <span class="va">sentiment</span>,</span></span>
+<span class="r-in"><span> plot_type <span class="op">=</span> <span class="st">"volume"</span>,</span></span>
+<span class="r-in"><span> bar_labels <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-plt img"><img src="dr_plot_sent_group-1.png" alt="" width="700" height="433"></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
