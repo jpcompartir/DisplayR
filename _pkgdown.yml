@@ -1,5 +1,11 @@
 template:
   bootstrap: 5
+  params:
+    bootswatch: "cosmo"
+    hljs:
+      style: "tango"
+    toc: true
+    toc_depth: 3
 
 navbar:
   structure:
@@ -30,6 +36,10 @@ reference:
 - contents:
   - disp_add_slide
 
+- title: "Bespoke Themes"
+  desc: "Apply themes to GGplot objects"
+- contents:
+  - contains("theme")
 
 repo:
   url:
