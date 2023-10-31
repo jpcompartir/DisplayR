@@ -201,10 +201,40 @@ df %>%
                                          "neutral" =  "#a89797"))
 ```
 
-## Subtopic
-
 # Theme Functions
 
 There are a number of theme functions included in {DisplayR}, they are to be applied according to the nature of the project and tend to take care of colour palettes and fonts. If you think there is a theme, or a number of themes missing, submit an issue at: (https://github.com/jpcompartir/DisplayR/issues). 
 
-The general idea is to add the theme you need after rendering your plot.
+The general idea is to add the theme you need after rendering your plot. Let's get a plot and then style it using our themes.
+
+```{r}
+(
+  plot <- df %>%
+  dr_plot_vot_group(group_var = topic, time_unit = "day")
+ )
+```
+
+We could add a dark theme with dr_theme_black
+
+```{r}
+plot +
+  dr_theme_black()
+```
+
+Or we could add a Microsoft theme using dr_theme_microsoft:
+```{r}
+plot +
+  dr_theme_microsoft(scale_type = "discrete")
+```
+
+A SHARE theme using dr_theme_share:
+```{r}
+plot +
+  dr_theme_share(scale_type = "discrete")
+```
+
+A SAMY theme using dr_theme_samy:
+```{r}
+plot +
+  dr_theme_samy(scale_type = "discrete")
+```
