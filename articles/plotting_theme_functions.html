@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">DisplayR</a>
 
@@ -310,10 +310,6 @@ accessibility-friendly colour palette.</p>
 <p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="subtopic">Subtopic<a class="anchor" aria-label="anchor" href="#subtopic"></a>
-</h3>
-</div>
 </div>
 <div class="section level2">
 <h2 id="theme-functions">Theme Functions<a class="anchor" aria-label="anchor" href="#theme-functions"></a>
@@ -323,7 +319,44 @@ are to be applied according to the nature of the project and tend to
 take care of colour palettes and fonts. If you think there is a theme,
 or a number of themes missing, submit an issue at: (<a href="https://github.com/jpcompartir/DisplayR/issues" class="external-link uri">https://github.com/jpcompartir/DisplayR/issues</a>).</p>
 <p>The general idea is to add the theme you need after rendering your
-plot.</p>
+plot. Let’s get a plot and then style it using our themes.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span></span>
+<span>  <span class="va">plot</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/dr_plot_vot_group.html">dr_plot_vot_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, time_unit <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
+<span> <span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<p>We could add a dark theme with dr_theme_black</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/dr_theme_black.html">dr_theme_black</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p>Or we could add a Microsoft theme using dr_theme_microsoft:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/dr_theme_microsoft.html">dr_theme_microsoft</a></span><span class="op">(</span>scale_type <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<p>A SHARE theme using dr_theme_share:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/dr_theme_share.html">dr_theme_share</a></span><span class="op">(</span>scale_type <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p>A SAMY theme using dr_theme_samy:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/dr_theme_samy.html">dr_theme_samy</a></span><span class="op">(</span>scale_type <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
+<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
