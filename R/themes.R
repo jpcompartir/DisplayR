@@ -470,3 +470,48 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
                                       values = values))
 
 }
+
+#' Apply Capture Intelligence themed colour scales and aesthetics to ggplot2 plots
+#'
+#' This function provides a convenient way to apply Capture themed colour scales and aesthetics to ggplot2 plots.
+#' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
+
+#' @param scale_type
+#' @param index
+#' @param direction
+#' @param guide
+#' @param fallback_font
+#'
+#' @return
+#' @export
+#'
+#' @examples
+dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
+                             index = NULL,
+                             direction = 1,
+                             guide = 'legend',
+                             fallback_font = "sans") {
+
+  scale_type <- match.arg(scale_type)
+
+  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
+    font_family <- fallback_font
+  } else {
+    font_family <- "GT Walsheim Pro"
+  }
+
+  if (scale_type == "continuous") {
+
+    # The continuous code block from theme_share_continuous
+    return(theme_capture_continuous(index, direction, guide, font_family = font_family))
+
+  } else if (scale_type == "discrete") {
+
+    # The discrete code block from theme_share_discrete
+    return(theme_capture_discrete(index, font_family = font_family))
+
+  } else {
+    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
+  }
+
+}
