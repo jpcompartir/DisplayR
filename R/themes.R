@@ -438,7 +438,6 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
   }
 
   base_size = 11
-  base_family <- font_family
   base_line_size = base_size / 22
   base_rect_size = base_size / 22
   half_line <- base_size / 2
@@ -465,6 +464,8 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                                              colour = "grey20"),
     legend.key = ggplot2::element_rect(fill = "white", colour = NA),
     legend.position = "bottom",
+    legend.text = element_text(family = font_family,
+                               size = base_size*0.8),
     complete = TRUE
   ),
   fill_scale,
@@ -495,7 +496,6 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
   }
 
   base_size = 11
-  base_family <- font_family
   base_line_size = base_size / 22
   base_rect_size = base_size / 22
   half_line <- base_size / 2
@@ -523,6 +523,8 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
                                                colour = "grey20"),
       legend.key = ggplot2::element_rect(fill = "white", colour = NA),
       legend.position = "bottom",
+      legend.text = element_text(family = font_family,
+                                 size = base_size*0.8),
       complete = TRUE
     ),ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                       values = values))
