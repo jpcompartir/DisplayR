@@ -61,7 +61,7 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
   } else {
-    font_family <- "Segoe UI Regular"
+    font_family <- "Segoe UI"
   }
 
   #Return the continuous function if necessary and if not discrete
@@ -89,7 +89,7 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 
 #' @keywords internal
-theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Segoe UI Regular"){
+theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Segoe UI"){
 
   palette = c(
     "#D83B01", # Orange
@@ -139,9 +139,39 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                                                     guide = guide)
   }
 
-  list(ggplot2::theme_minimal(base_family = font_family),
-       fill_scale,
-       colour_scale)
+  base_size = 11
+  base_line_size = base_size / 22
+  base_rect_size = base_size / 22
+  half_line <- base_size / 2
+
+  list(ggplot2::theme(
+    plot.title = ggplot2::element_text(
+      size = 15,
+      hjust = 0.5,
+      vjust = 1,
+      margin = margin(b = half_line)
+    ),
+    text = element_text(family = font_family),
+    panel.border = ggplot2::element_blank(),
+    panel.background = ggplot2::element_rect(fill = "white",
+                                             colour = NA),
+    axis.line = ggplot2::element_line(colour = "grey20"),
+    axis.ticks = ggplot2::element_line(colour = "grey20"),
+    axis.text = ggplot2::element_text(colour = "grey30",
+                                      size = rel(0.8)),
+    axis.title = ggplot2::element_text(colour = "grey30"),
+    panel.grid = ggplot2::element_line(colour = "grey92"),
+    panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
+    strip.background = ggplot2::element_rect(fill = "grey85",
+                                             colour = "grey20"),
+    legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+    legend.position = "bottom",
+    legend.text = element_text(family = font_family,
+                               size = base_size*0.8),
+    complete = TRUE
+  ),
+  fill_scale,
+  colour_scale)
 
 }
 
@@ -150,7 +180,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
 #' Adds Microsoft colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
 #' @keywords internal
-theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI Regular'){
+theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
 
   values = c(
     "#D83B01", # Orange
@@ -176,9 +206,39 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI Regul
     values <- values[index]
   }
 
-  list(ggplot2::theme_minimal(base_family = 'Segoe UI Regular'),
-       ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                      values = values))
+  base_size = 11
+  base_line_size = base_size / 22
+  base_rect_size = base_size / 22
+  half_line <- base_size / 2
+
+  list(
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(
+        size = 15,
+        hjust = 0.5,
+        vjust = 1,
+        margin = margin(b = half_line)
+      ),
+      text = element_text(family = font_family),
+      panel.border = ggplot2::element_blank(),
+      panel.background = ggplot2::element_rect(fill = "white",
+                                               colour = NA),
+      axis.line = ggplot2::element_line(colour = "grey20"),
+      axis.ticks = ggplot2::element_line(colour = "grey20"),
+      axis.text = ggplot2::element_text(colour = "grey30",
+                                        size = rel(0.8)),
+      axis.title = ggplot2::element_text(colour = "grey30"),
+      panel.grid = ggplot2::element_line(colour = "grey92"),
+      panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
+      strip.background = ggplot2::element_rect(fill = "grey85",
+                                               colour = "grey20"),
+      legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+      legend.position = "bottom",
+      legend.text = element_text(family = font_family,
+                                 size = base_size*0.8),
+      complete = TRUE
+    ),ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
+                                     values = values))
 
 }
 
