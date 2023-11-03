@@ -490,6 +490,7 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
                              index = NULL,
                              direction = 1,
                              guide = 'legend',
+                             aesthetics = "fill",
                              fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
@@ -508,7 +509,7 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
   } else if (scale_type == "discrete") {
 
     # The discrete code block from theme_share_discrete
-    return(theme_capture_discrete(index, font_family = font_family))
+    return(theme_capture_discrete(direction, font_family = font_family))
 
   } else {
     stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
@@ -525,7 +526,6 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
 #' @keywords internal
 theme_capture_continuous <- function(direction = 1, guide = 'legend', font_family = "GT Walsheim Pro"){
 
-   if (direction == 1){
     fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                 guide = guide,
@@ -534,6 +534,7 @@ theme_capture_continuous <- function(direction = 1, guide = 'legend', font_famil
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide,
                                                     direction = direction)
+
     base_size = 11
     base_family = "GT Walsheim Pro"
     base_line_size = base_size / 22
@@ -561,40 +562,59 @@ theme_capture_continuous <- function(direction = 1, guide = 'legend', font_famil
         strip.background = ggplot2::element_rect(fill = "grey85",
                                                  colour = "grey20"),
         legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+        legend.position = "bottom",
         complete = TRUE
       ),
       fill_scale,
       colour_scale
     )
 
-   }
-
 }
 
 
-#' theme_share_discrete
+#' theme_capture_discrete
 #'
-#' Adds SHARE colours and font to discrete plot.
-#' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
+#' Adds Capture colours and font to discrete plot.
+#' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
+#' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
+#'
 #' @keywords internal
-theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
+theme_capture_discrete <- function(direction, font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
 
-  values <- c("#0f50d2",
-              "#7800c6",
-              "#d80a83",
-              "#ffb600",
-              "#ff4e00",
-              "#bb7fe2",
-              "#ffda74",
-              "#ffa67f",
-              "#eb84c1")
+ fill_scale <- ggplot2::scale_fill_viridis_d(direction = direction)
+  colour_scale <- ggplot2::scale_colour_viridis_d(direction = direction)
 
-  if (is.numeric(index)){
-    values <- values[index]
-  }
+  base_size = 11
+  base_family = "GT Walsheim Pro"
+  base_line_size = base_size / 22
+  base_rect_size = base_size / 22
+  half_line <- base_size / 2
 
-  list(ggplot2::theme_minimal(base_family = font_family),
-       ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                      values = values))
-
+  list(
+    ggplot2::theme(
+      plot.title = ggplot2::element_text(
+        size = 15,
+        hjust = 0.5,
+        vjust = 1,
+        margin = margin(b = half_line)
+      ),
+      panel.border = ggplot2::element_blank(),
+      panel.background = ggplot2::element_rect(fill = "white",
+                                               colour = NA),
+      axis.line = ggplot2::element_line(colour = "grey20"),
+      axis.ticks = ggplot2::element_line(colour = "grey20"),
+      axis.text = ggplot2::element_text(colour = "grey30",
+                                        size = rel(0.8)),
+      axis.title = ggplot2::element_text(colour = "grey30"),
+      panel.grid = ggplot2::element_line(colour = "grey92"),
+      panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
+      strip.background = ggplot2::element_rect(fill = "grey85",
+                                               colour = "grey20"),
+      legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+      legend.position = "bottom",
+      complete = TRUE
+    ),
+    fill_scale,
+    colour_scale
+    )
 }
