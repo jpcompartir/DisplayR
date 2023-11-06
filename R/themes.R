@@ -144,6 +144,22 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
   base_rect_size = base_size / 22
   half_line <- base_size / 2
 
+  if (guide == "colourbar") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+  } else if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- list(color = NULL, fill = NULL)
+
+  }
+
   list(ggplot2::theme(
     plot.title = ggplot2::element_text(
       size = 15,
@@ -166,12 +182,15 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                                              colour = "grey20"),
     legend.key = ggplot2::element_rect(fill = "white", colour = NA),
     legend.position = "bottom",
+    legend.title = element_text(colour = "grey30"),
     legend.text = element_text(family = font_family,
-                               size = base_size*0.8),
+                               size = base_size*0.8,
+                               colour = "grey30"),
     complete = TRUE
   ),
   fill_scale,
-  colour_scale)
+  colour_scale,
+  guides_scale)
 
 }
 
@@ -234,11 +253,16 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
                                                colour = "grey20"),
       legend.key = ggplot2::element_rect(fill = "white", colour = NA),
       legend.position = "bottom",
+      legend.title = element_text(colour = "grey30"),
       legend.text = element_text(family = font_family,
-                                 size = base_size*0.8),
+                                 size = base_size*0.8,
+                                 colour = "grey30"),
       complete = TRUE
-    ),ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                     values = values))
+    ),
+    ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
+                                     values = values),
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
 
 }
 
@@ -357,6 +381,22 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
   base_rect_size = base_size / 22
   half_line <- base_size / 2
 
+  if (guide == "colourbar") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+  } else if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- list(color = NULL, fill = NULL)
+
+  }
+
   list(ggplot2::theme(
     plot.title = ggplot2::element_text(
       size = 15,
@@ -379,12 +419,15 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
                                              colour = "grey20"),
     legend.key = ggplot2::element_rect(fill = "white", colour = NA),
     legend.position = "bottom",
+    legend.title = element_text(colour = "grey30"),
     legend.text = element_text(family = font_family,
-                               size = base_size*0.8),
+                               size = base_size*0.8,
+                               colour = "grey30"),
     complete = TRUE
   ),
   fill_scale,
-  colour_scale)
+  colour_scale,
+  guides_scale)
 
 }
 
@@ -415,6 +458,7 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
   base_rect_size = base_size / 22
   half_line <- base_size / 2
 
+
   list(
     ggplot2::theme(
       plot.title = ggplot2::element_text(
@@ -438,11 +482,16 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
                                                colour = "grey20"),
       legend.key = ggplot2::element_rect(fill = "white", colour = NA),
       legend.position = "bottom",
+      legend.title = element_text(colour = "grey30"),
       legend.text = element_text(family = font_family,
-                                 size = base_size*0.8),
+                                 size = base_size*0.8,
+                                 colour = "grey30"),
       complete = TRUE
-    ),ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                     values = values))
+    ),
+    ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
+                                     values = values),
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
 
 }
 
@@ -559,6 +608,23 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
   base_rect_size = base_size / 22
   half_line <- base_size / 2
 
+
+  if (guide == "colourbar") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+  } else if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- list(color = NULL, fill = NULL)
+
+  }
+
   list(ggplot2::theme(
     plot.title = ggplot2::element_text(
       size = 15,
@@ -581,12 +647,15 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                                              colour = "grey20"),
     legend.key = ggplot2::element_rect(fill = "white", colour = NA),
     legend.position = "bottom",
+    legend.title = ggplot2::element_text(colour = "grey30"),
     legend.text = element_text(family = font_family,
-                               size = base_size*0.8),
+                               size = base_size*0.8,
+                               colour = "grey30"),
     complete = TRUE
   ),
   fill_scale,
-  colour_scale)
+  colour_scale,
+  guides_scale)
 
 }
 
@@ -640,11 +709,16 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
                                                colour = "grey20"),
       legend.key = ggplot2::element_rect(fill = "white", colour = NA),
       legend.position = "bottom",
+      legend.title = ggplot2::element_text(colour = "grey30"),
       legend.text = element_text(family = font_family,
-                                 size = base_size*0.8),
+                                 size = base_size*0.8,
+                                 colour = "grey30"),
       complete = TRUE
     ),ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                      values = values))
+                                      values = values),
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+  )
 
 }
 
@@ -734,7 +808,6 @@ theme_capture_continuous <- function(direction = 1, guide = 'legend', font_famil
       }
 
 
-
     list(
       ggplot2::theme(
         plot.title = ggplot2::element_text(
@@ -757,7 +830,8 @@ theme_capture_continuous <- function(direction = 1, guide = 'legend', font_famil
         strip.background = ggplot2::element_rect(fill = "grey85",
                                                  colour = "grey20"),
         legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-        legend.text = ggplot2::element_text(colour = "grey30"),
+        legend.text = ggplot2::element_text(colour = "grey30",
+                                            size = base_size*0.8),
         legend.title = ggplot2::element_text(colour = "grey30"),
         legend.position = "bottom",
         complete = TRUE
@@ -809,14 +883,15 @@ theme_capture_discrete <- function(direction, font_family = "GT Walsheim Pro"){
       strip.background = ggplot2::element_rect(fill = "grey85",
                                                colour = "grey20"),
       legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-      legend.text = ggplot2::element_text(colour = "grey30"),
+      legend.text = ggplot2::element_text(colour = "grey30",
+                                          size = base_size*0.8),
       legend.title = ggplot2::element_text(colour = "grey30"),
       legend.position = "bottom",
       complete = TRUE
     ),
     fill_scale,
     colour_scale,
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
                     colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
     )
 }
