@@ -717,6 +717,24 @@ theme_capture_continuous <- function(direction = 1, guide = 'legend', font_famil
     base_rect_size = base_size / 22
     half_line <- base_size / 2
 
+    if (guide == "colourbar") {
+
+      guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                     fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+      } else if (guide == "legend") {
+
+        guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                     fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+      } else {
+
+        guides_scale <- list(color = NULL, fill = NULL)
+
+      }
+
+
+
     list(
       ggplot2::theme(
         plot.title = ggplot2::element_text(
@@ -743,7 +761,8 @@ theme_capture_continuous <- function(direction = 1, guide = 'legend', font_famil
         complete = TRUE
       ),
       fill_scale,
-      colour_scale
+      colour_scale,
+      guides_scale
     )
 
 }
@@ -792,6 +811,8 @@ theme_capture_discrete <- function(direction, font_family = "GT Walsheim Pro"){
       complete = TRUE
     ),
     fill_scale,
-    colour_scale
+    colour_scale,
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
     )
 }
