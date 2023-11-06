@@ -757,6 +757,8 @@ theme_capture_continuous <- function(direction = 1, guide = 'legend', font_famil
         strip.background = ggplot2::element_rect(fill = "grey85",
                                                  colour = "grey20"),
         legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+        legend.text = ggplot2::element_text(colour = "grey30"),
+        legend.title = ggplot2::element_text(colour = "grey30"),
         legend.position = "bottom",
         complete = TRUE
       ),
@@ -807,6 +809,8 @@ theme_capture_discrete <- function(direction, font_family = "GT Walsheim Pro"){
       strip.background = ggplot2::element_rect(fill = "grey85",
                                                colour = "grey20"),
       legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+      legend.text = ggplot2::element_text(colour = "grey30"),
+      legend.title = ggplot2::element_text(colour = "grey30"),
       legend.position = "bottom",
       complete = TRUE
     ),
