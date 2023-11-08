@@ -225,38 +225,8 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
     values <- values[index]
   }
 
-  base_size = 11
-  half_line <- base_size / 2
-
   list(
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(
-        size = 15,
-        hjust = 0.5,
-        vjust = 1,
-        margin = margin(b = half_line)
-      ),
-      text = ggplot2::element_text(family = font_family),
-      panel.border = ggplot2::element_blank(),
-      panel.background = ggplot2::element_rect(fill = "white",
-                                               colour = NA),
-      axis.line = ggplot2::element_line(colour = "grey20"),
-      axis.ticks = ggplot2::element_line(colour = "grey20"),
-      axis.text = ggplot2::element_text(colour = "grey30",
-                                        size = rel(0.8)),
-      axis.title = ggplot2::element_text(colour = "grey30"),
-      panel.grid = ggplot2::element_line(colour = "grey92"),
-      panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-      strip.background = ggplot2::element_rect(fill = "grey85",
-                                               colour = "grey20"),
-      legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-      legend.position = "bottom",
-      legend.title = ggplot2::element_text(colour = "grey30"),
-      legend.text = ggplot2::element_text(family = font_family,
-                                 size = base_size*0.8,
-                                 colour = "grey30"),
-      complete = TRUE
-    ),
+    theme_boilerplate(font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                      values = values),
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
@@ -374,9 +344,6 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
                                                     guide = guide)
   }
 
-  base_size = 11
-  half_line <- base_size / 2
-
   if (guide == "colourbar") {
 
     guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
@@ -393,34 +360,8 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
 
   }
 
-  list(ggplot2::theme(
-    plot.title = ggplot2::element_text(
-      size = 15,
-      hjust = 0.5,
-      vjust = 1,
-      margin = margin(b = half_line)
-    ),
-    text = ggplot2::element_text(family = font_family),
-    panel.border = ggplot2::element_blank(),
-    panel.background = ggplot2::element_rect(fill = "white",
-                                             colour = NA),
-    axis.line = ggplot2::element_line(colour = "grey20"),
-    axis.ticks = ggplot2::element_line(colour = "grey20"),
-    axis.text = ggplot2::element_text(colour = "grey30",
-                                      size = rel(0.8)),
-    axis.title = ggplot2::element_text(colour = "grey30"),
-    panel.grid = ggplot2::element_line(colour = "grey92"),
-    panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-    strip.background = ggplot2::element_rect(fill = "grey85",
-                                             colour = "grey20"),
-    legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-    legend.position = "bottom",
-    legend.title = ggplot2::element_text(colour = "grey30"),
-    legend.text = ggplot2::element_text(family = font_family,
-                               size = base_size*0.8,
-                               colour = "grey30"),
-    complete = TRUE
-  ),
+  list(
+    theme_boilerplate(font_family),
   fill_scale,
   colour_scale,
   guides_scale)
@@ -449,39 +390,8 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
     values <- values[index]
   }
 
-  base_size = 11
-  half_line <- base_size / 2
-
-
   list(
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(
-        size = 15,
-        hjust = 0.5,
-        vjust = 1,
-        margin = margin(b = half_line)
-      ),
-      text = ggplot2::element_text(family = font_family),
-      panel.border = ggplot2::element_blank(),
-      panel.background = ggplot2::element_rect(fill = "white",
-                                               colour = NA),
-      axis.line = ggplot2::element_line(colour = "grey20"),
-      axis.ticks = ggplot2::element_line(colour = "grey20"),
-      axis.text = ggplot2::element_text(colour = "grey30",
-                                        size = rel(0.8)),
-      axis.title = ggplot2::element_text(colour = "grey30"),
-      panel.grid = ggplot2::element_line(colour = "grey92"),
-      panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-      strip.background = ggplot2::element_rect(fill = "grey85",
-                                               colour = "grey20"),
-      legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-      legend.position = "bottom",
-      legend.title = ggplot2::element_text(colour = "grey30"),
-      legend.text = ggplot2::element_text(family = font_family,
-                                 size = base_size*0.8,
-                                 colour = "grey30"),
-      complete = TRUE
-    ),
+    theme_boilerplate(font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                      values = values),
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
@@ -597,9 +507,6 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                                                     guide = guide)
   }
 
-  base_size = 11
-  half_line <- base_size / 2
-
 
   if (guide == "colourbar") {
 
@@ -617,34 +524,8 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
 
   }
 
-  list(ggplot2::theme(
-    plot.title = ggplot2::element_text(
-      size = 15,
-      hjust = 0.5,
-      vjust = 1,
-      margin = margin(b = half_line)
-    ),
-    text = ggplot2::element_text(family = font_family),
-    panel.border = ggplot2::element_blank(),
-    panel.background = ggplot2::element_rect(fill = "white",
-                                             colour = NA),
-    axis.line = ggplot2::element_line(colour = "grey20"),
-    axis.ticks = ggplot2::element_line(colour = "grey20"),
-    axis.text = ggplot2::element_text(colour = "grey30",
-                                      size = rel(0.8)),
-    axis.title = ggplot2::element_text(colour = "grey30"),
-    panel.grid = ggplot2::element_line(colour = "grey92"),
-    panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-    strip.background = ggplot2::element_rect(fill = "grey85",
-                                             colour = "grey20"),
-    legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-    legend.position = "bottom",
-    legend.title = ggplot2::element_text(colour = "grey30"),
-    legend.text = ggplot2::element_text(family = font_family,
-                               size = base_size*0.8,
-                               colour = "grey30"),
-    complete = TRUE
-  ),
+  list(
+    theme_boilerplate(font_family),
   fill_scale,
   colour_scale,
   guides_scale)
@@ -673,40 +554,9 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
     values <- values[index]
   }
 
-  base_size = 11
-  base_line_size = base_size / 22
-  base_rect_size = base_size / 22
-  half_line <- base_size / 2
-
   list(
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(
-        size = 15,
-        hjust = 0.5,
-        vjust = 1,
-        margin = margin(b = half_line)
-      ),
-      text = ggplot2::element_text(family = font_family),
-      panel.border = ggplot2::element_blank(),
-      panel.background = ggplot2::element_rect(fill = "white",
-                                               colour = NA),
-      axis.line = ggplot2::element_line(colour = "grey20"),
-      axis.ticks = ggplot2::element_line(colour = "grey20"),
-      axis.text = ggplot2::element_text(colour = "grey30",
-                                        size = rel(0.8)),
-      axis.title = ggplot2::element_text(colour = "grey30"),
-      panel.grid = ggplot2::element_line(colour = "grey92"),
-      panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-      strip.background = ggplot2::element_rect(fill = "grey85",
-                                               colour = "grey20"),
-      legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-      legend.position = "bottom",
-      legend.title = ggplot2::element_text(colour = "grey30"),
-      legend.text = ggplot2::element_text(family = font_family,
-                                 size = base_size*0.8,
-                                 colour = "grey30"),
-      complete = TRUE
-    ),ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
+    theme_boilerplate(font_family),
+    ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                       values = values),
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
                     colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
@@ -789,9 +639,6 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
                                                     guide = guide,
                                                     direction = direction)
 
-    base_size = 11
-    half_line <- base_size / 2
-
     if (guide == "colourbar") {
 
       guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
@@ -810,33 +657,7 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
 
 
     list(
-      ggplot2::theme(
-        plot.title = ggplot2::element_text(
-          size = 15,
-          hjust = 0.5,
-          vjust = 1,
-          margin = margin(b = half_line)
-        ),
-        text = ggplot2::element_text(family = font_family),
-        panel.border = ggplot2::element_blank(),
-        panel.background = ggplot2::element_rect(fill = "white",
-                                                 colour = NA),
-        axis.line = ggplot2::element_line(colour = "grey20"),
-        axis.ticks = ggplot2::element_line(colour = "grey20"),
-        axis.text = ggplot2::element_text(colour = "grey30",
-                                          size = rel(0.8)),
-        axis.title = ggplot2::element_text(colour = "grey30"),
-        panel.grid = ggplot2::element_line(colour = "grey92"),
-        panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-        strip.background = ggplot2::element_rect(fill = "grey85",
-                                                 colour = "grey20"),
-        legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-        legend.text = ggplot2::element_text(colour = "grey30",
-                                            size = base_size*0.8),
-        legend.title = ggplot2::element_text(colour = "grey30"),
-        legend.position = "bottom",
-        complete = TRUE
-      ),
+      theme_boilerplate(font_family),
       fill_scale,
       colour_scale,
       guides_scale
@@ -855,42 +676,51 @@ theme_capture_discrete <- function(direction, font_family = "GT Walsheim Pro"){
  fill_scale <- ggplot2::scale_fill_viridis_d(direction = direction)
   colour_scale <- ggplot2::scale_colour_viridis_d(direction = direction)
 
-  base_size = 11
-  base_line_size = base_size / 22
-  base_rect_size = base_size / 22
-  half_line <- base_size / 2
-
   list(
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(
-        size = 15,
-        hjust = 0.5,
-        vjust = 1,
-        margin = margin(b = half_line)
-      ),
-      text = ggplot2::element_text(family = font_family),
-      panel.border = ggplot2::element_blank(),
-      panel.background = ggplot2::element_rect(fill = "white",
-                                               colour = NA),
-      axis.line = ggplot2::element_line(colour = "grey20"),
-      axis.ticks = ggplot2::element_line(colour = "grey20"),
-      axis.text = ggplot2::element_text(colour = "grey30",
-                                        size = rel(0.8)),
-      axis.title = ggplot2::element_text(colour = "grey30"),
-      panel.grid = ggplot2::element_line(colour = "grey92"),
-      panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-      strip.background = ggplot2::element_rect(fill = "grey85",
-                                               colour = "grey20"),
-      legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-      legend.text = ggplot2::element_text(colour = "grey30",
-                                          size = base_size*0.8),
-      legend.title = ggplot2::element_text(colour = "grey30"),
-      legend.position = "bottom",
-      complete = TRUE
-    ),
+    theme_boilerplate(font_family),
     fill_scale,
     colour_scale,
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
                     colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
     )
+}
+
+### helper function
+
+theme_boilerplate <- function(font_family) {
+
+  base_size = 11
+  half_line <- base_size / 2
+
+  output <- ggplot2::theme(
+    plot.title = ggplot2::element_text(
+      size = 15,
+      hjust = 0.5,
+      vjust = 1,
+      margin = margin(b = half_line)
+    ),
+    text = ggplot2::element_text(family = font_family),
+    panel.border = ggplot2::element_blank(),
+    panel.background = ggplot2::element_rect(fill = "white",
+                                             colour = NA),
+    axis.line = ggplot2::element_line(colour = "grey20"),
+    axis.ticks = ggplot2::element_line(colour = "grey20"),
+    axis.text = ggplot2::element_text(colour = "grey30",
+                                      size = rel(0.8)),
+    axis.title = ggplot2::element_text(colour = "grey30"),
+    panel.grid = ggplot2::element_line(colour = "grey92"),
+    panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
+    strip.background = ggplot2::element_rect(fill = "grey85",
+                                             colour = "grey20"),
+    legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+    legend.text = ggplot2::element_text(family = font_family,
+                                        colour = "grey30",
+                                        size = base_size * 0.8),
+    legend.title = ggplot2::element_text(colour = "grey30"),
+    legend.position = "bottom",
+    complete = TRUE
+  )
+
+  return(output)
+
 }
