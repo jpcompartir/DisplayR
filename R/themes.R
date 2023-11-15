@@ -594,7 +594,7 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
 dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
                              direction = 1,
                              guide = 'colourbar',
-                             aesthetics = "fill",
+                             # aesthetics = "fill",
                              fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
