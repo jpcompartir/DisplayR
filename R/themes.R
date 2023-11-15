@@ -673,7 +673,9 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
 #' @keywords internal
 theme_capture_discrete <- function(direction, font_family = "GT Walsheim Pro"){
 
- fill_scale <- ggplot2::scale_fill_viridis_d(direction = direction)
+  stopifnot(direction %in% c(-1, 1))
+
+  fill_scale <- ggplot2::scale_fill_viridis_d(direction = direction)
   colour_scale <- ggplot2::scale_colour_viridis_d(direction = direction)
 
   list(

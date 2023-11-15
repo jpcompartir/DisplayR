@@ -80,7 +80,7 @@ test_that("theme_boilerplate() has desired behaviour related to text", {
   expect_false(is.null(plot_test$theme$text))
   expect_true(plot_test$theme$plot.title$size == 15)
   # axis text size and colour
-  expect_true(plot_test$theme$axis.text$size == ggplot2::rel(0.8))
+  expect_true(plot_test$theme$axis.text$size == 11* 0.8)
   expect_true(plot_test$theme$axis.text$colour == "grey30")
   # axis title colour
   expect_true(plot_test$theme$axis.title$colour == "grey30")
@@ -151,13 +151,13 @@ test_that("theme_capture_discrete returns a list", {
 
   })
 
-test_that("theme_capture_discrete gives error with direction isn't 1 or -1", {
+test_that("theme_capture_discrete gives error when direction isn't 1 or -1", {
 
   plot <- ggplot2::ggplot(data = iris,
                           ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
     ggplot2::geom_point()
 
-  expect_error({plot +
-      theme_capture_discrete(direction = "a")})
+  expect_error(plot +
+      theme_capture_discrete(direction = "a"), regexp = "direction %in%")
 })
 
