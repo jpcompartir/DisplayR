@@ -687,9 +687,9 @@ theme_capture_discrete <- function(direction, font_family = "GT Walsheim Pro"){
 
 ### helper function
 
-theme_boilerplate <- function(font_family) {
+theme_boilerplate <- function(font_family = "sans",
+                              base_size = 11) {
 
-  base_size = 11
   half_line <- base_size / 2
 
   output <- ggplot2::theme(
@@ -697,7 +697,7 @@ theme_boilerplate <- function(font_family) {
       size = 15,
       hjust = 0.5,
       vjust = 1,
-      margin = margin(b = half_line)
+      margin = ggplot2::margin(b = half_line)
     ),
     text = ggplot2::element_text(family = font_family),
     panel.border = ggplot2::element_blank(),
@@ -706,10 +706,10 @@ theme_boilerplate <- function(font_family) {
     axis.line = ggplot2::element_line(colour = "grey20"),
     axis.ticks = ggplot2::element_line(colour = "grey20"),
     axis.text = ggplot2::element_text(colour = "grey30",
-                                      size = rel(0.8)),
+                                      size = base_size * 0.8),
     axis.title = ggplot2::element_text(colour = "grey30"),
     panel.grid = ggplot2::element_line(colour = "grey92"),
-    panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
+    panel.grid.minor = ggplot2::element_line(linewidth = ggplot2::rel(0.5)),
     strip.background = ggplot2::element_rect(fill = "grey85",
                                              colour = "grey20"),
     legend.key = ggplot2::element_rect(fill = "white", colour = NA),
