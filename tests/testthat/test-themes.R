@@ -1,3 +1,184 @@
+### dr_theme_capture
+
+test_that("dr_theme_capture returns a list by default", {
+
+  p <- dr_theme_capture()
+  expect_type(p, "list")
+
+})
+
+test_that("Valid scale types return a list", {
+
+  plot_discrete <- dr_theme_capture(scale_type = "discrete")
+  plot_continuous <- dr_theme_capture(scale_type = "continuous")
+  expect_type(plot_discrete, "list")
+  expect_type(plot_continuous, "list")
+
+})
+
+test_that("Invalid scale type throws an error", {
+
+  expect_error(dr_theme_capture(scale_type = "abcd"), "arg' should be one of “discrete”, “continuous”")
+
+})
+
+test_that("Valid guide returns a list", {
+
+  plot_colourbar <- dr_theme_capture(guide = "colourbar")
+  plot_legend <- dr_theme_capture(guide = "legend")
+  expect_type(plot_colourbar, "list")
+  expect_type(plot_legend, "list")
+})
+
+test_that("Invalid guide throws error", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width)) +
+    ggplot2::geom_point()
+
+  expect_error(plot + dr_theme_capture(scale_type = "continuous",
+                                       guide = "abcd"), regexp = "guide %in%")
+
+})
+
+### theme_capture_continuous()
+
+test_that("theme_capture_continuous returns a list", {
+
+  p <- theme_capture_continuous(direction = 1, guide = 'colourbar', font_family = "GT Walsheim Pro")
+  expect_type(p, "list")
+
+})
+
+test_that("theme_capture_continuous gives error when direction isn't 1 or -1", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width)) +
+    ggplot2::geom_point()
+
+  expect_error(plot +
+                 theme_capture_continuous(direction = "a"), regexp = "direction %in%")
+})
+
+test_that("theme_capture_continuous correctly changes direction of palette", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width, fill = Sepal.Width)) +
+    ggplot2::geom_point()
+
+  plot_test <- plot +
+    theme_capture_continuous(direction = 1)
+
+  plot_test_2 <- plot +
+    theme_capture_continuous(direction = -1)
+
+  expect_equal(ggplot2::layer_data(plot_test)$colour[1], "#36AD7F")
+  expect_equal(ggplot2::layer_data(plot_test_2)$colour[1], "#30728D")
+  expect_equal(ggplot2::layer_data(plot_test)$fill[1], "#36AD7F")
+  expect_equal(ggplot2::layer_data(plot_test_2)$fill[1], "#30728D")
+
+})
+
+test_that("theme_capture_continuous correctly edits legend title", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width, fill = Sepal.Width)) +
+    ggplot2::geom_point()
+
+  plot_test_colourbar <- plot +
+    theme_capture_continuous()
+
+  expect_equal(plot_test_colourbar$guides$colour$title.position, "top")
+  expect_equal(plot_test_colourbar$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_test_colourbar$guides$fill$title.position, "top")
+  expect_equal(plot_test_colourbar$guides$fill$title.hjust, 0.5)
+
+  plot_test_legend <- plot +
+    theme_capture_continuous(guide = "legend")
+
+  expect_equal(plot_test_legend$guides$colour$title.position, "top")
+  expect_equal(plot_test_legend$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_test_legend$guides$fill$title.position, "top")
+  expect_equal(plot_test_legend$guides$fill$title.hjust, 0.5)
+})
+
+test_that("theme_capture_continuous correctly removes legend if guide = 'none'", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width, fill = Sepal.Width)) +
+    ggplot2::geom_point()
+
+  p <- theme_capture_continuous(guide = "none")
+
+  expect_equal(p[[4]]$color, NULL)
+  expect_equal(p[[4]]$fill, NULL)
+
+})
+
+test_that("theme_capture_continuous fails if guide isn't colourbar, colorbar, legend, or none", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width, fill = Sepal.Width)) +
+    ggplot2::geom_point()
+
+  expect_error(plot +
+                 theme_capture_continuous(guide = "a"), regexp = "guide %in%")
+
+})
+
+### theme_capture_discrete()
+
+test_that("theme_capture_discrete returns a list", {
+
+  p <- theme_capture_discrete(direction = 1, font_family = "GT Walsheim Pro")
+  expect_type(p, "list")
+
+})
+
+test_that("theme_capture_discrete gives error when direction isn't 1 or -1", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+    ggplot2::geom_point()
+
+  expect_error(plot +
+                 theme_capture_discrete(direction = "a"), regexp = "direction %in%")
+})
+
+test_that("theme_capture_discrete correctly changes direction of palette", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species, fill = Species)) +
+    ggplot2::geom_point()
+
+  plot_test <- plot +
+    theme_capture_discrete(direction = 1)
+
+  plot_test_2 <- plot +
+    theme_capture_discrete(direction = -1)
+
+  expect_equal(ggplot2::layer_data(plot_test)$colour[1], "#440154FF")
+  expect_equal(ggplot2::layer_data(plot_test_2)$colour[1], "#FDE725FF")
+  expect_equal(ggplot2::layer_data(plot_test)$fill[1], "#440154FF")
+  expect_equal(ggplot2::layer_data(plot_test_2)$fill[1], "#FDE725FF")
+
+})
+
+test_that("theme_capture_discrete correctly edits legend title", {
+
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species, fill = Species)) +
+    ggplot2::geom_point()
+
+  plot_test <- plot +
+    theme_capture_discrete()
+
+  expect_equal(plot_test$guides$colour$title.position, "top")
+  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_test$guides$fill$title.position, "top")
+  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+})
+
 ### Testing theme_boilerplate
 
 test_that("theme_boilerplate() returns list output when font_family is not provided",
@@ -141,23 +322,3 @@ test_that("theme_boilerplate() has desired behaviour towards legend aesthetics",
             expect_true(plot_test$theme$legend.position == "bottom")
 
           })
-
-### theme_capture_discrete()
-
-test_that("theme_capture_discrete returns a list", {
-
-  p <- theme_capture_discrete(direction = 1, font_family = "GT Walsheim Pro")
-  expect_type(p, "list")
-
-  })
-
-test_that("theme_capture_discrete gives error when direction isn't 1 or -1", {
-
-  plot <- ggplot2::ggplot(data = iris,
-                          ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
-    ggplot2::geom_point()
-
-  expect_error(plot +
-      theme_capture_discrete(direction = "a"), regexp = "direction %in%")
-})
-
