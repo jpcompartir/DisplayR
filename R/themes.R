@@ -630,12 +630,17 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
 #' @keywords internal
 theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_family = "GT Walsheim Pro"){
 
+  stopifnot(direction %in% c(-1, 1))
+
+  stopifnot(guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+
+
     fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
-                                                breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                # breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                 guide = guide,
                                                 direction = direction)
     colour_scale <- ggplot2::scale_colour_viridis_c(labels = scales::comma,
-                                                    breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                    # breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide,
                                                     direction = direction)
 
@@ -671,7 +676,7 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
 #'
 #' @keywords internal
-theme_capture_discrete <- function(direction, font_family = "GT Walsheim Pro"){
+theme_capture_discrete <- function(direction = 1, font_family = "GT Walsheim Pro"){
 
   stopifnot(direction %in% c(-1, 1))
 
