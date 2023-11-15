@@ -18,7 +18,7 @@ test_that("Valid scale types return a list", {
 
 test_that("Invalid scale type throws an error", {
 
-  expect_error(dr_theme_capture(scale_type = "abcd"), "arg' should be one of “discrete”, “continuous”")
+  expect_error(dr_theme_capture(scale_type = "abcd"), "should be one of \"discrete\", \"continuous\"")
 
 })
 
