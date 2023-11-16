@@ -3,30 +3,28 @@
 test_that("theme_boilerplate() returns list output when default arguments used",
           {
             theme <- theme_boilerplate()
-            expect_type(theme, "list")
+            expect_true(ggplot2::is.theme(theme))
 
-            expect_length(theme, 15)
-            expect_true(all(
-              c(
-                "text",
-                "axis.title",
-                "axis.text",
-                "axis.line",
-                "legend.key",
-                "legend.text",
-                "legend.title",
-                "legend.position",
-                "panel.background",
-                "panel.border",
-                "panel.grid",
-                "panel.grid.minor",
-                "plot.title",
-                "strip.background"
-              )
-              %in% names(theme)
-            ))
+            expected_names <- c(
+              "text",
+              "axis.title",
+              "axis.text",
+              "axis.line",
+              "legend.key",
+              "legend.text",
+              "legend.title",
+              "legend.position",
+              "panel.background",
+              "panel.border",
+              "panel.grid",
+              "panel.grid.minor",
+              "plot.title",
+              "strip.background",
+              "axis.ticks"
+            )
+            expect_setequal(expected_names, names(theme))
 
-          })
+})
 
 test_that("theme_boilerplate() returns ggplot object when theme applied", {
   # Create testing plots
@@ -61,8 +59,8 @@ test_that("theme_boilerplate() has desired behaviour related to text", {
   # title margin
   ## expect_equal(plot_boilerplate$theme$plot.title$margin[3], unit(5.5, "points"))
   # text family
-  expect_false(is.null(plot_boilerplate$theme$text))
-  expect_true(plot_boilerplate$theme$plot.title$size == 15)
+  expect_false(is.null(plot_boilerplate$theme$text$family)) # More specific
+  # expect_true(plot_boilerplate$theme$plot.title$size == 15) #Dupe
   # axis text size and colour
   expect_true(plot_boilerplate$theme$axis.text$size == 11 * 0.8)
   expect_true(plot_boilerplate$theme$axis.text$colour == "grey30")
