@@ -40,6 +40,44 @@ test_that("theme_boilerplate() returns ggplot object when theme applied", {
 
 })
 
+test_that("theme_boilerplate checks arguments are valid",{
+
+  plot <- test_plot()
+
+  expect_error(plot +
+                 theme_boilerplate(font_family = 2)
+  )
+  expect_error(plot +
+                 theme_boilerplate(font_family = "seagulls")
+  )
+
+  expect_error(plot +
+                 theme_boilerplate(base_size = 0))
+
+  expect_error(plot +
+                 theme_boilerplate(base_size = -2))
+})
+
+test_that("font_family argument behaves as expected with correct inputs", {
+  plot <- test_plot()
+
+  expect_equal(plot_boilerplate$theme$text$family, "sans") # More specific
+  plot_serif <- plot +
+    theme_boilerplate(font_family = "serif")
+  expect_equal(plot_serif$theme$text$family, "serif")
+})
+
+test_that("base_size argument accepts new inputs", {
+
+  plot <- test_plot()
+  plot_base <- plot +
+    theme_boilerplate(base_size = 10)
+
+  # Is this intended to be tested by?
+  # expect_equal(plot_boilerplate$theme$plot.title$margin[3], unit(5.5, "points"))
+
+})
+
 test_that("theme_boilerplate() has desired behaviour related to text", {
   # Create testing plots
   plot <-
@@ -58,8 +96,6 @@ test_that("theme_boilerplate() has desired behaviour related to text", {
   expect_true(plot_boilerplate$theme$plot.title$vjust == 1)
   # title margin
   ## expect_equal(plot_boilerplate$theme$plot.title$margin[3], unit(5.5, "points"))
-  # text family
-  expect_false(is.null(plot_boilerplate$theme$text$family)) # More specific
   # expect_true(plot_boilerplate$theme$plot.title$size == 15) #Dupe
   # axis text size and colour
   expect_true(plot_boilerplate$theme$axis.text$size == 11 * 0.8)
@@ -86,8 +122,11 @@ test_that("theme_boilerplate() has desired behaviour towards panel aesthetics",
               theme_boilerplate()
 
             # panel.border
-            expect_type(plot_boilerplate$theme$panel.border, "list")
-            # pane.background
+            # expect_type(plot_boilerplate$theme$panel.border, "list")
+            expect_contains(attributes(plot_boilerplate$theme$panel.border)$class, "element_blank")
+
+
+            # panel.background
             expect_true(plot_boilerplate$theme$panel.background$fill == "white")
             expect_true(is.na(plot_boilerplate$theme$panel.background$colour))
 
