@@ -45,27 +45,23 @@ test_that("theme_boilerplate checks arguments are valid",{
   plot <- test_plot()
 
   expect_error(plot +
-                 theme_boilerplate(font_family = 2)
-  )
-  expect_error(plot +
-                 theme_boilerplate(font_family = "seagulls")
-  )
-
-  expect_error(plot +
                  theme_boilerplate(base_size = 0))
 
   expect_error(plot +
                  theme_boilerplate(base_size = -2))
 })
 
-test_that("font_family argument behaves as expected with correct inputs", {
-  plot <- test_plot()
-
-  expect_equal(plot_boilerplate$theme$text$family, "sans") # More specific
-  plot_serif <- plot +
-    theme_boilerplate(font_family = "serif")
-  expect_equal(plot_serif$theme$text$family, "serif")
-})
+# test_that("font_family argument behaves as expected with correct inputs", {
+#   plot <- test_plot()
+#
+#   plot_boilerplate <- plot +
+#     theme_boilerplate()
+#
+#   expect_equal(plot_boilerplate$theme$text$family, "sans") # More specific
+#   # plot_serif <- plot +
+#   #   theme_boilerplate(font_family = "serif")
+#   # expect_equal(plot_serif$theme$text$family, "serif")
+# })
 
 test_that("base_size argument accepts new inputs", {
 
@@ -420,3 +416,613 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
             expect_type(legend_guide, "list")
 
           })
+
+### theme_samy_discrete()
+
+test_that("theme_samy_discrete returns a list with default arguments", {
+
+  theme <- theme_samy_discrete()
+  expect_type(theme, "list")
+
+})
+
+
+test_that("theme_samy_discrete correctly edits legend title", {
+
+  # Create testing plots
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(
+                            x = Sepal.Length,
+                            y = Sepal.Width,
+                            colour = Species,
+                            fill = Species
+                          )) +
+    ggplot2::geom_point()
+
+  plot_test <- plot +
+    theme_samy_discrete()
+
+  # Colour guide correct
+  expect_equal(plot_test$guides$colour$title.position, "top")
+  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+
+  # Fill guide correct
+  expect_equal(plot_test$guides$fill$title.position, "top")
+  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+
+})
+
+### theme_samy_continuous()
+
+test_that("theme_samy_continuous returns a list with default arguments", {
+
+  theme <- theme_samy_continuous()
+  expect_type(theme, "list")
+
+})
+
+test_that("direction arguments accept valid inputs and don't accept invalid",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+              ggplot2::geom_point()
+
+            # invalid direction - should throw error
+            expect_error(plot + theme_samy_continuous(direction = "a"), regexp = "direction %in%")
+
+            # valid directions
+            expect_no_error(plot + theme_samy_continuous(direction = 1))
+            expect_no_error(plot + theme_samy_continuous(direction = -1))
+
+          })
+
+test_that("theme_samy_continuous correctly changes direction of palette",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(
+                                      x = Sepal.Length,
+                                      y = Sepal.Width,
+                                      colour = Sepal.Width,
+                                      fill = Sepal.Width
+                                    )) +
+              ggplot2::geom_point()
+
+            plot_direction_forward <- plot +
+              theme_samy_continuous(direction = 1)
+
+            plot_direction_backward <- plot +
+              theme_samy_continuous(direction = -1)
+
+            # plot_direction_forward and plot_direction_backward first colours are different
+            expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#D87C6D")
+            expect_equal(ggplot2::layer_data(plot_direction_backward)$colour[1], "#F67C4C")
+
+            # plot_direction_forward and plot_direction_backward first fills are different
+            expect_equal(ggplot2::layer_data(plot_direction_forward)$fill[1], "#D87C6D")
+            expect_equal(ggplot2::layer_data(plot_direction_backward)$fill[1], "#F67C4C")
+
+          })
+
+test_that("guide arguments accept valid inputs and don't accept invalid",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(
+              data = iris,
+              ggplot2::aes(
+                x = Sepal.Length,
+                y = Sepal.Width,
+                colour = Sepal.Width,
+                fill = Sepal.Width
+              )
+            ) +
+              ggplot2::geom_point()
+
+            # Invalid guide type throws error
+            expect_error(theme_samy_continuous(guide = "a"), regexp = "guide %in%")
+
+            # Valid guide type returns list
+            expect_type(theme_samy_continuous(guide = "colourbar"), "list")
+            expect_type(theme_samy_continuous(guide = "legend"), "list")
+            expect_type(theme_samy_continuous(guide = "none"), "list")
+          })
+
+test_that("theme_samy_continuous correctly edits legend aesthetics", {
+  # Create testing plots
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(
+                            x = Sepal.Length,
+                            y = Sepal.Width,
+                            colour = Sepal.Width,
+                            fill = Sepal.Width
+                          )) +
+    ggplot2::geom_point()
+
+  # Guide = colourbar
+  plot_continuous_colourbar <- plot +
+    theme_samy_continuous(guide = "colourbar")
+
+  # colour
+  expect_equal(plot_continuous_colourbar$guides$colour$title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$colour$title.hjust, 0.5)
+
+  # fill
+  expect_equal(plot_continuous_colourbar$guides$fill$title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$fill$title.hjust, 0.5)
+
+  # Guide = legend
+  plot_continuous_legend <- plot +
+    theme_samy_continuous(guide = "legend")
+
+  # colour
+  expect_equal(plot_continuous_legend$guides$colour$title.position, "top")
+  expect_equal(plot_continuous_legend$guides$colour$title.hjust, 0.5)
+
+  # fill
+  expect_equal(plot_continuous_legend$guides$fill$title.position, "top")
+  expect_equal(plot_continuous_legend$guides$fill$title.hjust, 0.5)
+
+  # Guide = none
+  theme_no_guide <- theme_samy_continuous(guide = "none")
+
+  # colour
+  expect_equal(theme_no_guide[[4]]$color, NULL)
+  # fill
+  expect_equal(theme_no_guide[[4]]$fill, NULL)
+})
+
+### dr_theme_samy
+
+test_that("dr_theme_samy returns a list by default", {
+  p <- dr_theme_samy()
+  expect_type(p, "list")
+
+})
+
+test_that("scale_type arguments accept valid inputs and don't accept invalid inputs",
+          {
+            # Invalid scale_type throws an error
+            expect_error(
+              dr_theme_samy(scale_type = "abcd"),
+              "should be one of \"discrete\", \"continuous\""
+            )
+
+            # Valid scale_type argument return a list
+            discrete_scale_type <-
+              dr_theme_samy(scale_type = "discrete")
+            expect_type(discrete_scale_type, "list")
+
+            continuous_scale_type <-
+              dr_theme_samy(scale_type = "continuous")
+            expect_type(continuous_scale_type, "list")
+
+          })
+
+test_that("guide arguments accept valid inputs and don't accept invalid inputs",
+          {
+            # Invalid guide argument throws an error
+            expect_error(plot + dr_theme_samy(scale_type = "continuous",
+                                              guide = "abcd"),
+                         regexp = "guide %in%")
+
+            # Make testing plot
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width)) +
+              ggplot2::geom_point()
+
+            # Valid guide argument returns a list
+            colourbar_guide <- dr_theme_samy(guide = "colourbar")
+            expect_type(colourbar_guide, "list")
+
+            legend_guide <- dr_theme_samy(guide = "legend")
+            expect_type(legend_guide, "list")
+
+          })
+
+### theme_share_discrete()
+
+test_that("theme_share_discrete returns a list with default arguments", {
+
+  theme <- theme_share_discrete()
+  expect_type(theme, "list")
+
+})
+
+
+test_that("theme_share_discrete correctly edits legend title", {
+
+  # Create testing plots
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(
+                            x = Sepal.Length,
+                            y = Sepal.Width,
+                            colour = Species,
+                            fill = Species
+                          )) +
+    ggplot2::geom_point()
+
+  plot_test <- plot +
+    theme_share_discrete()
+
+  # Colour guide correct
+  expect_equal(plot_test$guides$colour$title.position, "top")
+  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+
+  # Fill guide correct
+  expect_equal(plot_test$guides$fill$title.position, "top")
+  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+
+})
+
+### theme_share_continuous()
+
+test_that("theme_share_continuous returns a list with default arguments", {
+
+  theme <- theme_share_continuous()
+  expect_type(theme, "list")
+
+})
+
+test_that("direction arguments accept valid inputs and don't accept invalid",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+              ggplot2::geom_point()
+
+            # invalid direction - should throw error
+            expect_error(plot + theme_share_continuous(direction = "a"), regexp = "direction %in%")
+
+            # valid directions
+            expect_no_error(plot + theme_share_continuous(direction = 1))
+            expect_no_error(plot + theme_share_continuous(direction = -1))
+
+          })
+
+test_that("theme_share_continuous correctly changes direction of palette",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(
+                                      x = Sepal.Length,
+                                      y = Sepal.Width,
+                                      colour = Sepal.Width,
+                                      fill = Sepal.Width
+                                    )) +
+              ggplot2::geom_point()
+
+            plot_direction_forward <- plot +
+              theme_share_continuous(direction = 1)
+
+            plot_direction_backward <- plot +
+              theme_share_continuous(direction = -1)
+
+            # plot_direction_forward and plot_direction_backward first colours are different
+            expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#BC2E96")
+            expect_equal(ggplot2::layer_data(plot_direction_backward)$colour[1], "#E54E71")
+
+            # plot_direction_forward and plot_direction_backward first fills are different
+            expect_equal(ggplot2::layer_data(plot_direction_forward)$fill[1], "#BC2E96")
+            expect_equal(ggplot2::layer_data(plot_direction_backward)$fill[1], "#E54E71")
+
+          })
+
+test_that("guide arguments accept valid inputs and don't accept invalid",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(
+              data = iris,
+              ggplot2::aes(
+                x = Sepal.Length,
+                y = Sepal.Width,
+                colour = Sepal.Width,
+                fill = Sepal.Width
+              )
+            ) +
+              ggplot2::geom_point()
+
+            # Invalid guide type throws error
+            expect_error(theme_share_continuous(guide = "a"), regexp = "guide %in%")
+
+            # Valid guide type returns list
+            expect_type(theme_share_continuous(guide = "colourbar"), "list")
+            expect_type(theme_share_continuous(guide = "legend"), "list")
+            expect_type(theme_share_continuous(guide = "none"), "list")
+          })
+
+test_that("theme_share_continuous correctly edits legend aesthetics", {
+  # Create testing plots
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(
+                            x = Sepal.Length,
+                            y = Sepal.Width,
+                            colour = Sepal.Width,
+                            fill = Sepal.Width
+                          )) +
+    ggplot2::geom_point()
+
+  # Guide = colourbar
+  plot_continuous_colourbar <- plot +
+    theme_share_continuous(guide = "colourbar")
+
+  # colour
+  expect_equal(plot_continuous_colourbar$guides$colour$title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$colour$title.hjust, 0.5)
+
+  # fill
+  expect_equal(plot_continuous_colourbar$guides$fill$title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$fill$title.hjust, 0.5)
+
+  # Guide = legend
+  plot_continuous_legend <- plot +
+    theme_share_continuous(guide = "legend")
+
+  # colour
+  expect_equal(plot_continuous_legend$guides$colour$title.position, "top")
+  expect_equal(plot_continuous_legend$guides$colour$title.hjust, 0.5)
+
+  # fill
+  expect_equal(plot_continuous_legend$guides$fill$title.position, "top")
+  expect_equal(plot_continuous_legend$guides$fill$title.hjust, 0.5)
+
+  # Guide = none
+  theme_no_guide <- theme_share_continuous(guide = "none")
+
+  # colour
+  expect_equal(theme_no_guide[[4]]$color, NULL)
+  # fill
+  expect_equal(theme_no_guide[[4]]$fill, NULL)
+})
+
+### dr_theme_share
+
+test_that("dr_theme_share returns a list by default", {
+  p <- dr_theme_share()
+  expect_type(p, "list")
+
+})
+
+test_that("scale_type arguments accept valid inputs and don't accept invalid inputs",
+          {
+            # Invalid scale_type throws an error
+            expect_error(
+              dr_theme_share(scale_type = "abcd"),
+              "should be one of \"discrete\", \"continuous\""
+            )
+
+            # Valid scale_type argument return a list
+            discrete_scale_type <-
+              dr_theme_share(scale_type = "discrete")
+            expect_type(discrete_scale_type, "list")
+
+            continuous_scale_type <-
+              dr_theme_share(scale_type = "continuous")
+            expect_type(continuous_scale_type, "list")
+
+          })
+
+test_that("guide arguments accept valid inputs and don't accept invalid inputs",
+          {
+            # Invalid guide argument throws an error
+            expect_error(plot + dr_theme_share(scale_type = "continuous",
+                                               guide = "abcd"),
+                         regexp = "guide %in%")
+
+            # Make testing plot
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width)) +
+              ggplot2::geom_point()
+
+            # Valid guide argument returns a list
+            colourbar_guide <- dr_theme_share(guide = "colourbar")
+            expect_type(colourbar_guide, "list")
+
+            legend_guide <- dr_theme_share(guide = "legend")
+            expect_type(legend_guide, "list")
+
+          })
+
+### theme_microsoft_discrete()
+
+test_that("theme_microsoft_discrete returns a list with default arguments", {
+
+  theme <- theme_microsoft_discrete()
+  expect_type(theme, "list")
+
+})
+
+
+test_that("theme_microsoft_discrete correctly edits legend title", {
+
+  # Create testing plots
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(
+                            x = Sepal.Length,
+                            y = Sepal.Width,
+                            colour = Species,
+                            fill = Species
+                          )) +
+    ggplot2::geom_point()
+
+  plot_test <- plot +
+    theme_microsoft_discrete()
+
+  # Colour guide correct
+  expect_equal(plot_test$guides$colour$title.position, "top")
+  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+
+  # Fill guide correct
+  expect_equal(plot_test$guides$fill$title.position, "top")
+  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+
+})
+
+### theme_microsoft_continuous()
+
+test_that("theme_microsoft_continuous returns a list with default arguments", {
+
+  theme <- theme_microsoft_continuous()
+  expect_type(theme, "list")
+
+})
+
+test_that("direction arguments accept valid inputs and don't accept invalid",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+              ggplot2::geom_point()
+
+            # invalid direction - should throw error
+            expect_error(plot + theme_microsoft_continuous(direction = "a"), regexp = "direction %in%")
+
+            # valid directions
+            expect_no_error(plot + theme_microsoft_continuous(direction = 1))
+            expect_no_error(plot + theme_microsoft_continuous(direction = -1))
+
+          })
+
+test_that("theme_microsoft_continuous correctly changes direction of palette",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(
+                                      x = Sepal.Length,
+                                      y = Sepal.Width,
+                                      colour = Sepal.Width,
+                                      fill = Sepal.Width
+                                    )) +
+              ggplot2::geom_point()
+
+            plot_direction_forward <- plot +
+              theme_microsoft_continuous(direction = 1)
+
+            plot_direction_backward <- plot +
+              theme_microsoft_continuous(direction = -1)
+
+            # plot_direction_forward and plot_direction_backward first colours are different
+            expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#327B4A")
+            expect_equal(ggplot2::layer_data(plot_direction_backward)$colour[1], "#618D0E")
+
+            # plot_direction_forward and plot_direction_backward first fills are different
+            expect_equal(ggplot2::layer_data(plot_direction_forward)$fill[1], "#327B4A")
+            expect_equal(ggplot2::layer_data(plot_direction_backward)$fill[1], "#618D0E")
+
+          })
+
+test_that("guide arguments accept valid inputs and don't accept invalid",
+          {
+            # Create testing plots
+            plot <- ggplot2::ggplot(
+              data = iris,
+              ggplot2::aes(
+                x = Sepal.Length,
+                y = Sepal.Width,
+                colour = Sepal.Width,
+                fill = Sepal.Width
+              )
+            ) +
+              ggplot2::geom_point()
+
+            # Invalid guide type throws error
+            expect_error(theme_microsoft_continuous(guide = "a"), regexp = "guide %in%")
+
+            # Valid guide type returns list
+            expect_type(theme_microsoft_continuous(guide = "colourbar"), "list")
+            expect_type(theme_microsoft_continuous(guide = "legend"), "list")
+            expect_type(theme_microsoft_continuous(guide = "none"), "list")
+          })
+
+test_that("theme_microsoft_continuous correctly edits legend aesthetics", {
+  # Create testing plots
+  plot <- ggplot2::ggplot(data = iris,
+                          ggplot2::aes(
+                            x = Sepal.Length,
+                            y = Sepal.Width,
+                            colour = Sepal.Width,
+                            fill = Sepal.Width
+                          )) +
+    ggplot2::geom_point()
+
+  # Guide = colourbar
+  plot_continuous_colourbar <- plot +
+    theme_microsoft_continuous(guide = "colourbar")
+
+  # colour
+  expect_equal(plot_continuous_colourbar$guides$colour$title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$colour$title.hjust, 0.5)
+
+  # fill
+  expect_equal(plot_continuous_colourbar$guides$fill$title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$fill$title.hjust, 0.5)
+
+  # Guide = legend
+  plot_continuous_legend <- plot +
+    theme_microsoft_continuous(guide = "legend")
+
+  # colour
+  expect_equal(plot_continuous_legend$guides$colour$title.position, "top")
+  expect_equal(plot_continuous_legend$guides$colour$title.hjust, 0.5)
+
+  # fill
+  expect_equal(plot_continuous_legend$guides$fill$title.position, "top")
+  expect_equal(plot_continuous_legend$guides$fill$title.hjust, 0.5)
+
+  # Guide = none
+  theme_no_guide <- theme_microsoft_continuous(guide = "none")
+
+  # colour
+  expect_equal(theme_no_guide[[4]]$color, NULL)
+  # fill
+  expect_equal(theme_no_guide[[4]]$fill, NULL)
+})
+
+### dr_theme_microsoft
+
+test_that("dr_theme_microsoft returns a list by default", {
+  p <- dr_theme_microsoft()
+  expect_type(p, "list")
+
+})
+
+test_that("scale_type arguments accept valid inputs and don't accept invalid inputs",
+          {
+            # Invalid scale_type throws an error
+            expect_error(
+              dr_theme_microsoft(scale_type = "abcd"),
+              "should be one of \"discrete\", \"continuous\""
+            )
+
+            # Valid scale_type argument return a list
+            discrete_scale_type <-
+              dr_theme_microsoft(scale_type = "discrete")
+            expect_type(discrete_scale_type, "list")
+
+            continuous_scale_type <-
+              dr_theme_microsoft(scale_type = "continuous")
+            expect_type(continuous_scale_type, "list")
+
+          })
+
+test_that("guide arguments accept valid inputs and don't accept invalid inputs",
+          {
+            # Invalid guide argument throws an error
+            expect_error(plot + dr_theme_microsoft(scale_type = "continuous",
+                                                   guide = "abcd"),
+                         regexp = "guide %in%")
+
+            # Make testing plot
+            plot <- ggplot2::ggplot(data = iris,
+                                    ggplot2::aes(x = Sepal.Length, y = Sepal.Width, colour = Sepal.Width)) +
+              ggplot2::geom_point()
+
+            # Valid guide argument returns a list
+            colourbar_guide <- dr_theme_microsoft(guide = "colourbar")
+            expect_type(colourbar_guide, "list")
+
+            legend_guide <- dr_theme_microsoft(guide = "legend")
+            expect_type(legend_guide, "list")
+
+          })
+

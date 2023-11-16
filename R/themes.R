@@ -91,6 +91,9 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
 #' @keywords internal
 theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Segoe UI"){
 
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+
   palette = c(
     "#D83B01", # Orange
              "#FFB900", # Yellow
@@ -139,11 +142,6 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                                                     guide = guide)
   }
 
-  base_size = 11
-  base_line_size = base_size / 22
-  base_rect_size = base_size / 22
-  half_line <- base_size / 2
-
   if (guide == "colourbar") {
 
     guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
@@ -160,37 +158,11 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
 
   }
 
-  list(ggplot2::theme(
-    plot.title = ggplot2::element_text(
-      size = 15,
-      hjust = 0.5,
-      vjust = 1,
-      margin = margin(b = half_line)
-    ),
-    text = ggplot2::element_text(family = font_family),
-    panel.border = ggplot2::element_blank(),
-    panel.background = ggplot2::element_rect(fill = "white",
-                                             colour = NA),
-    axis.line = ggplot2::element_line(colour = "grey20"),
-    axis.ticks = ggplot2::element_line(colour = "grey20"),
-    axis.text = ggplot2::element_text(colour = "grey30",
-                                      size = rel(0.8)),
-    axis.title = ggplot2::element_text(colour = "grey30"),
-    panel.grid = ggplot2::element_line(colour = "grey92"),
-    panel.grid.minor = ggplot2::element_line(linewidth = rel(0.5)),
-    strip.background = ggplot2::element_rect(fill = "grey85",
-                                             colour = "grey20"),
-    legend.key = ggplot2::element_rect(fill = "white", colour = NA),
-    legend.position = "bottom",
-    legend.title = ggplot2::element_text(colour = "grey30"),
-    legend.text = ggplot2::element_text(family = font_family,
-                               size = base_size*0.8,
-                               colour = "grey30"),
-    complete = TRUE
-  ),
-  fill_scale,
-  colour_scale,
-  guides_scale)
+  list(
+    theme_boilerplate(font_family = font_family),
+    fill_scale,
+    colour_scale,
+    guides_scale)
 
 }
 
@@ -226,7 +198,7 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
   }
 
   list(
-    theme_boilerplate(font_family),
+    theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                      values = values),
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
@@ -305,6 +277,9 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
 #' @keywords internal
 theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',  font_family = 'Montserrat Regular'){
 
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+
   palette <- c("#3fbbbb",
                         "#ff5b51",
                         "#ffcf0e",
@@ -361,7 +336,7 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
   }
 
   list(
-    theme_boilerplate(font_family),
+    theme_boilerplate(font_family = font_family),
   fill_scale,
   colour_scale,
   guides_scale)
@@ -391,7 +366,7 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
   }
 
   list(
-    theme_boilerplate(font_family),
+    theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                      values = values),
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
@@ -469,6 +444,9 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
 #' @keywords internal
 theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
 
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+
   values <- c("#0f50d2",
                        "#7800c6",
                        "#d80a83",
@@ -525,7 +503,7 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
   }
 
   list(
-    theme_boilerplate(font_family),
+    theme_boilerplate(font_family = font_family),
   fill_scale,
   colour_scale,
   guides_scale)
@@ -555,7 +533,7 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
   }
 
   list(
-    theme_boilerplate(font_family),
+    theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                       values = values),
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
@@ -630,17 +608,17 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
 #' @keywords internal
 theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_family = "GT Walsheim Pro"){
 
-  stopifnot(direction %in% c(-1, 1))
 
-  stopifnot(guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
 
 
     fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
-                                                # breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                 guide = guide,
                                                 direction = direction)
     colour_scale <- ggplot2::scale_colour_viridis_c(labels = scales::comma,
-                                                    # breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                    breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide,
                                                     direction = direction)
 
@@ -662,7 +640,7 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
 
 
     list(
-      theme_boilerplate(font_family),
+      theme_boilerplate(font_family = font_family),
       fill_scale,
       colour_scale,
       guides_scale
@@ -684,7 +662,7 @@ theme_capture_discrete <- function(direction = 1, font_family = "GT Walsheim Pro
   colour_scale <- ggplot2::scale_colour_viridis_d(direction = direction)
 
   list(
-    theme_boilerplate(font_family),
+    theme_boilerplate(font_family = font_family),
     fill_scale,
     colour_scale,
     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
@@ -698,6 +676,8 @@ theme_boilerplate <- function(font_family = "sans",
                               base_size = 11) {
 
   half_line <- base_size / 2
+
+  stopifnot(is.numeric(base_size) && base_size > 5)
 
   output <- ggplot2::theme(
     plot.title = ggplot2::element_text(
@@ -731,3 +711,4 @@ theme_boilerplate <- function(font_family = "sans",
   return(output)
 
 }
+
