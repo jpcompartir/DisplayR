@@ -79,6 +79,9 @@
     <loc>/reference/dr_theme_black.html</loc>
   </url>
   <url>
+    <loc>/reference/dr_theme_capture.html</loc>
+  </url>
+  <url>
     <loc>/reference/dr_theme_microsoft.html</loc>
   </url>
   <url>
@@ -95,6 +98,12 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/theme_capture_continuous.html</loc>
+  </url>
+  <url>
+    <loc>/reference/theme_capture_discrete.html</loc>
   </url>
   <url>
     <loc>/reference/theme_microsoft_continuous.html</loc>
