@@ -8,7 +8,7 @@ dr_theme_samy(
   scale_type = c("discrete", "continuous"),
   index = NULL,
   direction = 1,
-  guide = "legend",
+  guide = "colourbar",
   fallback_font = "sans"
 )
 }
@@ -19,7 +19,7 @@ dr_theme_samy(
 
 \item{direction}{An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.}
 
-\item{guide}{An optional character string specifying the type of guide to use for continuous scales. Default is 'legend'.}
+\item{guide}{An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.}
 
 \item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font.}
 }
@@ -38,11 +38,11 @@ library(ggplot2)
 # Example with continuous theme
 ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
   geom_point() +
-  theme_samy(scale_type = "continuous")
+  dr_theme_samy(scale_type = "continuous")
 
 # Example with discrete theme
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
   geom_point() +
-  theme_samy(scale_type = "discrete")
+  dr_theme_samy(scale_type = "discrete")
 }
 }

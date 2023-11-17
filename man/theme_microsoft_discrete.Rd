@@ -4,7 +4,7 @@
 \alias{theme_microsoft_discrete}
 \title{theme_microsoft_discrete}
 \usage{
-theme_microsoft_discrete(index = NULL, font_family = "Segoe UI Regular")
+theme_microsoft_discrete(index = NULL, font_family = "Segoe UI")
 }
 \arguments{
 \item{index}{Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)}

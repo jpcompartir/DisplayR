@@ -8,7 +8,7 @@ theme_microsoft_continuous(
   index = NULL,
   direction = 1,
   guide = "legend",
-  font_family = "Segoe UI Regular"
+  font_family = "Segoe UI"
 )
 }
 \arguments{

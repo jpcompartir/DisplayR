@@ -29,7 +29,7 @@ dr_theme_black <- function(){
 #' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
 #' @param index An optional numeric index or vector of indices to select specific colours from the Microsoft colour palette.
 #' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'legend'.
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
@@ -42,17 +42,17 @@ dr_theme_black <- function(){
 #' # Example with continuous theme
 #' ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
 #'   geom_point() +
-#'   theme_microsoft(scale_type = "continuous")
+#'   dr_theme_microsoft(scale_type = "continuous")
 #'
 #' # Example with discrete theme
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
-#'   theme_microsoft(scale_type = "discrete")
+#'   dr_theme_microsoft(scale_type = "discrete")
 #'   }
 dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
                             index = NULL,
                             direction = 1,
-                            guide = 'legend',
+                            guide = 'colourbar',
                             fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
@@ -61,7 +61,7 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
   } else {
-    font_family <- "Segoe UI Regular"
+    font_family <- "Segoe UI"
   }
 
   #Return the continuous function if necessary and if not discrete
@@ -89,7 +89,10 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 
 #' @keywords internal
-theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Segoe UI Regular"){
+theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Segoe UI"){
+
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
 
   palette = c(
     "#D83B01", # Orange
@@ -139,9 +142,27 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                                                     guide = guide)
   }
 
-  list(ggplot2::theme_minimal(base_family = font_family),
-       fill_scale,
-       colour_scale)
+  if (guide == "colourbar") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+  } else if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- list(color = NULL, fill = NULL)
+
+  }
+
+  list(
+    theme_boilerplate(font_family = font_family),
+    fill_scale,
+    colour_scale,
+    guides_scale)
 
 }
 
@@ -150,7 +171,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
 #' Adds Microsoft colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
 #' @keywords internal
-theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI Regular'){
+theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
 
   values = c(
     "#D83B01", # Orange
@@ -176,9 +197,12 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI Regul
     values <- values[index]
   }
 
-  list(ggplot2::theme_minimal(base_family = 'Segoe UI Regular'),
-       ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                      values = values))
+  list(
+    theme_boilerplate(font_family = font_family),
+    ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
+                                     values = values),
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
 
 }
 
@@ -191,7 +215,7 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI Regul
 #' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
 #' @param index An optional numeric index or vector of indices to select specific colours from the SAMY colour palette.
 #' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'legend'.
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
@@ -205,21 +229,21 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI Regul
 #' # Example with continuous theme
 #' ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
 #'   geom_point() +
-#'   theme_samy(scale_type = "continuous")
+#'   dr_theme_samy(scale_type = "continuous")
 #'
 #' # Example with discrete theme
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
-#'   theme_samy(scale_type = "discrete")
+#'   dr_theme_samy(scale_type = "discrete")
 #'}
 dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
                        index = NULL,
                        direction = 1,
-                       guide = 'legend',
+                       guide = 'colourbar',
                        fallback_font = "sans"){
   scale_type <- match.arg(scale_type)
 
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true") || !'Montserrat Regular' %in% names(pdfFonts())) {
+  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
   } else {
     font_family <- 'Montserrat Regular'
@@ -252,6 +276,9 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
 #'
 #' @keywords internal
 theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',  font_family = 'Montserrat Regular'){
+
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
 
   palette <- c("#3fbbbb",
                         "#ff5b51",
@@ -292,14 +319,29 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
                                                     guide = guide)
   }
 
-  list(ggplot2::theme_minimal(base_family = font_family),
-       fill_scale,
-       colour_scale)
+  if (guide == "colourbar") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+  } else if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- list(color = NULL, fill = NULL)
+
+  }
+
+  list(
+    theme_boilerplate(font_family = font_family),
+  fill_scale,
+  colour_scale,
+  guides_scale)
 
 }
-
-
-
 
 #' theme_samy_discrete
 #'
@@ -323,9 +365,12 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
     values <- values[index]
   }
 
-  list(ggplot2::theme_minimal(base_family = font_family),
-       ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                      values = values))
+  list(
+    theme_boilerplate(font_family = font_family),
+    ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
+                                     values = values),
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
 
 }
 
@@ -338,7 +383,7 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
 #' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
 #' @param index An optional numeric index or vector of indices to select specific colours from the share colour palette.
 #' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'legend'.
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
@@ -351,17 +396,17 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
 #' # Example with continuous theme
 #' ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
 #'   geom_point() +
-#'   theme_share(scale_type = "continuous")
+#'   dr_theme_share(scale_type = "continuous")
 #'
 #' # Example with discrete theme
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
-#'   theme_share(scale_type = "discrete")
+#'   dr_theme_share(scale_type = "discrete")
 #'   }
 dr_theme_share <- function(scale_type = c("discrete", "continuous"),
                         index = NULL,
                         direction = 1,
-                        guide = 'legend',
+                        guide = 'colourbar',
                         fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
@@ -398,6 +443,9 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
 #'
 #' @keywords internal
 theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
+
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
 
   values <- c("#0f50d2",
                        "#7800c6",
@@ -437,9 +485,28 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                                                     guide = guide)
   }
 
-  list(ggplot2::theme_minimal(base_family = font_family),
-       fill_scale,
-       colour_scale)
+
+  if (guide == "colourbar") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+  } else if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                    fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- list(color = NULL, fill = NULL)
+
+  }
+
+  list(
+    theme_boilerplate(font_family = font_family),
+  fill_scale,
+  colour_scale,
+  guides_scale)
 
 }
 
@@ -465,8 +532,183 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
     values <- values[index]
   }
 
-  list(ggplot2::theme_minimal(base_family = font_family),
-       ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                      values = values))
+  list(
+    theme_boilerplate(font_family = font_family),
+    ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
+                                      values = values),
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+  )
 
 }
+
+#' Apply Capture Intelligence themed colour scales and aesthetics to ggplot2 plots
+#'
+#' This function provides a convenient way to apply Capture themed colour scales and aesthetics to ggplot2 plots.
+#' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
+
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
+#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
+#'
+#' @return A list containing the ggplot2 theme, fill scale, and colour scale.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' library(ggplot2)
+#'
+#' # Example with continuous theme
+#' ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
+#'   geom_point() +
+#'   dr_theme_capture(scale_type = "continuous")
+#'
+#' # Example with discrete theme
+#' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
+#'   geom_point() +
+#'   dr_theme_capture(scale_type = "discrete")
+#'   }
+dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
+                             direction = 1,
+                             guide = 'colourbar',
+                             # aesthetics = "fill",
+                             fallback_font = "sans") {
+
+  scale_type <- match.arg(scale_type)
+
+  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
+    font_family <- fallback_font
+  } else {
+    font_family <- "GT Walsheim Pro"
+  }
+
+  if (scale_type == "continuous") {
+
+    # The continuous code block from theme_share_continuous
+    return(theme_capture_continuous(direction, guide, font_family = font_family))
+
+  } else if (scale_type == "discrete") {
+
+    # The discrete code block from theme_share_discrete
+    return(theme_capture_discrete(direction, font_family = font_family))
+
+  } else {
+    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
+  }
+
+}
+
+#' theme_capture_continuous
+#'
+#' Adds Capture colours and font to continuous plot.
+#' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
+#' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
+#'
+#' @keywords internal
+theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_family = "GT Walsheim Pro"){
+
+
+  stopifnot(direction %in% c(-1, 1),
+            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+
+
+    fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
+                                                breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                guide = guide,
+                                                direction = direction)
+    colour_scale <- ggplot2::scale_colour_viridis_c(labels = scales::comma,
+                                                    breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                    guide = guide,
+                                                    direction = direction)
+
+    if (guide == "colourbar") {
+
+      guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
+                                     fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
+
+      } else if (guide == "legend") {
+
+        guides_scale <- ggplot2::guides(colour = ggplot2::guide_legend(title.position="top", title.hjust = 0.5),
+                                     fill = ggplot2::guide_legend(title.position="top", title.hjust = 0.5))
+
+      } else {
+
+        guides_scale <- list(color = NULL, fill = NULL)
+
+      }
+
+
+    list(
+      theme_boilerplate(font_family = font_family),
+      fill_scale,
+      colour_scale,
+      guides_scale
+    )
+
+}
+
+#' theme_capture_discrete
+#'
+#' Adds Capture colours and font to discrete plot.
+#' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
+#'
+#' @keywords internal
+theme_capture_discrete <- function(direction = 1, font_family = "GT Walsheim Pro"){
+
+  stopifnot(direction %in% c(-1, 1))
+
+  fill_scale <- ggplot2::scale_fill_viridis_d(direction = direction)
+  colour_scale <- ggplot2::scale_colour_viridis_d(direction = direction)
+
+  list(
+    theme_boilerplate(font_family = font_family),
+    fill_scale,
+    colour_scale,
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+    )
+}
+
+### helper function
+
+theme_boilerplate <- function(font_family = "sans",
+                              base_size = 11) {
+
+  half_line <- base_size / 2
+
+  stopifnot(is.numeric(base_size) && base_size > 5)
+
+  output <- ggplot2::theme(
+    plot.title = ggplot2::element_text(
+      size = 15,
+      hjust = 0.5,
+      vjust = 1,
+      margin = ggplot2::margin(b = half_line)
+    ),
+    text = ggplot2::element_text(family = font_family),
+    panel.border = ggplot2::element_blank(),
+    panel.background = ggplot2::element_rect(fill = "white",
+                                             colour = NA),
+    axis.line = ggplot2::element_line(colour = "grey20"),
+    axis.ticks = ggplot2::element_line(colour = "grey20"),
+    axis.text = ggplot2::element_text(colour = "grey30",
+                                      size = base_size * 0.8),
+    axis.title = ggplot2::element_text(colour = "grey30"),
+    panel.grid = ggplot2::element_line(colour = "grey92"),
+    panel.grid.minor = ggplot2::element_line(linewidth = ggplot2::rel(0.5)),
+    strip.background = ggplot2::element_rect(fill = "grey85",
+                                             colour = "grey20"),
+    legend.key = ggplot2::element_rect(fill = "white", colour = NA),
+    legend.text = ggplot2::element_text(family = font_family,
+                                        colour = "grey30",
+                                        size = base_size * 0.8),
+    legend.title = ggplot2::element_text(colour = "grey30"),
+    legend.position = "bottom",
+    complete = TRUE
+  )
+
+  return(output)
+
+}
+
