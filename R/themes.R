@@ -51,11 +51,12 @@ dr_theme_black <- function(){
 #'   }
 dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
                             index = NULL,
-                            direction = 1,
+                            direction = c("forwards", "backwards"),
                             guide = 'colourbar',
                             fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
   # Use the fallback font if we're in the RMarkdown check environment
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
@@ -70,13 +71,11 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
     # The continuous code block from theme_microsoft_continuous
     return(theme_microsoft_continuous(index, direction, guide, font_family = font_family))
 
-  } else if (scale_type == "discrete") {
+  } else {
 
     # The discrete code block from theme_microsoft_discrete
     return(theme_microsoft_discrete(index, font_family = font_family))
 
-  } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
   }
 
 }
@@ -89,10 +88,10 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 
 #' @keywords internal
-theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Segoe UI"){
+theme_microsoft_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c('legend', 'colourbar', 'colorbar', 'none'), font_family = "Segoe UI"){
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  direction <- match.arg(direction)
+  guide <- match.arg(guide)
 
   palette = c(
     "#D83B01", # Orange
@@ -122,7 +121,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                          "#0078d4")
   }
 
-  if (direction == 1){
+  if (direction == "forwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = values,
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -131,7 +130,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                                                     labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide)
-  } else if (direction == -1){
+  } else if (direction == "backwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = rev(values),
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -238,10 +237,12 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
 #'}
 dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
                        index = NULL,
-                       direction = 1,
+                       direction = c("forward", "backwards"),
                        guide = 'colourbar',
                        fallback_font = "sans"){
+
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
@@ -255,13 +256,11 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
     # The continuous code block from theme_samy_continuous
     return(theme_samy_continuous(index, direction, guide, font_family = font_family))
 
-  } else if (scale_type == "discrete") {
+  } else {
 
     # The discrete code block from theme_samy_discrete
     return(theme_samy_discrete(index, font_family = font_family))
 
-  } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
   }
 
 }
@@ -275,10 +274,10 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 #'
 #' @keywords internal
-theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',  font_family = 'Montserrat Regular'){
+theme_samy_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c("legend", "colourbar", "colorbar", "none"),  font_family = 'Montserrat Regular'){
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  direction <- match.arg(direction)
+  guide <- match.arg(guide)
 
   palette <- c("#3fbbbb",
                         "#ff5b51",
@@ -299,7 +298,7 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
                          "#3fbbbb")
   }
 
-  if (direction == 1){
+  if (direction == "forwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = values,
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -308,7 +307,7 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
                                                     labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide)
-  } else if (direction == -1){
+  } else if (direction == "backwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = rev(values),
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -405,11 +404,12 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
 #'   }
 dr_theme_share <- function(scale_type = c("discrete", "continuous"),
                         index = NULL,
-                        direction = 1,
+                        direction = c("forwards", "backwards"),
                         guide = 'colourbar',
                         fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
@@ -422,13 +422,11 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
     # The continuous code block from theme_share_continuous
     return(theme_share_continuous(index, direction, guide, font_family = font_family))
 
-  } else if (scale_type == "discrete") {
+  } else {
 
     # The discrete code block from theme_share_discrete
     return(theme_share_discrete(index, font_family = font_family))
 
-  } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
   }
 
 }
@@ -442,10 +440,13 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 #'
 #' @keywords internal
-theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
+theme_share_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c('legend', 'colourbar', 'colorbar', 'none'), font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  direction <- match.arg(direction)
+  guide <- match.arg(guide)
+
+  # stopifnot(direction %in% c(-1, 1),
+  #           guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
 
   values <- c("#0f50d2",
                        "#7800c6",
@@ -465,7 +466,7 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                          "#0f50d2")
   }
 
-  if (direction == 1){
+  if (direction == "forwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = values,
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -474,7 +475,7 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                                                     labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide)
-  } else if (direction == -1){
+  } else if (direction == "backwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = rev(values),
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -569,13 +570,15 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
 #'   geom_point() +
 #'   dr_theme_capture(scale_type = "discrete")
 #'   }
+#'
 dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
-                             direction = 1,
+                             direction = c("forwards", "backwards"),
                              guide = 'colourbar',
                              # aesthetics = "fill",
                              fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
@@ -588,13 +591,11 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
     # The continuous code block from theme_share_continuous
     return(theme_capture_continuous(direction, guide, font_family = font_family))
 
-  } else if (scale_type == "discrete") {
+  } else {
 
     # The discrete code block from theme_share_discrete
     return(theme_capture_discrete(direction, font_family = font_family))
 
-  } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
   }
 
 }
@@ -606,21 +607,36 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 #'
 #' @keywords internal
-theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_family = "GT Walsheim Pro"){
+theme_capture_continuous <- function(direction = c("forwards", "backwards"), guide = c("colourbar", "colorbar", "legend", "none"), font_family = "GT Walsheim Pro"){
+
+  direction <- match.arg(direction)
+  guide <- match.arg(guide)
 
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
-
+  if (direction == "forwards") {
 
     fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                 guide = guide,
-                                                direction = direction)
+                                                direction = 1)
     colour_scale <- ggplot2::scale_colour_viridis_c(labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide,
-                                                    direction = direction)
+                                                    direction = 1)
+  }
+
+  else {
+
+    fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
+                                                breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                guide = guide,
+                                                direction = -1)
+    colour_scale <- ggplot2::scale_colour_viridis_c(labels = scales::comma,
+                                                    breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                    guide = guide,
+                                                    direction = -1)
+  }
+
 
     if (guide == "colourbar") {
 
@@ -654,12 +670,23 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
 #'
 #' @keywords internal
-theme_capture_discrete <- function(direction = 1, font_family = "GT Walsheim Pro"){
+theme_capture_discrete <- function(direction = c("forwards", "backwards"), font_family = "GT Walsheim Pro"){
 
-  stopifnot(direction %in% c(-1, 1))
+  direction <- match.arg(direction)
 
-  fill_scale <- ggplot2::scale_fill_viridis_d(direction = direction)
-  colour_scale <- ggplot2::scale_colour_viridis_d(direction = direction)
+  if (direction == "forwards"){
+    fill_scale <- ggplot2::scale_fill_viridis_d(direction = 1)
+    colour_scale <- ggplot2::scale_colour_viridis_d(direction = 1)
+
+  }
+
+  else {
+
+    fill_scale <- ggplot2::scale_fill_viridis_d(direction = -1)
+    colour_scale <- ggplot2::scale_colour_viridis_d(direction = -1)
+
+  }
+
 
   list(
     theme_boilerplate(font_family = font_family),
