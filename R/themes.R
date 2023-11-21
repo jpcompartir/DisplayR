@@ -26,17 +26,16 @@ dr_theme_black <- function(){
 #' This function provides a convenient way to apply Microsoft themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
 #'
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
 #' @param index An optional numeric index or vector of indices to select specific colours from the Microsoft colour palette.
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards".
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' library(ggplot2)
 #'
 #' # Example with continuous theme
@@ -48,7 +47,7 @@ dr_theme_black <- function(){
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_microsoft(scale_type = "discrete")
-#'   }
+
 dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
                             index = NULL,
                             direction = c("forwards", "backwards"),
@@ -211,17 +210,16 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
 #' This function provides a convenient way to apply Microsoft themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
 #'
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
 #' @param index An optional numeric index or vector of indices to select specific colours from the SAMY colour palette.
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards".
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'
 #' library(ggplot2)
 #'
@@ -234,7 +232,7 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_samy(scale_type = "discrete")
-#'}
+
 dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
                        index = NULL,
                        direction = c("forward", "backwards"),
@@ -244,6 +242,7 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
   scale_type <- match.arg(scale_type)
   direction <- match.arg(direction)
 
+  # Use the fallback font if we're in the RMarkdown check environment
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
   } else {
@@ -379,17 +378,17 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
 #' This function provides a convenient way to apply share themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
 #'
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
-#' @param index An optional numeric index or vector of indices to select specific colours from the share colour palette.
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
+#' @param index An optional numeric index or vector of indices to select specific colours from the SHARE colour palette.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards".
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#'
 #' library(ggplot2)
 #'
 #' # Example with continuous theme
@@ -401,7 +400,7 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_share(scale_type = "discrete")
-#'   }
+
 dr_theme_share <- function(scale_type = c("discrete", "continuous"),
                         index = NULL,
                         direction = c("forwards", "backwards"),
@@ -411,6 +410,7 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
   scale_type <- match.arg(scale_type)
   direction <- match.arg(direction)
 
+  # Use the fallback font if we're in the RMarkdown check environment
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
   } else {
@@ -547,17 +547,17 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
 #'
 #' This function provides a convenient way to apply Capture themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
-
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
+#'
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards". Exercise caution when opting for "backwards" as it reverses the colour sequence, causing smaller data values in the plot to appear lighter. This may not be visually intuitive for the audience, as typically brighter colours, such as yellows, are conventionally associated with higher data values.
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#'
 #' library(ggplot2)
 #'
 #' # Example with continuous theme
@@ -569,17 +569,16 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_capture(scale_type = "discrete")
-#'   }
-#'
+
 dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
                              direction = c("forwards", "backwards"),
                              guide = 'colourbar',
-                             # aesthetics = "fill",
                              fallback_font = "sans") {
 
   scale_type <- match.arg(scale_type)
   direction <- match.arg(direction)
 
+  # Use the fallback font if we're in the RMarkdown check environment
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
   } else {
