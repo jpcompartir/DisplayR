@@ -6,8 +6,8 @@
 \usage{
 theme_samy_continuous(
   index = NULL,
-  direction = 1,
-  guide = "legend",
+  direction = c("forwards", "backwards"),
+  guide = c("legend", "colourbar", "colorbar", "none"),
   font_family = "Montserrat Regular"
 )
 }

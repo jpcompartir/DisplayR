@@ -4,7 +4,10 @@
 \alias{theme_capture_discrete}
 \title{theme_capture_discrete}
 \usage{
-theme_capture_discrete(direction = 1, font_family = "GT Walsheim Pro")
+theme_capture_discrete(
+  direction = c("forwards", "backwards"),
+  font_family = "GT Walsheim Pro"
+)
 }
 \arguments{
 \item{direction}{The direction of the colours in the scale. Set to -1 to reverse them.}

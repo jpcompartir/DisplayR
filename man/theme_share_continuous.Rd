@@ -6,8 +6,8 @@
 \usage{
 theme_share_continuous(
   index = NULL,
-  direction = 1,
-  guide = "legend",
+  direction = c("forwards", "backwards"),
+  guide = c("legend", "colourbar", "colorbar", "none"),
   font_family = "Neue Haas Grotesk Text Pro 55 Roman"
 )
 }

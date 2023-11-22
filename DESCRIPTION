@@ -2,8 +2,10 @@ Package: DisplayR
 Title: Functions for visualising data
 Version: 0.0.0.9000
 Authors@R: 
-    person("Jack", "Penzer", , "jack.penzer@sharecreative.com", role = c("aut", "cre"),
-           comment = c(ORCID = "Capture Intelligence"))
+    c(person("Jack", "Penzer", , "jack.penzer@sharecreative.com", role = c("aut", "cre"),
+           comment = c(ORCID = "Capture Intelligence")),
+           person("Jamie", "Hudson", , "jamie.hudson@sharecreative.com", role = "aut", 
+           comment = c(ORCID = "Capture Intelligence")))
 Description: Aims to provide re-usable functions for various data visualisation challenges. There are functions for creating beautiful tables built on {gt}, interactive plots with {plotly} and static images using {ggplot2}.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -22,6 +24,7 @@ Imports:
     rlang (>= 1.1.1),
     scales (>= 1.2.1),
     stringr (>= 1.5.0),
+    sysfonts,
     tidyr (>= 1.3.0),
     tidyselect (>= 1.2.0),
     viridis (>= 0.6.2)

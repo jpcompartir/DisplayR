@@ -188,11 +188,11 @@ test_that("direction arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # invalid direction - should throw error
-            expect_error(plot + theme_capture_discrete(direction = "a"), regexp = "direction %in%")
+            expect_error(plot + theme_capture_discrete(direction = "a"), regexp = "\'arg' should be one of \"forwards\"")
 
             # valid directions
-            expect_no_error(plot + theme_capture_discrete(direction = 1))
-            expect_no_error(plot + theme_capture_discrete(direction = -1))
+            expect_no_error(plot + theme_capture_discrete(direction = "forwards"))
+            expect_no_error(plot + theme_capture_discrete(direction = "backwards"))
 
           })
 
@@ -209,10 +209,10 @@ test_that("theme_capture_discrete correctly changes direction of palette",
               ggplot2::geom_point()
 
             plot_direction_forward <- plot +
-              theme_capture_discrete(direction = 1)
+              theme_capture_discrete(direction = "forwards")
 
             plot_direction_backward <- plot +
-              theme_capture_discrete(direction = -1)
+              theme_capture_discrete(direction = "backwards")
 
             # plot_direction_forward and plot_direction_backward first colours are different
             expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#440154FF")
@@ -266,11 +266,11 @@ test_that("direction arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # invalid direction - should throw error
-            expect_error(plot + theme_capture_continuous(direction = "a"), regexp = "direction %in%")
+            expect_error(plot + theme_capture_continuous(direction = "a"), regexp = "\'arg' should be one of \"forwards\"")
 
             # valid directions
-            expect_no_error(plot + theme_capture_continuous(direction = 1))
-            expect_no_error(plot + theme_capture_continuous(direction = -1))
+            expect_no_error(plot + theme_capture_continuous(direction = "forwards"))
+            expect_no_error(plot + theme_capture_continuous(direction = "backwards"))
 
           })
 
@@ -287,10 +287,10 @@ test_that("theme_capture_continuous correctly changes direction of palette",
               ggplot2::geom_point()
 
             plot_direction_forward <- plot +
-              theme_capture_continuous(direction = 1)
+              theme_capture_continuous(direction = "forwards")
 
             plot_direction_backward <- plot +
-              theme_capture_continuous(direction = -1)
+              theme_capture_continuous(direction = "backwards")
 
             # plot_direction_forward and plot_direction_backward first colours are different
             expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#36AD7F")
@@ -317,7 +317,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # Invalid guide type throws error
-            expect_error(theme_capture_continuous(guide = "a"), regexp = "guide %in%")
+            expect_error(theme_capture_continuous(guide = "a"), regexp = "\'arg' should be one of \"colourbar\"")
 
             # Valid guide type returns list
             expect_type(theme_capture_continuous(guide = "colourbar"), "list")
@@ -401,7 +401,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
             # Invalid guide argument throws an error
             expect_error(plot + dr_theme_capture(scale_type = "continuous",
                                                  guide = "abcd"),
-                         regexp = "guide %in%")
+                         regexp = "\'arg\' should be one of \"colourbar\"")
 
             # Make testing plot
             plot <- ggplot2::ggplot(data = iris,
@@ -469,11 +469,11 @@ test_that("direction arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # invalid direction - should throw error
-            expect_error(plot + theme_samy_continuous(direction = "a"), regexp = "direction %in%")
+            expect_error(plot + theme_samy_continuous(direction = "a"), regexp = "\'arg\' should be one of \"forwards\"")
 
             # valid directions
-            expect_no_error(plot + theme_samy_continuous(direction = 1))
-            expect_no_error(plot + theme_samy_continuous(direction = -1))
+            expect_no_error(plot + theme_samy_continuous(direction = "forwards"))
+            expect_no_error(plot + theme_samy_continuous(direction = "backwards"))
 
           })
 
@@ -490,10 +490,10 @@ test_that("theme_samy_continuous correctly changes direction of palette",
               ggplot2::geom_point()
 
             plot_direction_forward <- plot +
-              theme_samy_continuous(direction = 1)
+              theme_samy_continuous(direction = "forwards")
 
             plot_direction_backward <- plot +
-              theme_samy_continuous(direction = -1)
+              theme_samy_continuous(direction = "backwards")
 
             # plot_direction_forward and plot_direction_backward first colours are different
             expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#D87C6D")
@@ -520,7 +520,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # Invalid guide type throws error
-            expect_error(theme_samy_continuous(guide = "a"), regexp = "guide %in%")
+            expect_error(theme_samy_continuous(guide = "a"), regexp = "\'arg\' should be one of \"legend\"")
 
             # Valid guide type returns list
             expect_type(theme_samy_continuous(guide = "colourbar"), "list")
@@ -604,7 +604,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
             # Invalid guide argument throws an error
             expect_error(plot + dr_theme_samy(scale_type = "continuous",
                                               guide = "abcd"),
-                         regexp = "guide %in%")
+                         regexp = "\'arg\' should be one of \"legend\"")
 
             # Make testing plot
             plot <- ggplot2::ggplot(data = iris,
@@ -672,11 +672,11 @@ test_that("direction arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # invalid direction - should throw error
-            expect_error(plot + theme_share_continuous(direction = "a"), regexp = "direction %in%")
+            expect_error(plot + theme_share_continuous(direction = "a"), regexp = "\'arg\' should be one of")
 
             # valid directions
-            expect_no_error(plot + theme_share_continuous(direction = 1))
-            expect_no_error(plot + theme_share_continuous(direction = -1))
+            expect_no_error(plot + theme_share_continuous(direction = "forwards"))
+            expect_no_error(plot + theme_share_continuous(direction = "backwards"))
 
           })
 
@@ -693,10 +693,10 @@ test_that("theme_share_continuous correctly changes direction of palette",
               ggplot2::geom_point()
 
             plot_direction_forward <- plot +
-              theme_share_continuous(direction = 1)
+              theme_share_continuous(direction = "forwards")
 
             plot_direction_backward <- plot +
-              theme_share_continuous(direction = -1)
+              theme_share_continuous(direction = "backwards")
 
             # plot_direction_forward and plot_direction_backward first colours are different
             expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#BC2E96")
@@ -723,7 +723,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # Invalid guide type throws error
-            expect_error(theme_share_continuous(guide = "a"), regexp = "guide %in%")
+            expect_error(theme_share_continuous(guide = "a"), regexp = "\'arg\' should be one of")
 
             # Valid guide type returns list
             expect_type(theme_share_continuous(guide = "colourbar"), "list")
@@ -807,7 +807,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
             # Invalid guide argument throws an error
             expect_error(plot + dr_theme_share(scale_type = "continuous",
                                                guide = "abcd"),
-                         regexp = "guide %in%")
+                         regexp = "\'arg\' should be one of")
 
             # Make testing plot
             plot <- ggplot2::ggplot(data = iris,
@@ -875,11 +875,11 @@ test_that("direction arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # invalid direction - should throw error
-            expect_error(plot + theme_microsoft_continuous(direction = "a"), regexp = "direction %in%")
+            expect_error(plot + theme_microsoft_continuous(direction = "a"), regexp = "\'arg\' should be one of \"forwards\", \"backwards\"")
 
             # valid directions
-            expect_no_error(plot + theme_microsoft_continuous(direction = 1))
-            expect_no_error(plot + theme_microsoft_continuous(direction = -1))
+            expect_no_error(plot + theme_microsoft_continuous(direction = "forwards"))
+            expect_no_error(plot + theme_microsoft_continuous(direction = "backwards"))
 
           })
 
@@ -896,10 +896,10 @@ test_that("theme_microsoft_continuous correctly changes direction of palette",
               ggplot2::geom_point()
 
             plot_direction_forward <- plot +
-              theme_microsoft_continuous(direction = 1)
+              theme_microsoft_continuous(direction = "forwards")
 
             plot_direction_backward <- plot +
-              theme_microsoft_continuous(direction = -1)
+              theme_microsoft_continuous(direction = "backwards")
 
             # plot_direction_forward and plot_direction_backward first colours are different
             expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], "#327B4A")
@@ -926,7 +926,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid",
               ggplot2::geom_point()
 
             # Invalid guide type throws error
-            expect_error(theme_microsoft_continuous(guide = "a"), regexp = "guide %in%")
+            expect_error(theme_microsoft_continuous(guide = "a"), regexp = "\'arg\' should be one of \"legend\"")
 
             # Valid guide type returns list
             expect_type(theme_microsoft_continuous(guide = "colourbar"), "list")
@@ -1010,7 +1010,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
             # Invalid guide argument throws an error
             expect_error(plot + dr_theme_microsoft(scale_type = "continuous",
                                                    guide = "abcd"),
-                         regexp = "guide %in%")
+                         regexp = "\'arg\' should be one of \"legend\"")
 
             # Make testing plot
             plot <- ggplot2::ggplot(data = iris,

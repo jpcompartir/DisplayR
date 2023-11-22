@@ -5,8 +5,8 @@
 \title{theme_capture_continuous}
 \usage{
 theme_capture_continuous(
-  direction = 1,
-  guide = "colourbar",
+  direction = c("forwards", "backwards"),
+  guide = c("colourbar", "colorbar", "legend", "none"),
   font_family = "GT Walsheim Pro"
 )
 }
