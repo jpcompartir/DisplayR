@@ -64,6 +64,16 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
     font_family <- "Segoe UI"
   }
 
+  # Use fallback font if font not loaded on device
+  list_of_fonts <- as.data.frame(sysfonts::font_files())
+  # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+
+  if ("Segoe UI" %in% list_of_fonts$family) {
+    font_family <- "Segoe UI"
+  } else {
+    font_family <- fallback_font
+  }
+
   #Return the continuous function if necessary and if not discrete
   if (scale_type == "continuous") {
 
@@ -249,6 +259,15 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
     font_family <- 'Montserrat Regular'
   }
 
+  # Use fallback font if font not loaded on device
+  list_of_fonts <- as.data.frame(sysfonts::font_files())
+  # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+
+  if ("Montserrat Regular" %in% list_of_fonts$family) {
+    font_family <- "Montserrat Regular"
+  } else {
+    font_family <- fallback_font
+  }
 
   if (scale_type == "continuous") {
 
@@ -417,6 +436,16 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
     font_family <- "Neue Haas Grotesk Text Pro 55 Roman"
   }
 
+  # Use fallback font if font not loaded on device
+  list_of_fonts <- as.data.frame(sysfonts::font_files())
+  # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+
+  if ("Neue Haas Grotesk Text Pro 55 Roman" %in% list_of_fonts$family) {
+    font_family <- "Neue Haas Grotesk Text Pro 55 Roman"
+  } else {
+    font_family <- fallback_font
+  }
+
   if (scale_type == "continuous") {
 
     # The continuous code block from theme_share_continuous
@@ -583,6 +612,16 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
     font_family <- fallback_font
   } else {
     font_family <- "GT Walsheim Pro"
+  }
+
+  # Use fallback font if font not loaded on device
+  list_of_fonts <- as.data.frame(sysfonts::font_files())
+  # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+
+  if ("GT Walsheim Pro" %in% list_of_fonts$family) {
+    font_family <- "GT Walsheim Pro"
+  } else {
+    font_family <- fallback_font
   }
 
   if (scale_type == "continuous") {
