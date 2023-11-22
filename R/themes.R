@@ -773,7 +773,11 @@ theme_boilerplate <- function(font_family = "sans",
     complete = TRUE
   )
 
-  return(output)
+  list(
+    output,
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+  )
 
 }
 
