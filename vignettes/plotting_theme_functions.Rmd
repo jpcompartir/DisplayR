@@ -201,6 +201,27 @@ df %>%
                                          "neutral" =  "#a89797"))
 ```
 
+### Raincloud plot
+
+Visualising the distribution of a variable is an important step in obtaining information about our data. 
+
+There are many visualisation techniques to effectively relay this information, such as histograms, boxplots, and density plots. However, each of these comes with their own pitfalls, for example boxplots hide data so you it is unknown the number of data points 'behind' the boxplot.
+
+A very neat approach is known as a raincloud plot, which combines multiple visualisations into an intuitive, modular, and statistically robust format. Effectively it combines a density plot, raw jittered data points, and a boxplot to offer maximum utility whilst ensuring the underlying data is not hidden by summary statistics.
+
+This plot can be achieved through the `dr_plot_raincloud()`
+
+```{r}
+set.seed(123)
+df %>% 
+  sample_n(500) %>% 
+  drop_na(sentiment) %>% 
+  dr_plot_raincloud(grouping_variable = sentiment,
+                    continuous_variable = V1,
+                    smoothness = 1)
+```
+
+
 # Theme Functions
 
 There are a number of theme functions included in {DisplayR}, they are to be applied according to the nature of the project and tend to take care of colour palettes and fonts. If you think there is a theme, or a number of themes missing, submit an issue at: (https://github.com/jpcompartir/DisplayR/issues). 
