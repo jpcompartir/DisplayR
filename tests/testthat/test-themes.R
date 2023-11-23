@@ -3,7 +3,7 @@
 test_that("theme_boilerplate() returns list output when default arguments used",
           {
             theme <- theme_boilerplate()
-            expect_true(ggplot2::is.theme(theme))
+            expect_type(theme, "list")
 
             expected_names <- c(
               "text",
@@ -22,7 +22,7 @@ test_that("theme_boilerplate() returns list output when default arguments used",
               "strip.background",
               "axis.ticks"
             )
-            expect_setequal(expected_names, names(theme))
+            expect_setequal(expected_names, names(theme[[1]]))
 
 })
 
@@ -364,9 +364,9 @@ test_that("theme_capture_continuous correctly edits legend aesthetics", {
   theme_no_guide <- theme_capture_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$color, NULL)
+  expect_equal(theme_no_guide[[4]]$colour, "none")
   # fill
-  expect_equal(theme_no_guide[[4]]$fill, NULL)
+  expect_equal(theme_no_guide[[4]]$fill, "none")
 })
 
 ### dr_theme_capture
@@ -567,7 +567,7 @@ test_that("theme_samy_continuous correctly edits legend aesthetics", {
   theme_no_guide <- theme_samy_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$color, NULL)
+  expect_equal(theme_no_guide[[4]]$colour, NULL)
   # fill
   expect_equal(theme_no_guide[[4]]$fill, NULL)
 })
@@ -770,7 +770,7 @@ test_that("theme_share_continuous correctly edits legend aesthetics", {
   theme_no_guide <- theme_share_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$color, NULL)
+  expect_equal(theme_no_guide[[4]]$colour, NULL)
   # fill
   expect_equal(theme_no_guide[[4]]$fill, NULL)
 })
@@ -973,7 +973,7 @@ test_that("theme_microsoft_continuous correctly edits legend aesthetics", {
   theme_no_guide <- theme_microsoft_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$color, NULL)
+  expect_equal(theme_no_guide[[4]]$colour, NULL)
   # fill
   expect_equal(theme_no_guide[[4]]$fill, NULL)
 })

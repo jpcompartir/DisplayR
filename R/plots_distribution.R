@@ -11,13 +11,13 @@
 #' @export
 #'
 #' @examples
-#' ## Bandwidth default value of 0.3
+#' ## Smoothness default value of 0.3
 #' iris %>%
 #'   dr_plot_raincloud(grouping_variable = Species,
 #'                     continuous_variable = Sepal.Length,
 #'                     smoothness = 0.3)
 #'
-#' ## Bandwidth changed to 0.8
+#' ## Smoothness changed to 0.8
 #' iris %>%
 #'   dr_plot_raincloud(grouping_variable = Species,
 #'                     continuous_variable = Sepal.Length,
@@ -26,8 +26,7 @@
 dr_plot_raincloud <- function(data, grouping_variable, continuous_variable, smoothness = 0.3) {
 
   stopifnot(is.numeric(smoothness),
-            smoothness > 0,
-            smoothness < 1)
+            smoothness > 0)
 
   # Get var for tidy eval
   group_sym <- rlang::ensym(grouping_variable)
