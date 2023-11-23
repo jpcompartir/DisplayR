@@ -15,6 +15,8 @@ URL: https://jpcompartir.github.io/DisplayR/
 Imports: 
     dplyr (>= 1.1.0),
     flextable (>= 0.9.0),
+    ggdist,
+    gghalves,
     ggplot2 (>= 3.4.2),
     gt (>= 0.9.0),
     lubridate (>= 1.8.0),
