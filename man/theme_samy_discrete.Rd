@@ -4,10 +4,16 @@
 \alias{theme_samy_discrete}
 \title{theme_samy_discrete}
 \usage{
-theme_samy_discrete(index = NULL, font_family = "Montserrat Regular")
+theme_samy_discrete(
+  index = NULL,
+  font_family = "Montserrat Regular",
+  guide = c("legend", "none")
+)
 }
 \arguments{
 \item{index}{Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)}
+
+\item{guide}{An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.}
 }
 \description{
 Adds Samy colours and font to discrete plot.

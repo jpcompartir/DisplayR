@@ -7,7 +7,7 @@
 theme_capture_continuous(
   direction = c("forwards", "backwards"),
   guide = c("colourbar", "colorbar", "legend", "none"),
-  font_family = "GT Walsheim Pro"
+  font_family = "Helvetica"
 )
 }
 \arguments{

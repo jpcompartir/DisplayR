@@ -36,6 +36,7 @@ dr_theme_black <- function(){
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' library(ggplot2)
 #'
 #' # Example with continuous theme
@@ -47,6 +48,7 @@ dr_theme_black <- function(){
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_microsoft(scale_type = "discrete")
+#'   }
 
 dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
                             index = NULL,
@@ -162,7 +164,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = c("forwards", "
 
   } else {
 
-    guides_scale <- list(color = NULL, fill = NULL)
+    guides_scale <- list(colour = NULL, fill = NULL)
 
   }
 
@@ -178,9 +180,11 @@ theme_microsoft_continuous <- function(index = NULL, direction = c("forwards", "
 #'
 #' Adds Microsoft colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
 #' @keywords internal
-theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
+theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI', guide = c("legend", "none")){
 
+  guide <- match.arg(guide)
   values = c(
     "#D83B01", # Orange
              "#FFB900", # Yellow
@@ -205,12 +209,24 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
     values <- values[index]
   }
 
+  if (guide == "legend") {
+
+    guides_scale <-     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                        colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
   list(
     theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                     values = values),
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
+                                   values = values),
+    guides_scale
+  )
 
 }
 
@@ -348,7 +364,7 @@ theme_samy_continuous <- function(index = NULL, direction = c("forwards", "backw
 
   } else {
 
-    guides_scale <- list(color = NULL, fill = NULL)
+    guides_scale <- list(colour = NULL, fill = NULL)
 
   }
 
@@ -364,8 +380,11 @@ theme_samy_continuous <- function(index = NULL, direction = c("forwards", "backw
 #'
 #' Adds Samy colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
 #' @keywords internal
-theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'){
+theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular', guide = c("legend", "none")){
+
+  guide <- match.arg(guide)
 
   values <- c("#3fbbbb",
                        "#ff5b51",
@@ -382,13 +401,24 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
     values <- values[index]
   }
 
+  if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                        colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
   list(
     theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                     values = values),
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
-
+                                   values = values),
+    guides_scale
+  )
 }
 
 
@@ -528,7 +558,7 @@ theme_share_continuous <- function(index = NULL, direction = c("forwards", "back
 
   } else {
 
-    guides_scale <- list(color = NULL, fill = NULL)
+    guides_scale <- list(colour = NULL, fill = NULL)
 
   }
 
@@ -545,8 +575,11 @@ theme_share_continuous <- function(index = NULL, direction = c("forwards", "back
 #'
 #' Adds SHARE colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
 #' @keywords internal
-theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
+theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk Text Pro 55 Roman", guide = c("legend", "none")){
+
+  guide <- match.arg(guide)
 
   values <- c("#0f50d2",
                        "#7800c6",
@@ -562,12 +595,23 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
     values <- values[index]
   }
 
+  if (guide == "legend") {
+
+    guides_scale <-     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                        colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
   list(
     theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                       values = values),
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+    guides_scale
   )
 
 }
@@ -599,6 +643,7 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
 #'   geom_point() +
 #'   dr_theme_capture(scale_type = "discrete")
 
+
 dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
                              direction = c("forwards", "backwards"),
                              guide = 'colourbar',
@@ -611,16 +656,14 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
     font_family <- fallback_font
   } else {
-    font_family <- "GT Walsheim Pro"
+    font_family <- "Helvetica"
   }
 
   # Use fallback font if font not loaded on device
   list_of_fonts <- as.data.frame(sysfonts::font_files())
   # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
 
-  if ("GT Walsheim Pro" %in% list_of_fonts$family) {
-    font_family <- "GT Walsheim Pro"
-  } else {
+  if (!("Helvetica" %in% list_of_fonts$family)) {
     font_family <- fallback_font
   }
 
@@ -645,7 +688,7 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 #'
 #' @keywords internal
-theme_capture_continuous <- function(direction = c("forwards", "backwards"), guide = c("colourbar", "colorbar", "legend", "none"), font_family = "GT Walsheim Pro"){
+theme_capture_continuous <- function(direction = c("forwards", "backwards"), guide = c("colourbar", "colorbar", "legend", "none"), font_family = "Helvetica"){
 
   direction <- match.arg(direction)
   guide <- match.arg(guide)
@@ -676,7 +719,7 @@ theme_capture_continuous <- function(direction = c("forwards", "backwards"), gui
   }
 
 
-    if (guide == "colourbar") {
+    if (guide == "colourbar" | guide == "colorbar") {
 
       guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
                                      fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
@@ -688,7 +731,8 @@ theme_capture_continuous <- function(direction = c("forwards", "backwards"), gui
 
       } else {
 
-        guides_scale <- list(color = NULL, fill = NULL)
+        guides_scale <- ggplot2::guides(fill = "none",
+                                        colour = "none")
 
       }
 
@@ -706,11 +750,13 @@ theme_capture_continuous <- function(direction = c("forwards", "backwards"), gui
 #'
 #' Adds Capture colours and font to discrete plot.
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
 #'
 #' @keywords internal
-theme_capture_discrete <- function(direction = c("forwards", "backwards"), font_family = "GT Walsheim Pro"){
+theme_capture_discrete <- function(direction = c("forwards", "backwards"), font_family = "Helvetica", guide = c("legend", "none")){
 
   direction <- match.arg(direction)
+  guide <- match.arg(guide)
 
   if (direction == "forwards"){
     fill_scale <- ggplot2::scale_fill_viridis_d(direction = 1)
@@ -725,14 +771,25 @@ theme_capture_discrete <- function(direction = c("forwards", "backwards"), font_
 
   }
 
+  if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
 
   list(
     theme_boilerplate(font_family = font_family),
     fill_scale,
     colour_scale,
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
-    )
+    guides_scale
+       )
 }
 
 ### helper function

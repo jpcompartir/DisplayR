@@ -6,11 +6,14 @@
 \usage{
 theme_capture_discrete(
   direction = c("forwards", "backwards"),
-  font_family = "GT Walsheim Pro"
+  font_family = "Helvetica",
+  guide = c("legend", "none")
 )
 }
 \arguments{
 \item{direction}{The direction of the colours in the scale. Set to -1 to reverse them.}
+
+\item{guide}{An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.}
 }
 \description{
 Adds Capture colours and font to discrete plot.

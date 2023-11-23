@@ -31,6 +31,7 @@ This function provides a convenient way to apply Microsoft themed colour scales 
 The user can specify whether they want a continuous or discrete theme by providing the \code{scale_type} argument.
 }
 \examples{
+\donttest{
 library(ggplot2)
 
 # Example with continuous theme
@@ -42,4 +43,5 @@ ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
   geom_point() +
   dr_theme_microsoft(scale_type = "discrete")
+  }
 }
