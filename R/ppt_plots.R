@@ -35,6 +35,7 @@ disp_ms_vot <- function(data,
   chart <- plotting_data %>%
     mschart::ms_linechart(x = "plot_date", y = "n") %>%
     mschart::chart_settings(style = "line") %>%
+    mschart::chart_data_smooth(values = c(n = 0)) %>%
     mschart::chart_ax_x(num_fmt = date_format)
 
   return(chart)
