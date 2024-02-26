@@ -59,22 +59,29 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
   scale_type <- match.arg(scale_type)
   direction <- match.arg(direction)
 
-  # Use the fallback font if we're in the RMarkdown check environment
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
-    font_family <- fallback_font
-  } else {
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Segoe UI" only in user environments where it is available
+  if (interactive() && "Segoe UI" %in% as.data.frame(sysfonts::font_files())$family) {
     font_family <- "Segoe UI"
   }
 
   # Use fallback font if font not loaded on device
-  list_of_fonts <- as.data.frame(sysfonts::font_files())
-  # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+  # list_of_fonts <- as.data.frame(sysfonts::font_files())
+  # # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+  #
+  # if ("Segoe UI" %in% list_of_fonts$family) {
+  #   font_family <- "Segoe UI"
+  # } else {
+  #   font_family <- fallback_font
+  # }
 
-  if ("Segoe UI" %in% list_of_fonts$family) {
-    font_family <- "Segoe UI"
-  } else {
-    font_family <- fallback_font
-  }
+  # if (!interactive()) {
+  #   font_family <- fallback_font
+  # } else {
+  #   font_family <- "Segoe UI"
+  # }
 
   #Return the continuous function if necessary and if not discrete
   if (scale_type == "continuous") {
@@ -268,22 +275,31 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
   scale_type <- match.arg(scale_type)
   direction <- match.arg(direction)
 
-  # Use the fallback font if we're in the RMarkdown check environment
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
-    font_family <- fallback_font
-  } else {
-    font_family <- 'Montserrat Regular'
-  }
+  # Default to fallback font
+  font_family <- fallback_font
 
-  # Use fallback font if font not loaded on device
-  list_of_fonts <- as.data.frame(sysfonts::font_files())
-  # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
-
-  if ("Montserrat Regular" %in% list_of_fonts$family) {
+  # Switch to "Montserrat Regular" only in user environments where it is available
+  if (interactive() && "Montserrat Regular" %in% as.data.frame(sysfonts::font_files())$family) {
     font_family <- "Montserrat Regular"
-  } else {
-    font_family <- fallback_font
   }
+
+#
+#   # Use the fallback font if we're in the RMarkdown check environment
+#   if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
+#     font_family <- fallback_font
+#   } else {
+#     font_family <- 'Montserrat Regular'
+#   }
+#
+#   # Use fallback font if font not loaded on device
+#   list_of_fonts <- as.data.frame(sysfonts::font_files())
+#   # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+#
+#   if ("Montserrat Regular" %in% list_of_fonts$family) {
+#     font_family <- "Montserrat Regular"
+#   } else {
+#     font_family <- fallback_font
+#   }
 
   if (scale_type == "continuous") {
 
@@ -459,22 +475,30 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
   scale_type <- match.arg(scale_type)
   direction <- match.arg(direction)
 
-  # Use the fallback font if we're in the RMarkdown check environment
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
-    font_family <- fallback_font
-  } else {
-    font_family <- "Neue Haas Grotesk Text Pro 55 Roman"
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Neue Haas Grotesk Text Pro 55 Roman" only in user environments where it is available
+  if (interactive() && "NeueHaasGroteskText Pro Md" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "NeueHaasGroteskText Pro Md"
   }
 
-  # Use fallback font if font not loaded on device
-  list_of_fonts <- as.data.frame(sysfonts::font_files())
-  # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
-
-  if ("Neue Haas Grotesk Text Pro 55 Roman" %in% list_of_fonts$family) {
-    font_family <- "Neue Haas Grotesk Text Pro 55 Roman"
-  } else {
-    font_family <- fallback_font
-  }
+  # # Use the fallback font if we're in the RMarkdown check environment
+  # if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
+  #   font_family <- fallback_font
+  # } else {
+  #   font_family <- "Neue Haas Grotesk Text Pro 55 Roman"
+  # }
+  #
+  # # Use fallback font if font not loaded on device
+  # list_of_fonts <- as.data.frame(sysfonts::font_files())
+  # # list_of_fonts <- systemfonts::system_fonts() %>% tibble::as_tibble()
+  #
+  # if ("Neue Haas Grotesk Text Pro 55 Roman" %in% list_of_fonts$family) {
+  #   font_family <- "Neue Haas Grotesk Text Pro 55 Roman"
+  # } else {
+  #   font_family <- fallback_font
+  # }
 
   if (scale_type == "continuous") {
 
@@ -499,7 +523,7 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 #'
 #' @keywords internal
-theme_share_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c('legend', 'colourbar', 'colorbar', 'none'), font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
+theme_share_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c('legend', 'colourbar', 'colorbar', 'none'), font_family = font_family){
 
   direction <- match.arg(direction)
   guide <- match.arg(guide)
@@ -577,7 +601,7 @@ theme_share_continuous <- function(index = NULL, direction = c("forwards", "back
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
 #' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
 #' @keywords internal
-theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk Text Pro 55 Roman", guide = c("legend", "none")){
+theme_share_discrete <- function(index = NULL, font_family = font_family, guide = c("legend", "none")){
 
   guide <- match.arg(guide)
 

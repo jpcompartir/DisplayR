@@ -171,3 +171,62 @@ disp_add_slide <- function(presentation, chart, layout = "Title and Content", ma
     officer::add_slide(layout = layout, master = master) %>%
     officer::ph_with(value = chart, location = officer::ph_location_type(type = "body"))
 }
+
+#' Create a stacked bar chart for Microsoft's Making My Life Better classification
+#'
+#' Generates a stacked bar chart using 'mschart' with custom colors for 'yes' and 'no' groups.
+#'
+#' @param data A dataframe containing the states and their corresponding 'yes' and 'no' counts.
+#' @param colours A named vector of colors to apply to the 'yes' groups in the chart.
+#' @param state_var The column with the state being plotted (x axis)
+#' #'
+#' @return An object of class 'ms_barchart' representing the stacked bar chart.
+#' @export
+#'
+#' @examples
+#' df <- dplyr::tribble(
+#'   ~state, ~yes, ~no,
+#'   "Brings me joy", 4861, 167,
+#'   "Empowers me", 4715, 313,
+#'   "Feels connected", 922, 4106,
+#'   "Inspires new ideas", 4906, 122,
+#'   "Simplifies tech", 3954, 1074
+#' )
+#'
+#' colours <- c("#0078D4", "#107C10", "#FFB900", "#008575", "#D83B01")
+
+#' chart <- dr_mmlb_barchart(df, colours, state_var = state)
+#' print(chart, preview = TRUE)
+#'
+dr_mmlb_barchart <- function(data, colours, state_var) {
+
+  state_sym <- rlang::ensym(state_var)  # Convert string to symbol
+
+   # Ensure that the colours vector has names
+  state_names <- unique(data[[rlang::as_string(state_sym)]])  # Use double brackets and as_string
+  names(colours) <- state_names
+
+  # Pivot the data and prepare for mschart
+  data_long <- data %>%
+    tidyr::pivot_longer(cols = c("yes", "no"),
+                 names_to = "class",
+                 values_to = "n") %>%
+    dplyr::mutate(group = paste(!!state_sym, class, sep = "_")) %>%
+    dplyr::arrange(!!state_sym, dplyr::desc(class)) %>%
+    dplyr::mutate(group = factor(group, levels = unique(as.character(group))))
+
+  # Create the fill values dynamically using the colours vector
+  yes_colours <- stats::setNames(colours, paste(state_names, "yes", sep = "_"))
+  no_colours <- stats::setNames(rep("grey90", length(state_names)), paste(state_names, "no", sep = "_"))
+  fill_values <- c(yes_colours, no_colours)
+
+  # Generate the mschart barchart
+  chart <- data_long %>%
+    mschart::ms_barchart(x = rlang::as_string(state_sym),
+                y = "n",
+                group = "group") %>%
+    mschart::as_bar_stack() %>%
+    mschart::chart_data_fill(values = fill_values)
+
+  return(chart)
+}

@@ -24,6 +24,7 @@ knitr::opts_chunk$set(
 library(ggplot2)
 library(DisplayR)
 library(dplyr)
+library(tidyr)
 ```
 
 # Plotting Functions
@@ -214,7 +215,7 @@ This plot can be achieved through the `dr_plot_raincloud()`
 ```{r}
 set.seed(123)
 df %>% 
-  sample_n(500) %>% 
+  slice_sample(n = 500) %>% 
   drop_na(sentiment) %>% 
   dr_plot_raincloud(grouping_variable = sentiment,
                     continuous_variable = V1,
