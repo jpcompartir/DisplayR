@@ -1,4 +1,4 @@
-### Testing theme_boilerplate
+### Testing theme_boilerplate ----
 
 test_that("theme_boilerplate() returns list output when default arguments used",
           {
@@ -170,7 +170,7 @@ test_that("theme_boilerplate() has desired behaviour towards legend aesthetics",
 
           })
 
-### theme_capture_discrete()
+### theme_capture_discrete() ----
 
 test_that("theme_capture_discrete returns a list with default arguments", {
 
@@ -249,7 +249,7 @@ test_that("theme_capture_discrete correctly edits legend title", {
 
 })
 
-### theme_capture_continuous()
+### theme_capture_continuous() ----
 
 test_that("theme_capture_continuous returns a list with default arguments", {
 
@@ -369,7 +369,7 @@ test_that("theme_capture_continuous correctly edits legend aesthetics", {
   expect_equal(theme_no_guide[[4]]$fill, "none")
 })
 
-### dr_theme_capture
+### dr_theme_capture ----
 
 test_that("dr_theme_capture returns a list by default", {
   p <- dr_theme_capture()
@@ -417,7 +417,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
 
           })
 
-### theme_samy_discrete()
+### theme_samy_discrete() ----
 
 test_that("theme_samy_discrete returns a list with default arguments", {
 
@@ -452,7 +452,7 @@ test_that("theme_samy_discrete correctly edits legend title", {
 
 })
 
-### theme_samy_continuous()
+### theme_samy_continuous() ----
 
 test_that("theme_samy_continuous returns a list with default arguments", {
 
@@ -572,7 +572,7 @@ test_that("theme_samy_continuous correctly edits legend aesthetics", {
   expect_equal(theme_no_guide[[4]]$fill, NULL)
 })
 
-### dr_theme_samy
+### dr_theme_samy ----
 
 test_that("dr_theme_samy returns a list by default", {
   p <- dr_theme_samy()
@@ -620,7 +620,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
 
           })
 
-### theme_share_discrete()
+### theme_share_discrete() ----
 
 test_that("theme_share_discrete returns a list with default arguments", {
 
@@ -655,7 +655,7 @@ test_that("theme_share_discrete correctly edits legend title", {
 
 })
 
-### theme_share_continuous()
+### theme_share_continuous() ----
 
 test_that("theme_share_continuous returns a list with default arguments", {
 
@@ -775,7 +775,7 @@ test_that("theme_share_continuous correctly edits legend aesthetics", {
   expect_equal(theme_no_guide[[4]]$fill, NULL)
 })
 
-### dr_theme_share
+### dr_theme_share ----
 
 test_that("dr_theme_share returns a list by default", {
   p <- dr_theme_share()
@@ -823,7 +823,7 @@ test_that("guide arguments accept valid inputs and don't accept invalid inputs",
 
           })
 
-### theme_microsoft_discrete()
+### theme_microsoft_discrete() ----
 
 test_that("theme_microsoft_discrete returns a list with default arguments", {
 
@@ -858,7 +858,7 @@ test_that("theme_microsoft_discrete correctly edits legend title", {
 
 })
 
-### theme_microsoft_continuous()
+### theme_microsoft_continuous() ----
 
 test_that("theme_microsoft_continuous returns a list with default arguments", {
 
@@ -978,7 +978,7 @@ test_that("theme_microsoft_continuous correctly edits legend aesthetics", {
   expect_equal(theme_no_guide[[4]]$fill, NULL)
 })
 
-### dr_theme_microsoft
+### dr_theme_microsoft ----
 
 test_that("dr_theme_microsoft returns a list by default", {
   p <- dr_theme_microsoft()

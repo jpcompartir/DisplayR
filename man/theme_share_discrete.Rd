@@ -6,7 +6,7 @@
 \usage{
 theme_share_discrete(
   index = NULL,
-  font_family = "Neue Haas Grotesk Text Pro 55 Roman",
+  font_family = font_family,
   guide = c("legend", "none")
 )
 }

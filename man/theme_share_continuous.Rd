@@ -8,7 +8,7 @@ theme_share_continuous(
   index = NULL,
   direction = c("forwards", "backwards"),
   guide = c("legend", "colourbar", "colorbar", "none"),
-  font_family = "Neue Haas Grotesk Text Pro 55 Roman"
+  font_family = font_family
 )
 }
 \arguments{
