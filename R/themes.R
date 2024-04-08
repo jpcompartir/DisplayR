@@ -523,7 +523,9 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 #'
 #' @keywords internal
-theme_share_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c('legend', 'colourbar', 'colorbar', 'none'), font_family = font_family){
+theme_share_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c('legend', 'colourbar', 'colorbar', 'none'),
+                                   # font_family = font_family
+                                   font_family = "Helvetica"){
 
   direction <- match.arg(direction)
   guide <- match.arg(guide)
@@ -601,7 +603,10 @@ theme_share_continuous <- function(index = NULL, direction = c("forwards", "back
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
 #' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
 #' @keywords internal
-theme_share_discrete <- function(index = NULL, font_family = font_family, guide = c("legend", "none")){
+theme_share_discrete <- function(index = NULL,
+                                 # font_family = font_family,
+                                 font_family = "Helvetica",
+                                 guide = c("legend", "none")){
 
   guide <- match.arg(guide)
 

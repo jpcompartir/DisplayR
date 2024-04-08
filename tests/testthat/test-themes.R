@@ -240,12 +240,12 @@ test_that("theme_capture_discrete correctly edits legend title", {
     theme_capture_discrete()
 
   # Colour guide correct
-  expect_equal(plot_test$guides$colour$title.position, "top")
-  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # Fill guide correct
-  expect_equal(plot_test$guides$fill$title.position, "top")
-  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
 })
 
@@ -341,32 +341,32 @@ test_that("theme_capture_continuous correctly edits legend aesthetics", {
     theme_capture_continuous(guide = "colourbar")
 
   # colour
-  expect_equal(plot_continuous_colourbar$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_colourbar$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = legend
   plot_continuous_legend <- plot +
     theme_capture_continuous(guide = "legend")
 
   # colour
-  expect_equal(plot_continuous_legend$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_legend$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = none
   theme_no_guide <- theme_capture_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$colour, "none")
+  expect_equal(theme_no_guide[[4]]$guides$colour, "none")
   # fill
-  expect_equal(theme_no_guide[[4]]$fill, "none")
+  expect_equal(theme_no_guide[[4]]$guides$fill, "none")
 })
 
 ### dr_theme_capture ----
@@ -443,12 +443,12 @@ test_that("theme_samy_discrete correctly edits legend title", {
     theme_samy_discrete()
 
   # Colour guide correct
-  expect_equal(plot_test$guides$colour$title.position, "top")
-  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # Fill guide correct
-  expect_equal(plot_test$guides$fill$title.position, "top")
-  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
 })
 
@@ -544,32 +544,32 @@ test_that("theme_samy_continuous correctly edits legend aesthetics", {
     theme_samy_continuous(guide = "colourbar")
 
   # colour
-  expect_equal(plot_continuous_colourbar$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_colourbar$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = legend
   plot_continuous_legend <- plot +
     theme_samy_continuous(guide = "legend")
 
   # colour
-  expect_equal(plot_continuous_legend$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_legend$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = none
   theme_no_guide <- theme_samy_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$colour, NULL)
+  expect_equal(theme_no_guide[[4]]$guides$colour, NULL)
   # fill
-  expect_equal(theme_no_guide[[4]]$fill, NULL)
+  expect_equal(theme_no_guide[[4]]$guides$fill, NULL)
 })
 
 ### dr_theme_samy ----
@@ -646,12 +646,12 @@ test_that("theme_share_discrete correctly edits legend title", {
     theme_share_discrete()
 
   # Colour guide correct
-  expect_equal(plot_test$guides$colour$title.position, "top")
-  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # Fill guide correct
-  expect_equal(plot_test$guides$fill$title.position, "top")
-  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
 })
 
@@ -747,32 +747,32 @@ test_that("theme_share_continuous correctly edits legend aesthetics", {
     theme_share_continuous(guide = "colourbar")
 
   # colour
-  expect_equal(plot_continuous_colourbar$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_colourbar$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = legend
   plot_continuous_legend <- plot +
     theme_share_continuous(guide = "legend")
 
   # colour
-  expect_equal(plot_continuous_legend$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_legend$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = none
   theme_no_guide <- theme_share_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$colour, NULL)
+  expect_equal(theme_no_guide[[4]]$guides$colour, NULL)
   # fill
-  expect_equal(theme_no_guide[[4]]$fill, NULL)
+  expect_equal(theme_no_guide[[4]]$guides$fill, NULL)
 })
 
 ### dr_theme_share ----
@@ -849,12 +849,12 @@ test_that("theme_microsoft_discrete correctly edits legend title", {
     theme_microsoft_discrete()
 
   # Colour guide correct
-  expect_equal(plot_test$guides$colour$title.position, "top")
-  expect_equal(plot_test$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # Fill guide correct
-  expect_equal(plot_test$guides$fill$title.position, "top")
-  expect_equal(plot_test$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_test$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
 })
 
@@ -950,32 +950,32 @@ test_that("theme_microsoft_continuous correctly edits legend aesthetics", {
     theme_microsoft_continuous(guide = "colourbar")
 
   # colour
-  expect_equal(plot_continuous_colourbar$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_colourbar$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_colourbar$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_colourbar$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = legend
   plot_continuous_legend <- plot +
     theme_microsoft_continuous(guide = "legend")
 
   # colour
-  expect_equal(plot_continuous_legend$guides$colour$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$colour$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$colour$params$theme$legend.title$hjust, 0.5)
 
   # fill
-  expect_equal(plot_continuous_legend$guides$fill$title.position, "top")
-  expect_equal(plot_continuous_legend$guides$fill$title.hjust, 0.5)
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title.position, "top")
+  expect_equal(plot_continuous_legend$guides$guides$fill$params$theme$legend.title$hjust, 0.5)
 
   # Guide = none
   theme_no_guide <- theme_microsoft_continuous(guide = "none")
 
   # colour
-  expect_equal(theme_no_guide[[4]]$colour, NULL)
+  expect_equal(theme_no_guide[[4]]$guides$colour, NULL)
   # fill
-  expect_equal(theme_no_guide[[4]]$fill, NULL)
+  expect_equal(theme_no_guide[[4]]$guides$fill, NULL)
 })
 
 ### dr_theme_microsoft ----
