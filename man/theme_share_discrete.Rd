@@ -6,7 +6,7 @@
 \usage{
 theme_share_discrete(
   index = NULL,
-  font_family = font_family,
+  font_family = "Helvetica",
   guide = c("legend", "none")
 )
 }

@@ -1,4 +1,4 @@
-test_that("themes correctly edit legend title", {
+test_that("themes correctly edit legend title and aesthetics", {
 
   theme_options <- c(
     # "share",

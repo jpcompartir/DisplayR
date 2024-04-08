@@ -523,7 +523,9 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
 #'
 #' @keywords internal
-theme_share_continuous <- function(index = NULL, direction = c("forwards", "backwards"), guide = c('legend', 'colourbar', 'colorbar', 'none'),
+theme_share_continuous <- function(index = NULL,
+                                   direction = c("forwards", "backwards"),
+                                   guide = c('legend', 'colourbar', 'colorbar', 'none'),
                                    # font_family = font_family
                                    font_family = "Helvetica"){
 
