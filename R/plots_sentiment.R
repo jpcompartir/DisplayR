@@ -14,10 +14,12 @@
 #' sentiment,
 #' bar_labels = "percent")
 #' }
-dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percent", "volume", "none"),
-                           sentiment_colours = c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")){
+dr_plot_sent <- function(data,
+                         sentiment_var = sentiment,
+                         bar_labels = c("percent", "volume", "none"),
+                         sentiment_colours = c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")){
 
-
+  # input validation ----
   stopifnot(is.character(sentiment_colours),
             is.data.frame(data))
 
@@ -28,6 +30,8 @@ dr_plot_sent <- function(data, sentiment_var = sentiment, bar_labels = c("percen
   sentiment_sym <- rlang::ensym(sentiment_var)
   sentiment_string <- rlang::as_string(sentiment_sym)
   if(!sentiment_string %in% colnames(data)) {stop(paste0(sentiment_string, " not in data"))}
+
+  # ----
 
   #Prep data for plot
   data <- data %>%
@@ -108,22 +112,32 @@ dr_plot_sent_group <- function(data,
                             bar_labels = c( "volume", "none", "percent"),
                             sentiment_colours = c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")) {
 
-  if(!is.character(sentiment_colours)) { stop("sentiment_colours = should be a character vector containing the colour mapping for positive, negative and neutral")}
-
-
-  stopifnot(is.character(sentiment_colours),
-            is.data.frame(data))
-
-  #Get variables for tidy evalute
+  # Get variables for tidy evalute
   group_sym <- rlang::ensym(group_var)
   sentiment_sym <- rlang::ensym(sentiment_var)
 
   group_string <- rlang::as_string(group_sym)
   sentiment_string <- rlang::as_string(sentiment_sym)
 
+  # input validation ----
+  stopifnot(is.data.frame(data))
 
-  bar_labels <- match.arg(bar_labels)
+  if(!group_string %in% colnames(data)){
+    stop(paste0("Cannot find '", group_string, "' in the data frame, are you sure you have entered the correct column name?"))
+  }
+
+  if(!sentiment_string %in% colnames(data)){
+    stop(paste0("Cannot find '", sentiment_string, "' in the data frame, are you sure you have entered the correct column name?"))
+  }
+
   plot_type <- match.arg(plot_type)
+  bar_labels <- match.arg(bar_labels)
+
+  if(!is.character(sentiment_colours)) {
+    stop("sentiment_colours = should be a character vector containing the colour mapping for positive, negative and neutral")
+  }
+
+  # ----
 
   #Summarise data for plotting
   data <- data %>%
@@ -203,6 +217,7 @@ dr_plot_sent_vot <- function(data,
                              plot_type = c("bar", "line"),
                              time_unit = c("week", "day","month", "quarter", "year")){
 
+  # input validation ----
   stopifnot(is.character(sentiment_colours),
             is.data.frame(data))
 
@@ -222,6 +237,7 @@ dr_plot_sent_vot <- function(data,
   if(!date_string %in% colnames(data)){
     stop(paste0("Cannot find '", date_string, "' in the data frame, did you mean `date_var = date`?"))
   }
+  # ----
 
   #Create a list which is dependent on the time_unit input with the vot_unit_data helper function
   unit_data <- vot_unit_data(time_unit = time_unit, vot_variable = "Volume of Sentiment", unit = "count")

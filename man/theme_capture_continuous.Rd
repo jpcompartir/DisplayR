@@ -7,13 +7,15 @@
 theme_capture_continuous(
   direction = c("forwards", "backwards"),
   guide = c("colourbar", "colorbar", "legend", "none"),
-  font_family = "Helvetica"
+  fallback_font = "sans"
 )
 }
 \arguments{
 \item{direction}{The direction of the colours in the scale. Set to -1 to reverse them.}
 
 \item{guide}{The type of legend. Use "colourbar", "legend" or FALSE.}
+
+\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font.}
 }
 \description{
 Adds Capture colours and font to continuous plot.

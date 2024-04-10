@@ -23,19 +23,33 @@
 #'                     continuous_variable = Sepal.Length,
 #'                     smoothness = 0.8)
 
-dr_plot_raincloud <- function(data, grouping_variable, continuous_variable, smoothness = 0.3) {
-
-  stopifnot(is.numeric(smoothness),
-            smoothness > 0)
+dr_plot_raincloud <- function(data,
+                              grouping_variable,
+                              continuous_variable,
+                              smoothness = 0.3) {
 
   # Get var for tidy eval
   group_sym <- rlang::ensym(grouping_variable)
   group_string <- rlang::as_string(group_sym)
-  if(!group_string %in% colnames(data)) {stop(paste0(group_sym, " not in data"))}
-
   continuous_sym <- rlang::ensym(continuous_variable)
   continuous_string <- rlang::as_string(continuous_sym)
-  if(!continuous_string %in% colnames(data)) {stop(paste0(continuous_sym, " not in data"))}
+
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(group_sym)))) {
+    stop("Column specified by 'grouping_variable = ' not found in 'data'.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(continuous_sym)))) {
+    stop("Column specified by 'continuous_variable = ' not found in 'data'.")
+  }
+
+  stopifnot(is.numeric(smoothness),
+            smoothness > 0)
+  # ----
 
   plot <- ggplot2::ggplot(data, ggplot2::aes(x = !!group_sym, y = !!continuous_sym, colour = !!group_sym, fill = !!group_sym))
 

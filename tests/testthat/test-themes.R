@@ -69,8 +69,7 @@ test_that("base_size argument accepts new inputs", {
   plot_base <- plot +
     theme_boilerplate(base_size = 10)
 
-  # Is this intended to be tested by?
-  # expect_equal(plot_boilerplate$theme$plot.title$margin[3], unit(5.5, "points"))
+  expect_equal(as.numeric(plot_base$theme$plot.title$margin[3]), as.numeric(unit(5, "points")))
 
 })
 

@@ -15,14 +15,21 @@
 #' @examples
 #' DisplayR::disp_example %>% dr_plot_vot(date = date, time_unit = "day")
 #' DisplayR::disp_example %>% dr_plot_vot(date = date, colour = "midnightblue", time_unit = "week")
-dr_plot_vot <- function(data, date_var = date, plot_type = c("line", "bar"), colour = "#440154FF", time_unit = c("day", "week", "month", "quarter", "year"), smooth = FALSE) {
+dr_plot_vot <- function(data,
+                        date_var = date,
+                        plot_type = c("line", "bar"),
+                        colour = "#440154FF",
+                        time_unit = c("day", "week", "month", "quarter", "year"),
+                        smooth = FALSE) {
 
+  # input validation ----
   #Match the unit and error check
   time_unit <- match.arg(time_unit)
   plot_type <- match.arg(plot_type)
 
   #Quick error checking, other parts taken care of by match.arg
   stopifnot(
+    is.data.frame(data),
     is.character(colour),
     is.logical(smooth)
 )
@@ -32,7 +39,9 @@ dr_plot_vot <- function(data, date_var = date, plot_type = c("line", "bar"), col
   date_string <- rlang::as_string(date_sym)
   if(!date_string %in% colnames(data)) {
     stop(paste0("Date variable: ", date_string, " not in data frame's column names."))
-    }
+  }
+
+  # ----
 
   #Create a list which is dependent on the time_unit input with the vot_unit_data helper function
   unit_data <- vot_unit_data(time_unit = time_unit, vot_variable = "Volume of Mentions", unit = "count")
@@ -98,13 +107,30 @@ dr_plot_vot <- function(data, date_var = date, plot_type = c("line", "bar"), col
 #'
 #' @return ggplot object
 #' @export
-dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("day", "week", "month", "quarter", "year")){
+dr_plot_vot_group <- function(data,
+                              group_var,
+                              date_var = date,
+                              time_unit = c("day", "week", "month", "quarter", "year")){
 
+  # input validation ----
   time_unit <- match.arg(time_unit)
+
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
 
   #Get tidy evaluate supplied variables
   date_sym <- rlang::ensym(date_var)
   group_sym <- rlang::ensym(group_var)
+
+  if (!rlang::has_name(data, deparse(substitute(group_sym)))) {
+    stop("Column specified by 'group_var = ' not found in 'data'.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(date_sym)))) {
+    stop("Column specified by 'date_var = ' not found in 'data'.")
+  }
+  # ----
 
   #Create a list which is dependent on the time_unit input with the vot_unit_data helper function
   unit_data <- vot_unit_data(time_unit = time_unit, vot_variable = "Volume of Mentions", unit = "count")
@@ -160,14 +186,22 @@ dr_plot_vot_group <- function(data, group_var, date_var = date, time_unit = c("d
 #' and y-axis label. The 'variable' and 'unit' parameters allow for flexibility in
 #' describing the data being plotted.
 #'
-#' @param time_unit A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"
+#' @param time_unit A single unit of time fed into lubridate::floor_date.
 #' @param unit A character string used to describe the unit of the data in the y-axis label.
 #' Default is "Count".
 #' @param vot_variable Will form part of plot's title, should describe type of plot
 #'
 #' @return A list with elements 'date_breaks', 'date_labels', 'title', 'yaxis'
 #' @keywords internal
-vot_unit_data <- function(time_unit, vot_variable = "Volume of Mentions", unit = "Count"){
+vot_unit_data <- function(time_unit = c("day", "week", "month", "quarter", "year"),
+                          vot_variable = "Volume of Mentions", unit = "Count"){
+
+  # input validation ----
+  match.arg(time_unit)
+
+  stopifnot(is.character(vot_variable), is.character(unit))
+  # ----
+
   unit_mapping <- list(
     day = list(
       date_breaks = "1 weeks",

@@ -4,10 +4,14 @@
 \alias{vot_unit_data}
 \title{Get unit-specific data for plotting and switch o reduce complexity}
 \usage{
-vot_unit_data(time_unit, vot_variable = "Volume of Mentions", unit = "Count")
+vot_unit_data(
+  time_unit = c("day", "week", "month", "quarter", "year"),
+  vot_variable = "Volume of Mentions",
+  unit = "Count"
+)
 }
 \arguments{
-\item{time_unit}{A single unit of time fed into lubridate::floor_date  "week", "day", "month","quarter", "year"}
+\item{time_unit}{A single unit of time fed into lubridate::floor_date.}
 
 \item{vot_variable}{Will form part of plot's title, should describe type of plot}
 

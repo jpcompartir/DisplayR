@@ -21,7 +21,7 @@ dr_theme_microsoft(
 
 \item{guide}{An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.}
 
-\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font.}
+\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font (Segoe UI).}
 }
 \value{
 A list containing the ggplot2 theme, fill scale, and colour scale.

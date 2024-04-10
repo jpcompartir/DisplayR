@@ -8,7 +8,7 @@ theme_share_continuous(
   index = NULL,
   direction = c("forwards", "backwards"),
   guide = c("legend", "colourbar", "colorbar", "none"),
-  font_family = "Helvetica"
+  fallback_font = "sans"
 )
 }
 \arguments{
@@ -17,6 +17,8 @@ theme_share_continuous(
 \item{direction}{The direction of the colours in the scale. Set to -1 to reverse them.}
 
 \item{guide}{The type of legend. Use "colourbar", "legend" or FALSE.}
+
+\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font (NeueHaasGroteskText Pro Md).}
 }
 \description{
 Adds SHARE colours and font to continuous plot.

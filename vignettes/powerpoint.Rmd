@@ -3,7 +3,7 @@ title: "Charts for PowerPoint"
 output:
   html_document:
     toc: true
-    toc_float: true
+    # toc_float: true
     toc_depth: 2
     highlight: tango
   
@@ -16,7 +16,10 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE,
+  fig.dim = c(7,3),
+  fig.align = "center"
 )
 ```
 
@@ -44,8 +47,8 @@ Let's get some data.
 
 ```{r}
 df <- DisplayR::disp_example
-```
 
+```
 we'll use the `disp_ms_vot` function, which creates a line chart from a data frame. Type `?disp_ms_vot` to access the documentation.
 
 The function counts our date variable for us, and buckets the date variable into day, week, month, quarter, or year, according to the input of the time argument.
@@ -192,7 +195,7 @@ The options for exporting are:
 
 `1.` is nearly always preferable over `2.` as for each plot it cuts down on overall steps to go from R --\> PowerPoint, and when dealing with 10s, or 100s of plots, the difference is meaningful.
 
-However, you need to know the path to your PowerPoint presentation, PowerPoint this can be non-trivial for users not familiar with navigating file systems and directories, especially when working on an interactive/live document, meaning you may need to opt for 2.
+However, you need to know the path to your PowerPoint presentation, this can be non-trivial for users not familiar with navigating file systems and directories, especially when working on an interactive/live document, meaning you may need to opt for 2.
 
 ## One plot at a time
 
@@ -204,52 +207,30 @@ presentation_path <- "~/Documents/presentations/officer_demo.pptx"
 presentation <- read_pptx(presentation_path)
 ```
 
+```{r, eval = FALSE, include = FALSE}
+presentation_path <- "~/Documents/testing/officer_demo.pptx"
+
+presentation <- read_pptx(presentation_path)
+```
+
 ::: tip
 **Tip**: for Mac users, use Finder to identify the root to your presentation - right click PowerPoint's tray icon -\> options -\> open in Finder
 :::
 
-Before we begin, the pptx_summary function outputs:
+Before we begin, we can use the `pptx_summary` function to output a dataframe showing the current contents of your PowerPoint and the `layout_summary` function to output a dataframe containing the available slide templates in your PowerPoint.
+
+<div class="tip">
+**Tip**: Reading in a PowerPoint presentation with custom 'Master Slides' will give you more slide templates to work with.
+</div>
 
 ```{r, eval = FALSE}
 pptx_summary(presentation)
 layout_summary(presentation)
 ```
 
-```{r, echo = FALSE, message = FALSE}
-library(knitr)
-library(kableExtra)
-# First table
-table1 <- data.frame(
-  "text id" = c(2, 3),
-  "content_type" = c("paragraph", "paragraph"),
-  "slide_id" = c(1, 1)
-)
-
-table1 %>%
-  kable("markdown", align = "c") %>%
-  kable_styling()
-```
-
-<div class="tip">
-**Tip**: Reading in a PowerPoint presentation with custom 'Master Slides' will give your more slide templates to work with.
-</div>
-
-
 There is a utility function which ships with DisplayR `disp_add_slide` which takes a presentation and a chart as its main inputs, as well as a layout type and master.
 
-
-In our presentation the available layouts are: 
-```{r, echo = FALSE, message = FALSE}
-table2 <- data.frame(
-  "layout" = c("Title Slide", "Title and Vertical Text", "Vertical Title and Text", "Title and Content", "Section Header", "Two Content", "Comparison", "Title Only", "Blank", "Content with Caption", "Picture with Caption"),
-  "master" = rep("Office Theme", 11)
-)
-
-table2 %>%
-  kable("markdown", align = "c")
-```
-
-To add the slide with a 'Two Content' layout, we can use the disp_add_slide function. This is a common layout wherein the chart sits on the right and the copy on the left. We then print our presentation to our presentation path to save the changes.
+To add the slide with a 'Two Content' layout, we can use the disp_add_slide function. This is a common layout wherein the chart sits on the right and the copy on the left. We can choose any layout that was output from the `layout_summary` function. We then print our presentation to our presentation path to save the changes.
 
 ```{r, eval = FALSE}
 presentation <- disp_add_slide(presentation, grouped_sent_chart, layout = "Two Content")

@@ -12,10 +12,25 @@
 make_gt_summary_table <- function(data,
                                   group_var,
                                   sentiment_var) {
+
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
   # Tidy evaluate supplied variables
   group_sym <- rlang::ensym(group_var)
   sent_sym <- rlang::ensym(sentiment_var)
 
+  if (!rlang::has_name(data, deparse(substitute(group_sym)))) {
+    stop("Column specified by 'group_var = ' not found in 'data'.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(sent_sym)))) {
+    stop("Column specified by 'sentiment_var = ' not found in 'data'.")
+  }
+
+  # ----
 
   summary_table <- data %>%
     dplyr::filter(!is.na(!!sent_sym)) %>%
@@ -289,9 +304,29 @@ disp_gt_theme <- function() {
 #'
 #' @return A ggplot object representing the bar plot.
 #' @keywords internal
-disp_gt_vot <- function(data, date_var, time_unit = c("week", "day", "month", "quarter", "year"), bar_colour = "#628EFD", date_breaks = "4 months", date_labels = "%b") {
-  unit <- match.arg(time_unit)
+disp_gt_vot <- function(data,
+                        date_var,
+                        time_unit = c("week", "day", "month", "quarter", "year"),
+                        bar_colour = "#628EFD",
+                        date_breaks = "4 months",
+                        date_labels = "%b") {
+
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
   date_sym <- rlang::ensym(date_var)
+
+  if (!rlang::has_name(data, deparse(substitute(date_sym)))) {
+    stop("Column specified by 'date_var = ' not found in 'data'.")
+  }
+
+  unit <- match.arg(time_unit)
+
+  stopifnot(is.character(bar_colour), is.character(date_breaks), is.character(date_labels))
+
+  # ----
 
   data <- data %>%
     dplyr::mutate(
@@ -331,6 +366,12 @@ disp_gt_sent_time <- function(data,
                               time_unit = c("week", "day", "month", "quarter", "year"),
                               date_breaks = "4 months",
                               date_labels = "%b") {
+
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
   unit <- match.arg(time_unit)
   chart_type <- match.arg(chart_type)
 
@@ -346,6 +387,9 @@ disp_gt_sent_time <- function(data,
   if (!date_string %in% colnames(data)) {
     stop(paste0("Cannot find '", date_string, "' in the data frame, did you mean `date_var = date`?"))
   }
+
+  stopifnot(is.character(date_breaks), is.character(date_labels))
+  # ----
 
   data <- data %>% dplyr::mutate(
     plot_date = as.Date(!!date_sym),
