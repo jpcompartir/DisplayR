@@ -6,9 +6,9 @@
 \usage{
 theme_microsoft_continuous(
   index = NULL,
-  direction = 1,
-  guide = "legend",
-  font_family = "Segoe UI"
+  direction = c("forwards", "backwards"),
+  guide = c("legend", "colourbar", "colorbar", "none"),
+  fallback_font = "sans"
 )
 }
 \arguments{
@@ -17,6 +17,8 @@ theme_microsoft_continuous(
 \item{direction}{The direction of the colours in the scale. Set to -1 to reverse them.}
 
 \item{guide}{The type of legend. Use "colourbar", "legend" or FALSE.}
+
+\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font (Segoe UI)}
 }
 \description{
 Adds Microsoft colours and font to continous plot.

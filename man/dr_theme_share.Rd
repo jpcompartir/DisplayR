@@ -7,21 +7,21 @@
 dr_theme_share(
   scale_type = c("discrete", "continuous"),
   index = NULL,
-  direction = 1,
+  direction = c("forwards", "backwards"),
   guide = "colourbar",
   fallback_font = "sans"
 )
 }
 \arguments{
-\item{scale_type}{A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".}
+\item{scale_type}{A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.}
 
-\item{index}{An optional numeric index or vector of indices to select specific colours from the share colour palette.}
+\item{index}{An optional numeric index or vector of indices to select specific colours from the SHARE colour palette.}
 
-\item{direction}{An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.}
+\item{direction}{A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards".}
 
-\item{guide}{An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.}
+\item{guide}{An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.}
 
-\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font.}
+\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font (NeueHaasGroteskText Pro Md).}
 }
 \value{
 A list containing the ggplot2 theme, fill scale, and colour scale.
@@ -31,7 +31,7 @@ This function provides a convenient way to apply share themed colour scales and 
 The user can specify whether they want a continuous or discrete theme by providing the \code{scale_type} argument.
 }
 \examples{
-\dontrun{
+
 library(ggplot2)
 
 # Example with continuous theme
@@ -43,5 +43,4 @@ ggplot(mtcars, aes(x = wt, y = mpg, colour = qsec)) +
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
   geom_point() +
   dr_theme_share(scale_type = "discrete")
-  }
 }

@@ -17,11 +17,23 @@ disp_ms_vot <- function(data,
                         date,
                         time = c("week", "day", "month", "quarter", "year"),
                         date_format = "d/m/yy") {
-  # Make sure our time and plot_type arguments are input correctly
-  time <- match.arg(time)
 
   # Tidy-evaluate ready variables
   date_sym <- rlang::ensym(date)
+
+  # input validation ----
+  time <- match.arg(time)
+
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(date_sym)))) {
+    stop("Column specified by 'date = ' not found in 'data'.")
+  }
+
+  stopifnot(is.character(date_format)) # I should probably add some more robust tests here
+  # ----
 
   plotting_data <- data %>%
     dplyr::mutate(
@@ -35,6 +47,7 @@ disp_ms_vot <- function(data,
   chart <- plotting_data %>%
     mschart::ms_linechart(x = "plot_date", y = "n") %>%
     mschart::chart_settings(style = "line") %>%
+    mschart::chart_data_smooth(values = c(n = 0)) %>%
     mschart::chart_ax_x(num_fmt = date_format)
 
   return(chart)
@@ -62,8 +75,6 @@ disp_ms_vot_grouped <- function(data,
                                 group_var,
                                 time = c("week", "day", "month", "quarter", "year"),
                                 date_format = "yyyy/dd/mm") {
-  # Make sure our time and plot_type arguments are input correctly
-  time <- match.arg(time)
 
   # Tidy-evaluate ready variables
   date_sym <- rlang::ensym(date)
@@ -71,6 +82,23 @@ disp_ms_vot_grouped <- function(data,
   group_sym <- rlang::ensym(group_var)
   group_string <- rlang::as_string(group_sym)
 
+
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(date_sym)))) {
+    stop("Column specified by 'date = ' not found in 'data'.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(group_sym)))) {
+    stop("Column specified by 'group_var = ' not found in 'data'.")
+  }
+
+  time <- match.arg(time)
+  stopifnot(is.character(date_format)) # I should probably add some more robust tests here
+  # ----
 
   plotting_data <- data %>%
     dplyr::mutate(
@@ -102,8 +130,10 @@ disp_ms_vot_grouped <- function(data,
 #' @return A \code{mschart::ms_barchart} object representing the stacked bar chart.
 #' @export
 
-disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("percent", "volume")) {
-  plot_type <- match.arg(plot_type)
+disp_ms_sent_grouped <- function(data,
+                                 sentiment_var,
+                                 group_var,
+                                 plot_type = c("percent", "volume")) {
 
   sentiment_sym <- rlang::ensym(sentiment_var)
   sentiment_string <- rlang::as_string(sentiment_sym)
@@ -111,6 +141,21 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("
   group_sym <- rlang::ensym(group_var)
   group_string <- rlang::as_string(group_sym)
 
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(sentiment_sym)))) {
+    stop("Column specified by 'sentiment_var = ' not found in 'data'.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(group_sym)))) {
+    stop("Column specified by 'group_var = ' not found in 'data'.")
+  }
+
+  plot_type <- match.arg(plot_type)
+  # ----
 
   plotting_data <- data %>%
     dplyr::mutate(!!sentiment_sym := tolower(!!sentiment_sym)) %>%
@@ -165,8 +210,98 @@ disp_ms_sent_grouped <- function(data, sentiment_var, group_var, plot_type = c("
 #'
 #' @return A modified officer::pptx object with the new slide and chart added.
 #' @export
-disp_add_slide <- function(presentation, chart, layout = "Title and Content", master = "Office Theme") {
+disp_add_slide <- function(presentation,
+                           chart,
+                           layout = "Title and Content",
+                           master = "Office Theme") {
+
+  # input validation ----
+  if (!inherits(presentation, "rpptx")) {
+    stop("'presentation' must be an officer::pptx object representing the PowerPoint presentation.")
+  }
+
+  if (class(chart)[2] != "ms_chart") {
+    stop("'chart' must be an mschart::ms_chart object representing the chart to be inserted")
+  }
+
+  stopifnot(is.character(layout), is.character(master))
+  # ----
+
   presentation %>%
     officer::add_slide(layout = layout, master = master) %>%
     officer::ph_with(value = chart, location = officer::ph_location_type(type = "body"))
+}
+
+#' Create a stacked bar chart for Microsoft's Making My Life Better classification
+#'
+#' Generates a stacked bar chart using 'mschart' with custom colors for 'yes' and 'no' groups.
+#'
+#' @param data A dataframe containing the states and their corresponding 'yes' and 'no' counts.
+#' @param colours A named vector of colors to apply to the 'yes' groups in the chart.
+#' @param state_var The column with the state being plotted (x axis)
+#' #'
+#' @return An object of class 'ms_barchart' representing the stacked bar chart.
+#' @export
+#'
+#' @examples
+#' df <- dplyr::tribble(
+#'   ~state, ~yes, ~no,
+#'   "Brings me joy", 4861, 167,
+#'   "Empowers me", 4715, 313,
+#'   "Feels connected", 922, 4106,
+#'   "Inspires new ideas", 4906, 122,
+#'   "Simplifies tech", 3954, 1074
+#' )
+#'
+#' colours <- c("#0078D4", "#107C10", "#FFB900", "#008575", "#D83B01")
+
+#' chart <- dr_mmlb_barchart(df, colours, state_var = state)
+#' print(chart, preview = TRUE)
+#'
+dr_mmlb_barchart <- function(data,
+                             colours,
+                             state_var) {
+
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
+  stopifnot(is.character(colours))
+
+  if (!rlang::has_name(data, deparse(substitute(state_var)))) {
+    stop("Column specified by 'state_var = ' not found in 'data'.")
+  }
+
+  # ----
+
+  state_sym <- rlang::ensym(state_var)  # Convert string to symbol
+
+  # Ensure that the colours vector has names
+  state_names <- unique(data[[rlang::as_string(state_sym)]])  # Use double brackets and as_string
+  names(colours) <- state_names
+
+  # Pivot the data and prepare for mschart
+  data_long <- data %>%
+    tidyr::pivot_longer(cols = c("yes", "no"),
+                        names_to = "class",
+                        values_to = "n") %>%
+    dplyr::mutate(group = paste(!!state_sym, class, sep = "_")) %>%
+    dplyr::arrange(!!state_sym, dplyr::desc(class)) %>%
+    dplyr::mutate(group = factor(group, levels = unique(as.character(group))))
+
+  # Create the fill values dynamically using the colours vector
+  yes_colours <- stats::setNames(colours, paste(state_names, "yes", sep = "_"))
+  no_colours <- stats::setNames(rep("grey90", length(state_names)), paste(state_names, "no", sep = "_"))
+  fill_values <- c(yes_colours, no_colours)
+
+  # Generate the mschart barchart
+  chart <- data_long %>%
+    mschart::ms_barchart(x = rlang::as_string(state_sym),
+                         y = "n",
+                         group = "group") %>%
+    mschart::as_bar_stack() %>%
+    mschart::chart_data_fill(values = fill_values)
+
+  return(chart)
 }

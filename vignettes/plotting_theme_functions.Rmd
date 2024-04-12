@@ -3,7 +3,7 @@ title: "Plotting & Theme Functions"
 output:
   html_document:
     toc: true
-    toc_float: true
+    # toc_float: true
     toc_depth: 3
     highlight: tango
     theme: cosmo
@@ -16,7 +16,10 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE,
+  fig.dim = c(7,3),
+  fig.align = "center"
 )
 ```
 
@@ -24,6 +27,7 @@ knitr::opts_chunk$set(
 library(ggplot2)
 library(DisplayR)
 library(dplyr)
+library(tidyr)
 ```
 
 # Plotting Functions
@@ -36,7 +40,7 @@ When working on research projects or Understand phases, there is often a set of 
 
 Other plots which do not have a clear and obvious location, e.g. sentiment distributions, volume over time etc. will sit here in {DisplayR}. They most likely will *not* be the centrepiece of a delivery, and they should not be used as a substitute for thinking about the problem at hand and creating bespoke graphics when called for*. They do however represent valuable efficiency gains in the EDA workflow, and prime clients for a Capture Intelligence deck or delivery.
 
-*See the Capture Cookbook and Visualisation Guidelines for more information on creating Bespoke graphics and adhering to good data visualisation principles.
+*See the [Capture Cookbook and Visualisation Guidelines](https://jamiehshare.github.io/capture_cookbook/) for more information on creating Bespoke graphics and adhering to good data visualisation principles.
 
 ## Volume Over Time
 
@@ -49,22 +53,8 @@ df <- DisplayR::disp_example
 
 ### Single Element - Ungrouped Data Frame
 
-We feed the dataset into the `disp_plot_vot` function, setting `date = date`, plot_type = "line" and time_unit = "week".
+We feed the dataset into the `disp_plot_vot` function, setting `date = date`, `plot_type` to `line` or `bar` and `time_unit` to whatever unit we wish to use (see the function documentation (`?dr_plot_vot`) for available units).
 
-```{r, eval = FALSE}
-#to access function's documentation:
-?dr_plot_vot
-```
-
-
-```{r}
-df %>%
-  dr_plot_vot(date_var = date, 
-                plot_type = "line", 
-                time_unit = "week")
-```
-
-Alternatively, we could generate a plot where we count the volume per day:
 ```{r}
 df %>%
   dr_plot_vot(date_var = date, 
@@ -72,22 +62,21 @@ df %>%
                 time_unit = "day")
 ```
 
-You'll notice the plot's title, y-axis label and x-axis text (there is no x axis label currently) change auto-magically.
-
-There is also the option to use bars rather than a line, we'll render a chart with bars and change the colour using the plot_type = "bar" and colour = "#d80a83" arguments:
+Alternatively, we could generate a bar plot where we count the volume per week and change the plot colour:
 ```{r}
 df %>%
   dr_plot_vot(date_var = date, 
-                plot_type = "bar", 
-                time_unit = "day", 
-                colour = "#d80a83", 
-                smooth = TRUE)
+              plot_type = "bar", 
+              time_unit = "week",
+              "#d80a83",
+              smooth = TRUE)
 ```
+
+You'll notice the plot's title, y-axis label and x-axis text (there is no x axis label currently) change auto-magically.
 
 ### Multiple Elements - Grouped Data Frame
 
 Often we want - or need - to visualise the trend in volume for multiple things at the same time, where things are similar objects contained in the same variable. For example, we may want to visualise the volume over time per topic, or per sentiment category.
-
 
 We can plot the volume of each topic over time, though it can be (is nearly always) inadvisable to map 9 colours on a plot:
 ```{r}
@@ -108,7 +97,7 @@ df %>%
                     date_var = date,
                     time_unit = "day") +
   ggplot2::scale_colour_manual(values = sentiment_colours) +
-  ggplot2::labs(title = stringr::str_wrap("Neutral and negative sentiment consistently higher than positive barring a brief period in the second week of March.", width = 80)) # Use stringr::str_wrap to wrap the title according to a specified with (# of characters)
+  ggplot2::labs(title = stringr::str_wrap("Neutral and negative sentiment consistently higher than positive barring brief periods in March.", width = 80)) # Use stringr::str_wrap to wrap the title according to a specified with (# of characters)
 ```
 
 ## Sentiment Distributions
@@ -123,36 +112,20 @@ We have:
 
 ### Ungrouped
 
-When we want to plot a quick sentiment distribution chart using bars we can use the dr_plot_sent function, which has limited scope for customisation.
+When we want to plot a quick sentiment distribution chart using bars we can use the dr_plot_sent function, which has limited scope for customisation, but we can manually add things like a title. The `bar_label` can be set to "percent", "volume" or "none".
 
 ```{r}
 df %>%
   dr_plot_sent(sentiment_var = sentiment,
                bar_labels = "percent") +
-  labs(title = "")
+  labs(title = "Negative sentiment ~14% higher than positive")
 ```
 
-We could alternatively set the bar_labels to volume and add a descriptive title:
-
-```{r}
-df %>%
-  dr_plot_sent(sentiment_var = sentiment,
-               bar_labels = "volume") +
-  labs(title = "Negative sentiment ~1.7x higher than positive")
-```
-
-Or no bar_labels:
-```{r}
-df %>%
-  dr_plot_sent(sentiment_var = sentiment,
-               bar_labels = "none")
-```
-
-### Grouped 
+### Grouped
 
 More often than not, we won't want to create just one sentiment chart, so we've created a function for plotting grouped sentiment charts.
 
-The `dr_plot_sent_group` function comes with the additional argument, `group_var = `. When setting `plot_type = "percent"` and `bar_labels = "volume"`, we can add the y-axis (now x visually) ticks back and give a title to make the plot more explicit, 
+The `dr_plot_sent_group` function comes with the additional argument, `group_var = `. When setting `plot_type = "percent"` and `bar_labels = "volume"`, we can add the y-axis (visually, the x-axis in the output chart) ticks back and give a title to make the plot more explicit,
 
 ```{r}
 df %>%
@@ -175,12 +148,6 @@ df %>%
 We can also plot the volumes rather than percentages on the bars themselves:
 ```{r}
 df %>%
-  dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "volume", bar_labels = "percent")
-```
-
-However, as we can see, this can lead to unwanted results, especially when using bar_labels. So we could remove the labels and add the gridlines back.
-```{r}
-df %>%
   dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "volume", bar_labels = "none") +
   theme(panel.grid.major.x = element_line()) +
   scale_y_continuous()
@@ -192,18 +159,39 @@ We showed an example of using the `dr_plot_vot_group` function to visualise sent
 
 ```{r}
 df %>%
-  dr_plot_sent_vot(sentiment_var = sentiment, 
-                   date_var = date, 
-                   plot_type = "bar", 
+  dr_plot_sent_vot(sentiment_var = sentiment,
+                   date_var = date,
+                   plot_type = "bar",
                    time_unit = "day",
                    sentiment_colours = c("positive" = "#007fff",
                                          "negative" = "#D83B01",
                                          "neutral" =  "#a89797"))
 ```
 
+### Raincloud plot
+
+Visualising the distribution of a variable is an important step in obtaining information about our data.
+
+There are many visualisation techniques to effectively relay this information, such as histograms, boxplots, and density plots. However, each of these comes with their own pitfalls, for example boxplots hide data the number of data points 'behind' the boxplot is an unknown.
+
+A very neat approach is known as a raincloud plot, which combines multiple visualisations into an intuitive, modular, and statistically robust format. Effectively it combines a density plot, raw jittered data points, and a boxplot to offer maximum utility whilst ensuring the underlying data is not hidden by summary statistics.
+
+This plot can be achieved through the `dr_plot_raincloud()`
+
+```{r}
+set.seed(123)
+df %>%
+  slice_sample(n = 500) %>%
+  drop_na(sentiment) %>%
+  dr_plot_raincloud(grouping_variable = sentiment,
+                    continuous_variable = V1,
+                    smoothness = 1)
+```
+
+
 # Theme Functions
 
-There are a number of theme functions included in {DisplayR}, they are to be applied according to the nature of the project and tend to take care of colour palettes and fonts. If you think there is a theme, or a number of themes missing, submit an issue at: (https://github.com/jpcompartir/DisplayR/issues). 
+There are a number of theme functions included in {DisplayR}, they are to be applied according to the nature of the project and tend to take care of colour palettes and fonts. If you think there is a theme, or a number of themes missing, submit an issue at: (https://github.com/jpcompartir/DisplayR/issues).
 
 The general idea is to add the theme you need after rendering your plot. Let's get a plot and then style it using our themes.
 

@@ -4,10 +4,18 @@
 \alias{theme_capture_discrete}
 \title{theme_capture_discrete}
 \usage{
-theme_capture_discrete(direction = 1, font_family = "GT Walsheim Pro")
+theme_capture_discrete(
+  direction = c("forwards", "backwards"),
+  guide = c("legend", "none"),
+  fallback_font = "sans"
+)
 }
 \arguments{
 \item{direction}{The direction of the colours in the scale. Set to -1 to reverse them.}
+
+\item{guide}{An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.}
+
+\item{fallback_font}{Adds a fallback font of 'sans' in case user does not have required font.}
 }
 \description{
 Adds Capture colours and font to discrete plot.

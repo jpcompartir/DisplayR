@@ -68,9 +68,7 @@ test_that("disp_gt_sent_time is functioning as expected", {
   plot_build <- ggplot2::ggplot_build(plot)
 
   # Colours are as expected
-  expect_equal(plot_build$data[[1]][[1]][[1]], "#c00000")
-  expect_equal(plot_build$data[[1]][[1]][[9]], "black")
-  expect_equal(plot_build$data[[1]][[1]][[17]], "#1b7837")
+  expect_equal(unique(plot_build$data[[1]][[1]]), c("#c00000", "black", "#1b7837"))
 
   # Data is as expected
   expect_equal(plot_build$data[[1]][[4]][[1]], 119)

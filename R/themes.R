@@ -26,17 +26,17 @@ dr_theme_black <- function(){
 #' This function provides a convenient way to apply Microsoft themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
 #'
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
 #' @param index An optional numeric index or vector of indices to select specific colours from the Microsoft colour palette.
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
-#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards".
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (Segoe UI).
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(ggplot2)
 #'
 #' # Example with continuous theme
@@ -49,18 +49,30 @@ dr_theme_black <- function(){
 #'   geom_point() +
 #'   dr_theme_microsoft(scale_type = "discrete")
 #'   }
+
 dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
                             index = NULL,
-                            direction = 1,
+                            direction = c("forwards", "backwards"),
                             guide = 'colourbar',
                             fallback_font = "sans") {
 
+  # input validation ----
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
-  # Use the fallback font if we're in the RMarkdown check environment
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
-    font_family <- fallback_font
-  } else {
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(guide),
+            is.character(fallback_font))
+
+  # ----
+
+
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Segoe UI" only in user environments where it is available
+  if (interactive() && "Segoe UI" %in% as.data.frame(sysfonts::font_files())$family) {
     font_family <- "Segoe UI"
   }
 
@@ -68,15 +80,13 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
   if (scale_type == "continuous") {
 
     # The continuous code block from theme_microsoft_continuous
-    return(theme_microsoft_continuous(index, direction, guide, font_family = font_family))
-
-  } else if (scale_type == "discrete") {
-
-    # The discrete code block from theme_microsoft_discrete
-    return(theme_microsoft_discrete(index, font_family = font_family))
+    return(theme_microsoft_continuous(index, direction, guide, fallback_font = font_family))
 
   } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
+
+    # The discrete code block from theme_microsoft_discrete
+    return(theme_microsoft_discrete(index, fallback_font = font_family))
+
   }
 
 }
@@ -87,12 +97,29 @@ dr_theme_microsoft <- function(scale_type = c("discrete", "continuous"),
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (Segoe UI)
 
 #' @keywords internal
-theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Segoe UI"){
+theme_microsoft_continuous <- function(index = NULL,
+                                       direction = c("forwards", "backwards"),
+                                       guide = c('legend', 'colourbar', 'colorbar', 'none'),
+                                       fallback_font = "sans"){
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  # input validation ----
+  direction <- match.arg(direction)
+  guide <- match.arg(guide)
+
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font))
+  # ----
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Segoe UI" only in user environments where it is available
+  if (interactive() && "Segoe UI" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Segoe UI"
+  }
 
   palette = c(
     "#D83B01", # Orange
@@ -122,7 +149,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                          "#0078d4")
   }
 
-  if (direction == 1){
+  if (direction == "forwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = values,
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -131,7 +158,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
                                                     labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide)
-  } else if (direction == -1){
+  } else if (direction == "backwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = rev(values),
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -154,7 +181,7 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
 
   } else {
 
-    guides_scale <- list(color = NULL, fill = NULL)
+    guides_scale <- list(colour = NULL, fill = NULL)
 
   }
 
@@ -170,8 +197,28 @@ theme_microsoft_continuous <- function(index = NULL, direction = 1, guide = 'leg
 #'
 #' Adds Microsoft colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (Segoe UI)
 #' @keywords internal
-theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
+theme_microsoft_discrete <- function(index = NULL,
+                                     guide = c("legend", "none"),
+                                     fallback_font = 'sans'){
+
+  # input validation ----
+  guide <- match.arg(guide)
+
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font))
+  # ----
+
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Segoe UI" only in user environments where it is available
+  if (interactive() && "Segoe UI" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Segoe UI"
+  }
 
   values = c(
     "#D83B01", # Orange
@@ -197,12 +244,24 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
     values <- values[index]
   }
 
+  if (guide == "legend") {
+
+    guides_scale <-     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                        colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
   list(
     theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                     values = values),
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
+                                   values = values),
+    guides_scale
+  )
 
 }
 
@@ -212,17 +271,16 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
 #' This function provides a convenient way to apply Microsoft themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
 #'
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
 #' @param index An optional numeric index or vector of indices to select specific colours from the SAMY colour palette.
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
-#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards".
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (Montserrat Regular).
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'
 #' library(ggplot2)
 #'
@@ -235,33 +293,41 @@ theme_microsoft_discrete <- function(index = NULL, font_family = 'Segoe UI'){
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_samy(scale_type = "discrete")
-#'}
+
 dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
                        index = NULL,
-                       direction = 1,
+                       direction = c("forward", "backwards"),
                        guide = 'colourbar',
                        fallback_font = "sans"){
+
+  # input validation ----
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
-    font_family <- fallback_font
-  } else {
-    font_family <- 'Montserrat Regular'
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font),
+            is.character(guide))
+  # ----
+
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Montserrat Regular" only in user environments where it is available
+  if (interactive() && "Montserrat Regular" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Montserrat Regular"
   }
-
 
   if (scale_type == "continuous") {
 
     # The continuous code block from theme_samy_continuous
-    return(theme_samy_continuous(index, direction, guide, font_family = font_family))
-
-  } else if (scale_type == "discrete") {
-
-    # The discrete code block from theme_samy_discrete
-    return(theme_samy_discrete(index, font_family = font_family))
+    return(theme_samy_continuous(index, direction, guide, fallback_font = font_family))
 
   } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
+
+    # The discrete code block from theme_samy_discrete
+    return(theme_samy_discrete(index, fallback_font = font_family))
+
   }
 
 }
@@ -273,12 +339,30 @@ dr_theme_samy <- function(scale_type = c("discrete", "continuous"),
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (Montserrat Regular).
 #'
 #' @keywords internal
-theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',  font_family = 'Montserrat Regular'){
+theme_samy_continuous <- function(index = NULL,
+                                  direction = c("forwards", "backwards"),
+                                  guide = c("legend", "colourbar", "colorbar", "none"),
+                                  fallback_font = 'sans'){
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  # input validation ----
+  direction <- match.arg(direction)
+  guide <- match.arg(guide)
+
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font))
+  # ----
+
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Montserrat Regular" only in user environments where it is available
+  if (interactive() && "Montserrat Regular" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Montserrat Regular"
+  }
 
   palette <- c("#3fbbbb",
                         "#ff5b51",
@@ -299,7 +383,7 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
                          "#3fbbbb")
   }
 
-  if (direction == 1){
+  if (direction == "forwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = values,
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -308,7 +392,7 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
                                                     labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide)
-  } else if (direction == -1){
+  } else if (direction == "backwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = rev(values),
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -331,7 +415,7 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
 
   } else {
 
-    guides_scale <- list(color = NULL, fill = NULL)
+    guides_scale <- list(colour = NULL, fill = NULL)
 
   }
 
@@ -347,8 +431,29 @@ theme_samy_continuous <- function(index = NULL, direction = 1, guide = 'legend',
 #'
 #' Adds Samy colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (Montserrat Regular).
 #' @keywords internal
-theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'){
+theme_samy_discrete <- function(index = NULL,
+                                guide = c("legend", "none"),
+                                fallback_font = 'sans'){
+
+  # input validation ----
+  guide <- match.arg(guide)
+
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font))
+  # ----
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Montserrat Regular" only in user environments where it is available
+  if (interactive() && "Montserrat Regular" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Montserrat Regular"
+  }
+
+  guide <- match.arg(guide)
 
   values <- c("#3fbbbb",
                        "#ff5b51",
@@ -365,13 +470,24 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
     values <- values[index]
   }
 
+  if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                        colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
   list(
     theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
-                                     values = values),
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5)))
-
+                                   values = values),
+    guides_scale
+  )
 }
 
 
@@ -380,17 +496,17 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
 #' This function provides a convenient way to apply share themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
 #'
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
-#' @param index An optional numeric index or vector of indices to select specific colours from the share colour palette.
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
-#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
+#' @param index An optional numeric index or vector of indices to select specific colours from the SHARE colour palette.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards".
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (NeueHaasGroteskText Pro Md).
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#'
 #' library(ggplot2)
 #'
 #' # Example with continuous theme
@@ -402,33 +518,40 @@ theme_samy_discrete <- function(index = NULL, font_family = 'Montserrat Regular'
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_share(scale_type = "discrete")
-#'   }
+
 dr_theme_share <- function(scale_type = c("discrete", "continuous"),
                         index = NULL,
-                        direction = 1,
+                        direction = c("forwards", "backwards"),
                         guide = 'colourbar',
                         fallback_font = "sans") {
 
+  # input validation ----
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
-    font_family <- fallback_font
-  } else {
-    font_family <- "Neue Haas Grotesk Text Pro 55 Roman"
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font),
+            is.character(guide))
+  # ----
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Neue Haas Grotesk Text Pro 55 Roman" only in user environments where it is available
+  if (interactive() && "NeueHaasGroteskText Pro Md" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "NeueHaasGroteskText Pro Md"
   }
 
   if (scale_type == "continuous") {
 
     # The continuous code block from theme_share_continuous
-    return(theme_share_continuous(index, direction, guide, font_family = font_family))
-
-  } else if (scale_type == "discrete") {
-
-    # The discrete code block from theme_share_discrete
-    return(theme_share_discrete(index, font_family = font_family))
+    return(theme_share_continuous(index, direction, guide, fallback_font = font_family))
 
   } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
+
+    # The discrete code block from theme_share_discrete
+    return(theme_share_discrete(index, fallback_font = font_family))
+
   }
 
 }
@@ -440,12 +563,32 @@ dr_theme_share <- function(scale_type = c("discrete", "continuous"),
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (NeueHaasGroteskText Pro Md).
 #'
 #' @keywords internal
-theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend', font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
+theme_share_continuous <- function(index = NULL,
+                                   direction = c("forwards", "backwards"),
+                                   guide = c('legend', 'colourbar', 'colorbar', 'none'),
+                                   fallback_font = "sans"){
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  # input validation ----
+  direction <- match.arg(direction)
+  guide <- match.arg(guide)
+
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font))
+  # ----
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Neue Haas Grotesk Text Pro 55 Roman" only in user environments where it is available
+  if (interactive() && "NeueHaasGroteskText Pro Md" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "NeueHaasGroteskText Pro Md"
+  }
+
+  # stopifnot(direction %in% c(-1, 1),
+  #           guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
 
   values <- c("#0f50d2",
                        "#7800c6",
@@ -465,7 +608,7 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                          "#0f50d2")
   }
 
-  if (direction == 1){
+  if (direction == "forwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = values,
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -474,7 +617,7 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
                                                     labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide)
-  } else if (direction == -1){
+  } else if (direction == "backwards"){
     fill_scale <- ggplot2::scale_fill_gradientn(colours = rev(values),
                                                 labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
@@ -498,7 +641,7 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
 
   } else {
 
-    guides_scale <- list(color = NULL, fill = NULL)
+    guides_scale <- list(colour = NULL, fill = NULL)
 
   }
 
@@ -515,8 +658,28 @@ theme_share_continuous <- function(index = NULL, direction = 1, guide = 'legend'
 #'
 #' Adds SHARE colours and font to discrete plot.
 #' @param index Choose palettes colours by index by setting index equal to a character vector e.g. c(1,2,3) or c(1:3)
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font (NeueHaasGroteskText Pro Md).
+#'
 #' @keywords internal
-theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk Text Pro 55 Roman"){
+theme_share_discrete <- function(index = NULL,
+                                 guide = c("legend", "none"),
+                                 fallback_font = "sans"){
+
+  # input validation ----
+  guide <- match.arg(guide)
+
+  stopifnot(is.null(index) | is.numeric(index),
+            is.character(fallback_font))
+  # ----
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Neue Haas Grotesk Text Pro 55 Roman" only in user environments where it is available
+  if (interactive() && "NeueHaasGroteskText Pro Md" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "NeueHaasGroteskText Pro Md"
+  }
 
   values <- c("#0f50d2",
                        "#7800c6",
@@ -532,12 +695,23 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
     values <- values[index]
   }
 
+  if (guide == "legend") {
+
+    guides_scale <-     ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                        colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
   list(
     theme_boilerplate(font_family = font_family),
     ggplot2::scale_discrete_manual(aesthetics = c('fill', 'colour'),
                                       values = values),
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+    guides_scale
   )
 
 }
@@ -546,17 +720,17 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
 #'
 #' This function provides a convenient way to apply Capture themed colour scales and aesthetics to ggplot2 plots.
 #' The user can specify whether they want a continuous or discrete theme by providing the `scale_type` argument.
-
-#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete".
-#' @param direction An optional numeric value (1 or -1) specifying the direction of the colour gradient for continuous scales. Default is 1.
-#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is 'colourbar'.
+#'
+#' @param scale_type A character string specifying the type of scale, either "continuous" or "discrete". Default is "discrete". Simply, is the data mapped to the colour or fill aesthetic discrete or continuous.
+#' @param direction A character string, either "forwards" or "backwards" specifying the direction of the colour or fill gradient for continuous scales. Default is "forwards". Exercise caution when opting for "backwards" as it reverses the colour sequence, causing smaller data values in the plot to appear lighter. This may not be visually intuitive for the audience, as typically brighter colours, such as yellows, are conventionally associated with higher data values.
+#' @param guide An optional character string specifying the type of guide to use for continuous scales. Default is "colourbar", but other values include "legend", and "none". A rule of thumb is if the data are continuous, "colourbar" should be used, and if the data are discrete then "legend" should be used.
 #' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @return A list containing the ggplot2 theme, fill scale, and colour scale.
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#'
 #' library(ggplot2)
 #'
 #' # Example with continuous theme
@@ -568,33 +742,39 @@ theme_share_discrete <- function(index = NULL, font_family = "Neue Haas Grotesk 
 #' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, colour = Species)) +
 #'   geom_point() +
 #'   dr_theme_capture(scale_type = "discrete")
-#'   }
+
+
 dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
-                             direction = 1,
+                             direction = c("forwards", "backwards"),
                              guide = 'colourbar',
-                             # aesthetics = "fill",
                              fallback_font = "sans") {
 
+  # input validation ----
   scale_type <- match.arg(scale_type)
+  direction <- match.arg(direction)
 
-  if (identical(Sys.getenv("R_CHECK_ENVIRON"), "true")) {
-    font_family <- fallback_font
-  } else {
-    font_family <- "GT Walsheim Pro"
+  stopifnot(is.character(fallback_font),
+            is.character(guide))
+  # ----
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Neue Haas Grotesk Text Pro 55 Roman" only in user environments where it is available
+  if (interactive() && "Helvetica" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Helvetica"
   }
 
   if (scale_type == "continuous") {
 
     # The continuous code block from theme_share_continuous
-    return(theme_capture_continuous(direction, guide, font_family = font_family))
-
-  } else if (scale_type == "discrete") {
-
-    # The discrete code block from theme_share_discrete
-    return(theme_capture_discrete(direction, font_family = font_family))
+    return(theme_capture_continuous(direction, guide, fallback_font = font_family))
 
   } else {
-    stop("Invalid scale_type argument. Must be either 'continuous' or 'discrete'.")
+
+    # The discrete code block from theme_share_discrete
+    return(theme_capture_discrete(direction, fallback_font = font_family))
+
   }
 
 }
@@ -604,25 +784,54 @@ dr_theme_capture <- function(scale_type = c("discrete", "continuous"),
 #' Adds Capture colours and font to continuous plot.
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
 #' @param guide The type of legend. Use "colourbar", "legend" or FALSE.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @keywords internal
-theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_family = "GT Walsheim Pro"){
+theme_capture_continuous <- function(direction = c("forwards", "backwards"),
+                                     guide = c("colourbar", "colorbar", "legend", "none"),
+                                     fallback_font = "sans"){
 
+  # input validation ----
+  guide <- match.arg(guide)
+  direction <- match.arg(direction)
 
-  stopifnot(direction %in% c(-1, 1),
-            guide %in% c('colourbar', 'colorbar', 'legend', 'none'))
+  stopifnot(is.character(fallback_font))
+  # ----
 
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Neue Haas Grotesk Text Pro 55 Roman" only in user environments where it is available
+  if (interactive() && "Helvetica" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Helvetica"
+  }
+
+  if (direction == "forwards") {
 
     fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
                                                 breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                 guide = guide,
-                                                direction = direction)
+                                                direction = 1)
     colour_scale <- ggplot2::scale_colour_viridis_c(labels = scales::comma,
                                                     breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
                                                     guide = guide,
-                                                    direction = direction)
+                                                    direction = 1)
+  }
 
-    if (guide == "colourbar") {
+  else {
+
+    fill_scale <- ggplot2::scale_fill_viridis_c(labels = scales::comma,
+                                                breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                guide = guide,
+                                                direction = -1)
+    colour_scale <- ggplot2::scale_colour_viridis_c(labels = scales::comma,
+                                                    breaks = function(x) round(stats::quantile(x, seq(0, 1, 0.25))),
+                                                    guide = guide,
+                                                    direction = -1)
+  }
+
+
+    if (guide == "colourbar" | guide == "colorbar") {
 
       guides_scale <- ggplot2::guides(colour = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5),
                                      fill = ggplot2::guide_colourbar(title.position="top", title.hjust = 0.5))
@@ -634,7 +843,8 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
 
       } else {
 
-        guides_scale <- list(color = NULL, fill = NULL)
+        guides_scale <- ggplot2::guides(fill = "none",
+                                        colour = "none")
 
       }
 
@@ -652,28 +862,71 @@ theme_capture_continuous <- function(direction = 1, guide = 'colourbar', font_fa
 #'
 #' Adds Capture colours and font to discrete plot.
 #' @param direction The direction of the colours in the scale. Set to -1 to reverse them.
+#' @param guide An optional character string specifying the type of guide to use for discrete scales. Either is "legend", which is default, or "none" to remove the legend.
+#' @param fallback_font Adds a fallback font of 'sans' in case user does not have required font.
 #'
 #' @keywords internal
-theme_capture_discrete <- function(direction = 1, font_family = "GT Walsheim Pro"){
+theme_capture_discrete <- function(direction = c("forwards", "backwards"),
+                                   guide = c("legend", "none"),
+                                   fallback_font = "sans"){
 
-  stopifnot(direction %in% c(-1, 1))
+  # input validation ----
+  guide <- match.arg(guide)
+  direction <- match.arg(direction)
 
-  fill_scale <- ggplot2::scale_fill_viridis_d(direction = direction)
-  colour_scale <- ggplot2::scale_colour_viridis_d(direction = direction)
+  stopifnot(is.character(fallback_font))
+  # ----
+
+  # Default to fallback font
+  font_family <- fallback_font
+
+  # Switch to "Neue Haas Grotesk Text Pro 55 Roman" only in user environments where it is available
+  if (interactive() && "Helvetica" %in% as.data.frame(sysfonts::font_files())$family) {
+    font_family <- "Helvetica"
+  }
+
+  if (direction == "forwards"){
+    fill_scale <- ggplot2::scale_fill_viridis_d(direction = 1)
+    colour_scale <- ggplot2::scale_colour_viridis_d(direction = 1)
+
+  }
+
+  else {
+
+    fill_scale <- ggplot2::scale_fill_viridis_d(direction = -1)
+    colour_scale <- ggplot2::scale_colour_viridis_d(direction = -1)
+
+  }
+
+  if (guide == "legend") {
+
+    guides_scale <- ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+
+  } else {
+
+    guides_scale <- ggplot2::guides(fill = "none",
+                                    colour = "none")
+
+  }
+
 
   list(
     theme_boilerplate(font_family = font_family),
     fill_scale,
     colour_scale,
-    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
-                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
-    )
+    guides_scale
+       )
 }
 
 ### helper function
 
 theme_boilerplate <- function(font_family = "sans",
                               base_size = 11) {
+
+  # input validation ----
+  stopifnot(is.character(font_family), is.numeric(base_size))
+  # ----
 
   half_line <- base_size / 2
 
@@ -708,7 +961,11 @@ theme_boilerplate <- function(font_family = "sans",
     complete = TRUE
   )
 
-  return(output)
+  list(
+    output,
+    ggplot2::guides(fill = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5),
+                    colour = ggplot2::guide_legend(title.position = "top", title.hjust = 0.5))
+  )
 
 }
 

@@ -15,9 +15,31 @@
 #' @return A flextable object displaying the summary table with gradient colouring for positive and negative sentiments.
 #' @export
 #'
-disp_flextable <- function(data, group_var, sentiment_var, positive_colour = "#107C10", negative_colour = "#D83B01") {
+disp_flextable <- function(data,
+                           group_var,
+                           sentiment_var,
+                           positive_colour = "#107C10",
+                           negative_colour = "#D83B01") {
+
   group_sym <- rlang::ensym(group_var)
   sentiment_sym <- rlang::ensym(sentiment_var)
+
+  # input validation ----
+  if (!tibble::is_tibble(data) && !is.data.frame(data)) {
+    stop("Input 'data' must be a tibble or a data frame.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(group_sym)))) {
+    stop("Column specified by 'group_var = ' not found in 'data'.")
+  }
+
+  if (!rlang::has_name(data, deparse(substitute(sentiment_sym)))) {
+    stop("Column specified by 'sentiment_var = ' not found in 'data'.")
+  }
+
+  stopifnot(is.character(positive_colour), is.character(negative_colour))
+  # ----
+
 
   # Create a summary table with columns group_var, volume, negative, neutral, positive
   summary_table <- data %>%
