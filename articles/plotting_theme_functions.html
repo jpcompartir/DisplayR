@@ -8,8 +8,8 @@
 <meta name="description" content="DisplayR">
 <title>Plotting &amp; Theme Functions • DisplayR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plotting &amp; Theme Functions">
 <meta property="og:description" content="DisplayR">
@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary" data-bs-theme="dark"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">DisplayR</a>
 
@@ -41,7 +41,6 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/Introduction.html">Introduction</a>
     <a class="dropdown-item" href="../articles/plotting_theme_functions.html">Plotting &amp; Theme Functions</a>
     <a class="dropdown-item" href="../articles/powerpoint.html">Charts for PowerPoint</a>
     <a class="dropdown-item" href="../articles/tables.html">Creating Beautiful Tables</a>
@@ -83,7 +82,8 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jpcompartir.github.io/DisplayR/" class="external-link">DisplayR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="plotting-functions">Plotting Functions<a class="anchor" aria-label="anchor" href="#plotting-functions"></a>
 </h2>
@@ -107,9 +107,9 @@ delivery, and they should not be used as a substitute for thinking about
 the problem at hand and creating bespoke graphics when called for*. They
 do however represent valuable efficiency gains in the EDA workflow, and
 prime clients for a Capture Intelligence deck or delivery.</p>
-<p>*See the Capture Cookbook and Visualisation Guidelines for more
-information on creating Bespoke graphics and adhering to good data
-visualisation principles.</p>
+<p>*See the <a href="https://jamiehshare.github.io/capture_cookbook/" class="external-link">Capture Cookbook
+and Visualisation Guidelines</a> for more information on creating
+Bespoke graphics and adhering to good data visualisation principles.</p>
 <div class="section level3">
 <h3 id="volume-over-time">Volume Over Time<a class="anchor" aria-label="anchor" href="#volume-over-time"></a>
 </h3>
@@ -124,43 +124,29 @@ place and to identify when important changes in volume occur.</p>
 <h4 id="single-element---ungrouped-data-frame">Single Element - Ungrouped Data Frame<a class="anchor" aria-label="anchor" href="#single-element---ungrouped-data-frame"></a>
 </h4>
 <p>We feed the dataset into the <code>disp_plot_vot</code> function,
-setting <code>date = date</code>, plot_type = “line” and time_unit =
-“week”.</p>
+setting <code>date = date</code>, <code>plot_type</code> to
+<code>line</code> or <code>bar</code> and <code>time_unit</code> to
+whatever unit we wish to use (see the function documentation
+(<code><a href="../reference/dr_plot_vot.html">?dr_plot_vot</a></code>) for available units).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#to access function's documentation:</span></span>
-<span><span class="op">?</span><span class="va">dr_plot_vot</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/dr_plot_vot.html">dr_plot_vot</a></span><span class="op">(</span>date_var <span class="op">=</span> <span class="va">date</span>, </span>
+<span>                plot_type <span class="op">=</span> <span class="st">"line"</span>, </span>
+<span>                time_unit <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;"></p>
+<p>Alternatively, we could generate a bar plot where we count the volume
+per week and change the plot colour:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/dr_plot_vot.html">dr_plot_vot</a></span><span class="op">(</span>date_var <span class="op">=</span> <span class="va">date</span>, </span>
-<span>                plot_type <span class="op">=</span> <span class="st">"line"</span>, </span>
-<span>                time_unit <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<p>Alternatively, we could generate a plot where we count the volume per
-day:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_vot.html">dr_plot_vot</a></span><span class="op">(</span>date_var <span class="op">=</span> <span class="va">date</span>, </span>
-<span>                plot_type <span class="op">=</span> <span class="st">"line"</span>, </span>
-<span>                time_unit <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<span>              plot_type <span class="op">=</span> <span class="st">"bar"</span>, </span>
+<span>              time_unit <span class="op">=</span> <span class="st">"week"</span>,</span>
+<span>              <span class="st">"#d80a83"</span>,</span>
+<span>              smooth <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>You’ll notice the plot’s title, y-axis label and x-axis text (there
 is no x axis label currently) change auto-magically.</p>
-<p>There is also the option to use bars rather than a line, we’ll render
-a chart with bars and change the colour using the plot_type = “bar” and
-colour = “#d80a83” arguments:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_vot.html">dr_plot_vot</a></span><span class="op">(</span>date_var <span class="op">=</span> <span class="va">date</span>, </span>
-<span>                plot_type <span class="op">=</span> <span class="st">"bar"</span>, </span>
-<span>                time_unit <span class="op">=</span> <span class="st">"day"</span>, </span>
-<span>                colour <span class="op">=</span> <span class="st">"#d80a83"</span>, </span>
-<span>                smooth <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 rows containing non-finite values (`stat_smooth()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 rows containing missing values (`position_stack()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="multiple-elements---grouped-data-frame">Multiple Elements - Grouped Data Frame<a class="anchor" aria-label="anchor" href="#multiple-elements---grouped-data-frame"></a>
@@ -171,17 +157,17 @@ contained in the same variable. For example, we may want to visualise
 the volume over time per topic, or per sentiment category.</p>
 <p>We can plot the volume of each topic over time, though it can be (is
 nearly always) inadvisable to map 9 colours on a plot:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sentiment</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/dr_plot_vot_group.html">dr_plot_vot_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>,</span>
 <span>                    date_var <span class="op">=</span> <span class="va">date</span>,</span>
 <span>                    time_unit <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>As there are only three sentiment categories, we could map sentiment
 more simply, and use the <code>scale_colour_manual</code> function to
 re-colour our lines:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sentiment_colours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span> <span class="op">=</span> <span class="st">"#107C10"</span>, <span class="st">"negative"</span> <span class="op">=</span> <span class="st">"#D83B01"</span>, <span class="st">"neutral"</span> <span class="op">=</span> <span class="st">"#FFB900"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
@@ -190,10 +176,10 @@ re-colour our lines:</p>
 <span>                    date_var <span class="op">=</span> <span class="va">date</span>,</span>
 <span>                    time_unit <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">sentiment_colours</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span><span class="st">"Neutral and negative sentiment consistently higher than positive barring a brief period in the second week of March."</span>, width <span class="op">=</span> <span class="fl">80</span><span class="op">)</span><span class="op">)</span> <span class="co"># Use stringr::str_wrap to wrap the title according to a specified with (# of characters)</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span><span class="st">"Neutral and negative sentiment consistently higher than positive barring brief periods in March."</span>, width <span class="op">=</span> <span class="fl">80</span><span class="op">)</span><span class="op">)</span> <span class="co"># Use stringr::str_wrap to wrap the title according to a specified with (# of characters)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level3">
@@ -216,27 +202,14 @@ categories</li>
 </h4>
 <p>When we want to plot a quick sentiment distribution chart using bars
 we can use the dr_plot_sent function, which has limited scope for
-customisation.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+customisation, but we can manually add things like a title. The
+<code>bar_label</code> can be set to “percent”, “volume” or “none”.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/dr_plot_sent.html">dr_plot_sent</a></span><span class="op">(</span>sentiment_var <span class="op">=</span> <span class="va">sentiment</span>,</span>
 <span>               bar_labels <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p>We could alternatively set the bar_labels to volume and add a
-descriptive title:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent.html">dr_plot_sent</a></span><span class="op">(</span>sentiment_var <span class="op">=</span> <span class="va">sentiment</span>,</span>
-<span>               bar_labels <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Negative sentiment ~1.7x higher than positive"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<p>Or no bar_labels:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent.html">dr_plot_sent</a></span><span class="op">(</span>sentiment_var <span class="op">=</span> <span class="va">sentiment</span>,</span>
-<span>               bar_labels <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Negative sentiment ~14% higher than positive"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="grouped">Grouped<a class="anchor" aria-label="anchor" href="#grouped"></a>
@@ -247,20 +220,20 @@ charts.</p>
 <p>The <code>dr_plot_sent_group</code> function comes with the
 additional argument, <code>group_var =</code>. When setting
 <code>plot_type = "percent"</code> and
-<code>bar_labels = "volume"</code>, we can add the y-axis (now x
-visually) ticks back and give a title to make the plot more
-explicit,</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code>bar_labels = "volume"</code>, we can add the y-axis (visually, the
+x-axis in the output chart) ticks back and give a title to make the plot
+more explicit,</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, plot_type <span class="op">=</span> <span class="st">"percent"</span>, bar_labels <span class="op">=</span> <span class="st">"volume"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># Add the percentage back to the axis ticks</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Percentage of posts"</span><span class="op">)</span>  <span class="co">#Add the label back</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">y</span> is already present.</span></span>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>There are other options, we can set the bar’s labels to percent, and
 titles or change the axis labels, move the legend etc.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, plot_type <span class="op">=</span> <span class="st">"percent"</span>, bar_labels <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Percentage of posts"</span>, <span class="co">#We use x = because the plot has had its axes reversed</span></span>
@@ -268,24 +241,17 @@ titles or change the axis labels, move the legend etc.</p>
 <span>       subtitle <span class="op">=</span> <span class="st">"Plot ordered by overall volume"</span>, <span class="co">#Just an example</span></span>
 <span>       caption <span class="op">=</span> <span class="st">"Data Source: Social Media"</span><span class="op">)</span><span class="op">+</span><span class="co">#Just an example</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>We can also plot the volumes rather than percentages on the bars
 themselves:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, plot_type <span class="op">=</span> <span class="st">"volume"</span>, bar_labels <span class="op">=</span> <span class="st">"percent"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<p>However, as we can see, this can lead to unwanted results, especially
-when using bar_labels. So we could remove the labels and add the
-gridlines back.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/dr_plot_sent_group.html">dr_plot_sent_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, plot_type <span class="op">=</span> <span class="st">"volume"</span>, bar_labels <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">y</span> is already present.</span></span>
 <span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="sentiment-over-time">Sentiment over time<a class="anchor" aria-label="anchor" href="#sentiment-over-time"></a>
@@ -297,17 +263,42 @@ and can provide bars or lines. As we’ve already seen lines for
 sentiment, we’ll show bars. This function allows the user to enter the
 sentiment mapping directly, so let’s switch to a more
 accessibility-friendly colour palette.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/dr_plot_sent_vot.html">dr_plot_sent_vot</a></span><span class="op">(</span>sentiment_var <span class="op">=</span> <span class="va">sentiment</span>, </span>
-<span>                   date_var <span class="op">=</span> <span class="va">date</span>, </span>
-<span>                   plot_type <span class="op">=</span> <span class="st">"bar"</span>, </span>
+<span>  <span class="fu"><a href="../reference/dr_plot_sent_vot.html">dr_plot_sent_vot</a></span><span class="op">(</span>sentiment_var <span class="op">=</span> <span class="va">sentiment</span>,</span>
+<span>                   date_var <span class="op">=</span> <span class="va">date</span>,</span>
+<span>                   plot_type <span class="op">=</span> <span class="st">"bar"</span>,</span>
 <span>                   time_unit <span class="op">=</span> <span class="st">"day"</span>,</span>
 <span>                   sentiment_colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"positive"</span> <span class="op">=</span> <span class="st">"#007fff"</span>,</span>
 <span>                                         <span class="st">"negative"</span> <span class="op">=</span> <span class="st">"#D83B01"</span>,</span>
-<span>                                         <span class="st">"neutral"</span> <span class="op">=</span>  <span class="st">"#a89797"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 rows containing missing values (`position_stack()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+<span>                                         <span class="st">"neutral"</span> <span class="op">=</span>  <span class="st">"#a89797"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;"></p>
+</div>
+<div class="section level4">
+<h4 id="raincloud-plot">Raincloud plot<a class="anchor" aria-label="anchor" href="#raincloud-plot"></a>
+</h4>
+<p>Visualising the distribution of a variable is an important step in
+obtaining information about our data.</p>
+<p>There are many visualisation techniques to effectively relay this
+information, such as histograms, boxplots, and density plots. However,
+each of these comes with their own pitfalls, for example boxplots hide
+data the number of data points ‘behind’ the boxplot is an unknown.</p>
+<p>A very neat approach is known as a raincloud plot, which combines
+multiple visualisations into an intuitive, modular, and statistically
+robust format. Effectively it combines a density plot, raw jittered data
+points, and a boxplot to offer maximum utility whilst ensuring the
+underlying data is not hidden by summary statistics.</p>
+<p>This plot can be achieved through the
+<code><a href="../reference/dr_plot_raincloud.html">dr_plot_raincloud()</a></code></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">sentiment</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/dr_plot_raincloud.html">dr_plot_raincloud</a></span><span class="op">(</span>grouping_variable <span class="op">=</span> <span class="va">sentiment</span>,</span>
+<span>                    continuous_variable <span class="op">=</span> <span class="va">V1</span>,</span>
+<span>                    smoothness <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
@@ -320,43 +311,38 @@ take care of colour palettes and fonts. If you think there is a theme,
 or a number of themes missing, submit an issue at: (<a href="https://github.com/jpcompartir/DisplayR/issues" class="external-link uri">https://github.com/jpcompartir/DisplayR/issues</a>).</p>
 <p>The general idea is to add the theme you need after rendering your
 plot. Let’s get a plot and then style it using our themes.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span></span>
 <span>  <span class="va">plot</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/dr_plot_vot_group.html">dr_plot_vot_group</a></span><span class="op">(</span>group_var <span class="op">=</span> <span class="va">topic</span>, time_unit <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span></span>
-<span> <span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<span> <span class="op">)</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>We could add a dark theme with dr_theme_black</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/dr_theme_black.html">dr_theme_black</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<span>  <span class="fu"><a href="../reference/dr_theme_black.html">dr_theme_black</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>Or we could add a Microsoft theme using dr_theme_microsoft:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/dr_theme_microsoft.html">dr_theme_microsoft</a></span><span class="op">(</span>scale_type <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
-<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>A SHARE theme using dr_theme_share:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/dr_theme_share.html">dr_theme_share</a></span><span class="op">(</span>scale_type <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
-<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;"></p>
 <p>A SAMY theme using dr_theme_samy:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/dr_theme_samy.html">dr_theme_samy</a></span><span class="op">(</span>scale_type <span class="op">=</span> <span class="st">"discrete"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
-<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values (`geom_line()`).</span></span></code></pre></div>
-<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<span><span class="co">#&gt; Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre></div>
+<p><img src="plotting_theme_functions_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -366,12 +352,12 @@ plot. Let’s get a plot and then style it using our themes.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Jack Penzer.</p>
+<p>Developed by Jack Penzer, Jamie Hudson.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>
