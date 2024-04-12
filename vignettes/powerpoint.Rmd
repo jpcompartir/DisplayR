@@ -207,12 +207,6 @@ presentation_path <- "~/Documents/presentations/officer_demo.pptx"
 presentation <- read_pptx(presentation_path)
 ```
 
-```{r, eval = FALSE, include = FALSE}
-presentation_path <- "~/Documents/testing/officer_demo.pptx"
-
-presentation <- read_pptx(presentation_path)
-```
-
 ::: tip
 **Tip**: for Mac users, use Finder to identify the root to your presentation - right click PowerPoint's tray icon -\> options -\> open in Finder
 :::

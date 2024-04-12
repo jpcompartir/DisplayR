@@ -216,7 +216,7 @@ disp_add_slide <- function(presentation,
                            master = "Office Theme") {
 
   # input validation ----
-  if (class(presentation) != "rpptx") {
+  if (!inherits(presentation, "rpptx")) {
     stop("'presentation' must be an officer::pptx object representing the PowerPoint presentation.")
   }
 

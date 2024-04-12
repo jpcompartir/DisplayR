@@ -1,4 +1,9 @@
-globals <- utils::globalVariables(c("plot_date", "n", "percent", "fp_text", ":=", "volume", "Sentiment x Time", "Neutral", "Volume x Time", "sentiment", "df", "group", "positive", "neutral", "negative", "Positive", "Negative", "Volume", "group_n", "percent_character", "topic", ".total", "palette", "pdfFonts", "Sepal.Length", "Sepal.Width"))
+globals <- utils::globalVariables(c("plot_date", "n", "percent", "fp_text", ":=",
+                                    "volume", "Sentiment x Time", "Neutral", "Volume x Time",
+                                    "sentiment", "df", "group", "positive", "neutral",
+                                    "negative", "Positive", "Negative", "Volume", "group_n",
+                                    "percent_character", "topic", ".total", "palette", "pdfFonts",
+                                    "Sepal.Length", "Sepal.Width", "iris", "Species"))
 
 
 test_plot <- function() {plot <-
@@ -48,12 +53,12 @@ theme_edits_legend <- function(theme){ # need to add more here
     plot_test <- .
 
     # Colour guide correct
-    expect_equal(plot_test$guides$guides$colour$params$theme$legend.title.position, "top", info= paste0("Theme generating failure: ", theme))
-    expect_equal(plot_test$guides$guides$colour$params$theme$legend.title$hjust, 0.5, info= paste0("Theme generating failure: ", theme))
+    testthat::expect_equal(plot_test$guides$guides$colour$params$theme$legend.title.position, "top", info= paste0("Theme generating failure: ", theme))
+    testthat::expect_equal(plot_test$guides$guides$colour$params$theme$legend.title$hjust, 0.5, info= paste0("Theme generating failure: ", theme))
 
     # Fill guide correct
-    expect_equal(plot_test$guides$guides$fill$params$theme$legend.title.position, "top", info= paste0("Theme generating failure: ", theme))
-    expect_equal(plot_test$guides$guides$fill$params$theme$legend.title$hjust, 0.5, info= paste0("Theme generating failure: ", theme))
+    testthat::expect_equal(plot_test$guides$guides$fill$params$theme$legend.title.position, "top", info= paste0("Theme generating failure: ", theme))
+    testthat::expect_equal(plot_test$guides$guides$fill$params$theme$legend.title$hjust, 0.5, info= paste0("Theme generating failure: ", theme))
   })
 }
 
@@ -69,13 +74,13 @@ theme_accepts_direction_args <- function(theme){
     ggplot2::geom_point()
 
   # invalid direction - should throw error
-  expect_error(plot + theme_func(direction = "a"),
+  testthat::expect_error(plot + theme_func(direction = "a"),
                regexp = "\'arg' should be one of \"forwards\"",
                info= paste0("Theme generating failure: ", theme))
 
   # valid directions
-  expect_no_error(plot + theme_func(direction = "forwards"))
-  expect_no_error(plot + theme_func(direction = "backwards"))
+  testthat::expect_no_error(plot + theme_func(direction = "forwards"))
+  testthat::expect_no_error(plot + theme_func(direction = "backwards"))
 
 }
 
@@ -100,11 +105,11 @@ theme_edits_palette_direction <- function(theme, colour_forward, colour_backward
     theme_func(direction = "backwards")
 
   # plot_direction_forward and plot_direction_backward first colours are different
-  expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], colour_forward, info= paste0("Theme generating failure: ", theme))
-  expect_equal(ggplot2::layer_data(plot_direction_backward)$colour[1], colour_backward, info= paste0("Theme generating failure: ", theme))
+  testthat::expect_equal(ggplot2::layer_data(plot_direction_forward)$colour[1], colour_forward, info= paste0("Theme generating failure: ", theme))
+  testthat::expect_equal(ggplot2::layer_data(plot_direction_backward)$colour[1], colour_backward, info= paste0("Theme generating failure: ", theme))
 
   # plot_direction_forward and plot_direction_backward first fills are different
-  expect_equal(ggplot2::layer_data(plot_direction_forward)$fill[1], colour_forward, info= paste0("Theme generating failure: ", theme))
-  expect_equal(ggplot2::layer_data(plot_direction_backward)$fill[1], colour_backward, info= paste0("Theme generating failure: ", theme))
+  testthat::expect_equal(ggplot2::layer_data(plot_direction_forward)$fill[1], colour_forward, info= paste0("Theme generating failure: ", theme))
+  testthat::expect_equal(ggplot2::layer_data(plot_direction_backward)$fill[1], colour_backward, info= paste0("Theme generating failure: ", theme))
 }
 

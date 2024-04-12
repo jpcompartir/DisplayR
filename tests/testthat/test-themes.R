@@ -44,10 +44,10 @@ test_that("theme_boilerplate checks arguments are valid",{
 
   plot <- test_plot()
 
-  expect_error(plot +
+  testthat::expect_error(plot +
                  theme_boilerplate(base_size = 0))
 
-  expect_error(plot +
+  testthat::expect_error(plot +
                  theme_boilerplate(base_size = -2))
 })
 
@@ -69,7 +69,7 @@ test_that("base_size argument accepts new inputs", {
   plot_base <- plot +
     theme_boilerplate(base_size = 10)
 
-  expect_equal(as.numeric(plot_base$theme$plot.title$margin[3]), as.numeric(unit(5, "points")))
+  expect_equal(as.numeric(plot_base$theme$plot.title$margin[3]), 5)
 
 })
 
@@ -248,11 +248,11 @@ test_that("guide arguments accept valid inputs and don't accept invalid", {
     theme_func <- get(theme)
 
     if (i < 5){ # explicitly continuous themes
-      expect_error(theme_func(guide = "a"),
+      testthat::expect_error(theme_func(guide = "a"),
                    regexp = "^\'arg\' should be one of",
                    info = paste0("Theme generating failure: ", theme))
     } else { # need to specify continuous scales for dr_* functions
-      expect_error(theme_func(scale_type = "continuous",
+      testthat::expect_error(theme_func(scale_type = "continuous",
                               guide = "a"),
                    regexp = "^\'arg\' should be one of",
                    info = paste0("Theme generating failure: ", theme))
@@ -276,7 +276,7 @@ test_that("scale_type arguments accept valid inputs and don't accept invalid inp
     theme_func <- get(theme)
 
     # Invalid scale_type throws an error
-    expect_error(
+    testthat::expect_error(
       theme_func(scale_type = "abcd"),
       "should be one of \"discrete\", \"continuous\"",
       info = paste0("Theme generating failure: ", theme)
