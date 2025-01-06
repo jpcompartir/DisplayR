@@ -9,13 +9,12 @@ color:
 
 typography:
   fonts:
-    - family: GT Walsheim Pro
-      source: google
     - family: Source Sans Pro
       source: google
   base: Source Sans Pro
   headings:
-    family: GT Walsheim Pro
+    family: Source Sans Pro
+    weight: bold
     color: secondary
   link:
     decoration: underline
