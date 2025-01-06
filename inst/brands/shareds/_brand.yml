@@ -1,0 +1,25 @@
+color:
+  palette:
+    purple: "#4A0959"
+    teal: "#2B778E"
+  background: white
+  foreground: black
+  primary: teal
+  secondary: purple
+
+typography:
+  fonts:
+    - family: Source Sans Pro
+      source: google
+  base: Source Sans Pro
+  headings:
+    family: Source Sans Pro
+    weight: bold
+    color: secondary
+  link:
+    decoration: underline
+
+logo:
+  small: logo.png
+  medium: logo.png
+  large: logo.png

@@ -34,19 +34,20 @@ library(tidyr)
 
 When working on research projects or Understand phases, there is often a set of charts you will create at the beginning, and then at multiple points throughout the project. These charts will help you perform common exploratory data analysis (EDA) tasks to better understand your data and identify areas of investigation. Some of these charts sit naturally in other packages such as:
 
-* {ParseR} - descriptive plots of text distributions e.g. Pairwise Correlations, n-gram plots, Weighted log-odds
-* {SegmentR} - plots for topic modelling outputs e.g. top terms
-* {ConnectR} - network visualisations e.g. Retweet network, mention network
+-   {ParseR} - descriptive plots of text distributions e.g. Pairwise Correlations, n-gram plots, Weighted log-odds
+-   {SegmentR} - plots for topic modelling outputs e.g. top terms
+-   {ConnectR} - network visualisations e.g. Retweet network, mention network
 
-Other plots which do not have a clear and obvious location, e.g. sentiment distributions, volume over time etc. will sit here in {DisplayR}. They most likely will *not* be the centrepiece of a delivery, and they should not be used as a substitute for thinking about the problem at hand and creating bespoke graphics when called for*. They do however represent valuable efficiency gains in the EDA workflow, and prime clients for a Capture Intelligence deck or delivery.
+Other plots which do not have a clear and obvious location, e.g. sentiment distributions, volume over time etc. will sit here in {DisplayR}. They most likely will *not* be the centrepiece of a delivery, and they should not be used as a substitute for thinking about the problem at hand and creating bespoke graphics when called for\*. They do however represent valuable efficiency gains in the EDA workflow, and prime clients for a Capture Intelligence deck or delivery.
 
-*See the [Capture Cookbook and Visualisation Guidelines](https://jamiehshare.github.io/capture_cookbook/) for more information on creating Bespoke graphics and adhering to good data visualisation principles.
+\*See the [Capture Cookbook and Visualisation Guidelines](https://jamiehshare.github.io/capture_cookbook/) for more information on creating Bespoke graphics and adhering to good data visualisation principles.
 
 ## Volume Over Time
 
 When working with the data from various Social Media APIs (Twitter, Facebook, Reddit etc.) there is usually a time stamp or date/time column, this column can be used to visualise when the conversation takes place and to identify when important changes in volume occur.
 
 We'll use {DisplayR}'s dataset:
+
 ```{r}
 df <- DisplayR::disp_example
 ```
@@ -63,6 +64,7 @@ df %>%
 ```
 
 Alternatively, we could generate a bar plot where we count the volume per week and change the plot colour:
+
 ```{r}
 df %>%
   dr_plot_vot(date_var = date, 
@@ -79,6 +81,7 @@ You'll notice the plot's title, y-axis label and x-axis text (there is no x axis
 Often we want - or need - to visualise the trend in volume for multiple things at the same time, where things are similar objects contained in the same variable. For example, we may want to visualise the volume over time per topic, or per sentiment category.
 
 We can plot the volume of each topic over time, though it can be (is nearly always) inadvisable to map 9 colours on a plot:
+
 ```{r}
 df %>%
   filter(!is.na(sentiment)) %>%
@@ -88,6 +91,7 @@ df %>%
 ```
 
 As there are only three sentiment categories, we could map sentiment more simply, and use the `scale_colour_manual` function to re-colour our lines:
+
 ```{r}
 sentiment_colours <- c("positive" = "#107C10", "negative" = "#D83B01", "neutral" = "#FFB900")
 
@@ -106,9 +110,9 @@ We looked briefly at how to plot sentiment over time using the dr_plot_vot_group
 
 We have:
 
-* dr_plot_sent - a vertical bar chart showing the distribution of sentiment
-* dr_plot_sent_group - stacked horizontal bar chart for group sentiment
-* dr_plot_sent_vot - stacked bar chart specifically for sentiment categories
+-   dr_plot_sent - a vertical bar chart showing the distribution of sentiment
+-   dr_plot_sent_group - stacked horizontal bar chart for group sentiment
+-   dr_plot_sent_vot - stacked bar chart specifically for sentiment categories
 
 ### Ungrouped
 
@@ -125,7 +129,7 @@ df %>%
 
 More often than not, we won't want to create just one sentiment chart, so we've created a function for plotting grouped sentiment charts.
 
-The `dr_plot_sent_group` function comes with the additional argument, `group_var = `. When setting `plot_type = "percent"` and `bar_labels = "volume"`, we can add the y-axis (visually, the x-axis in the output chart) ticks back and give a title to make the plot more explicit,
+The `dr_plot_sent_group` function comes with the additional argument, `group_var =`. When setting `plot_type = "percent"` and `bar_labels = "volume"`, we can add the y-axis (visually, the x-axis in the output chart) ticks back and give a title to make the plot more explicit,
 
 ```{r}
 df %>%
@@ -135,6 +139,7 @@ df %>%
 ```
 
 There are other options, we can set the bar's labels to percent, and titles or change the axis labels, move the legend etc.
+
 ```{r}
 df %>%
   dr_plot_sent_group(group_var = topic, plot_type = "percent", bar_labels = "percent") +
@@ -146,6 +151,7 @@ df %>%
 ```
 
 We can also plot the volumes rather than percentages on the bars themselves:
+
 ```{r}
 df %>%
   dr_plot_sent_group(group_var = topic, sentiment_var = sentiment, plot_type = "volume", bar_labels = "none") +
@@ -188,10 +194,9 @@ df %>%
                     smoothness = 1)
 ```
 
-
 # Theme Functions
 
-There are a number of theme functions included in {DisplayR}, they are to be applied according to the nature of the project and tend to take care of colour palettes and fonts. If you think there is a theme, or a number of themes missing, submit an issue at: (https://github.com/jpcompartir/DisplayR/issues).
+There are a number of theme functions included in {DisplayR}, they are to be applied according to the nature of the project and tend to take care of colour palettes and fonts. If you think there is a theme, or a number of themes missing, submit an issue at: (<https://github.com/jpcompartir/DisplayR/issues>).
 
 The general idea is to add the theme you need after rendering your plot. Let's get a plot and then style it using our themes.
 
@@ -210,19 +215,39 @@ plot +
 ```
 
 Or we could add a Microsoft theme using dr_theme_microsoft:
+
 ```{r}
 plot +
   dr_theme_microsoft(scale_type = "discrete")
 ```
 
 A SHARE theme using dr_theme_share:
+
 ```{r}
 plot +
   dr_theme_share(scale_type = "discrete")
 ```
 
 A SAMY theme using dr_theme_samy:
+
 ```{r}
 plot +
   dr_theme_samy(scale_type = "discrete")
 ```
+
+# Brand Theming
+
+As of `DisplayR 0.1` we have added a space for brand .yml templates in DisplayR/inst/brands. Each brand should have a [\_brand.yml](https://quarto.org/docs/authoring/brand.html) and an optional 'logo.png'. This can then be added to Quarto projects to render in accordance with brand styling.
+
+The first brand we have added is `shareds` this is for internal experiments and presentations. You can view available brands with:
+
+```{r}
+dr_list_brands()
+```
+
+And then you could add the \_brand.yml and the logo for shareds with:
+
+```{r, eval=FALSE}
+dr_add_brand("shareds")
+```
+

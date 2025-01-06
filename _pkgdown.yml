@@ -43,6 +43,12 @@ reference:
 - contents:
   - contains("theme")
 
+- title: "Brand Styling Utilities"
+  desc: "Apply brand styling and logo to Quarto documents"
+- contents:
+  - dr_list_brands
+  - dr_add_brand
+
 repo:
   url:
     home: https://github.com/jpcompartir/DisplayR
