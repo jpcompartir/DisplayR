@@ -26,7 +26,7 @@
 
   for (font_name in names(proprietary_fonts)) {
     if (!font_name %in% sysfonts::font_families()) {
-      warning(sprintf("Font '%s' not found on system, download and install them individually to access full package functionality", font_name))
+      warning(sprintf("Font '%s' not found in system, download and install individually to access full package functionality", font_name))
     }
   }
 }
