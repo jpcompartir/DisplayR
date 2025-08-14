@@ -1,0 +1,54 @@
+project:
+  execute-dir: project
+  output-dir: quarto_files
+
+code-annotations: select
+theme: [default, samy-theme.scss]
+
+format:
+  html:
+    author: "SAMY Data Science"
+    code-copy: true
+    code-block-bg: "#FFFFFF"
+    code-tools: true
+    code-fold: true
+    code-overflow: wrap
+    embed-resources: true
+    fig-align: center
+    highlight-style: tango
+    link-external-icon: true
+    link-external-newwindow: true
+    number-sections: true
+    title-block-banner: true
+    toc: true
+    toc-depth: 3
+    toc-expand: true
+    toc-location: left
+  revealjs:
+    cap-location: bottom
+    footer: "SAMY UK"
+    logo: small
+    number-sections: false
+    preview-links: true
+    self-contained: true
+    scrollable: true
+    smaller: true
+    slide-number: c/t
+    slide-zoom: true
+    toc: false
+
+knitr:
+  opts_chunk:
+    out.width: "600px"
+    out.height: "400px"
+    fig.align: "center"
+
+execute:
+  warning: false
+  message: false
+  eval: true
+  echo: true
+  include: true
+
+brand:
+  _brand.yml
