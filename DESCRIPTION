@@ -13,6 +13,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 URL: https://jpcompartir.github.io/DisplayR/
 Imports: 
+    cli,
     dplyr (>= 1.1.0),
     flextable (>= 0.9.0),
     ggdist,

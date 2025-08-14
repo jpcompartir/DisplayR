@@ -19,7 +19,6 @@ format:
     link-external-icon: true
     link-external-newwindow: true
     number-sections: true
-    title-block-banner: true
     toc: true
     toc-depth: 3
     toc-expand: true
