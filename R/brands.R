@@ -52,10 +52,12 @@ dr_add_brand <- function(brand, directory = getwd(), overwrite = NULL) {
   existing_files <- basename(brand_files)[file.exists(destination_files)]
 
   # if files already exist, ask the user whether to overwrite or not
-  if (is.null(overwrite) && length(existing_files) > 0) {
-    cli::cli_ul(existing_files)
-    choice <- utils::menu(c("Yes", "No"), title = "Overwrite existing files?")
-    overwrite <- choice == 1
+  if(interactive()){
+    if (is.null(overwrite) && length(existing_files) > 0) {
+      cli::cli_ul(existing_files)
+      choice <- utils::menu(c("Yes", "No"), title = "Overwrite existing files?")
+      overwrite <- choice == 1
+    }
   }
 
   # default to TRUE if still NULL (no existing files or not specified)
