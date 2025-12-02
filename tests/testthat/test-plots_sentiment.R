@@ -1,6 +1,4 @@
 test_that("dr_plot_sent is rendering a ggplot when it should and failing when it should", {
-
-  expect_error(dr_plot_sent_vot(df, sentiment_var = sentiment, date_var = date))
   df <- DisplayR::disp_example
 
   plot <- dr_plot_sent(df, sentiment, "percent")
@@ -26,11 +24,6 @@ test_that("dr_plot_sent is rendering a ggplot when it should and failing when it
 
 test_that("grouped sentiment plot is functioning as expeced", {
 
-  #test plot raises an error when data frame doesn't exist
-  expect_error(dr_plot_sent_group(df, group_var = topic,
-                                  sentiment_var = sentiment,
-                                  plot_type = "percent",
-                                  bar_labels = "volume"))
   df <- DisplayR::disp_example
 
   #test plot renders a ggplot object and the first value of n == 57

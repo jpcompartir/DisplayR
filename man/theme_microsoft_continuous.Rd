@@ -2,7 +2,7 @@
 % Please edit documentation in R/themes.R
 \name{theme_microsoft_continuous}
 \alias{theme_microsoft_continuous}
-\title{theme_microsoft_continous}
+\title{theme_microsoft_continuous}
 \usage{
 theme_microsoft_continuous(
   index = NULL,
