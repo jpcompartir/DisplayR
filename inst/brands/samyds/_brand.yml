@@ -1,0 +1,43 @@
+color:
+  palette:
+    samy-nero-black: "#232323"
+    samy-inferno: "#FF5D17"
+    samy-peach: "#F7AB81"
+    samy-turquoise: "#1C7E76"
+    samy-crimson: "#B80F0A"
+    samy-blue: "#191970"
+    samy-bg: "#F7F7F7"
+    samy-green: "#028A0F"
+  primary: samy-peach
+  background: samy-bg
+  foreground: samy-nero-black
+  secondary: samy-nero-black
+  danger: samy-crimson
+
+typography:
+  fonts:
+    - family: Helvetica
+      source: system
+  base:
+    family: Helvetica
+    weight: 300
+  headings:
+    family: Helvetica
+    weight: 400
+    color: samy-nero-black
+  link:
+    color: samy-nero-black
+    decoration: underline
+
+  monospace:
+    background-color: white
+  monospace-inline:
+    color: samy-inferno
+    background-color: white
+  monospace-block:
+    background-color: white
+
+logo:
+  small: samy_isotype.png
+  medium: samy_logotype.png
+  large: samy_logotype.png

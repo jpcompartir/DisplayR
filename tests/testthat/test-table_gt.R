@@ -68,10 +68,10 @@ test_that("disp_gt_sent_time is functioning as expected", {
   plot_build <- ggplot2::ggplot_build(plot)
 
   # Colours are as expected
-  expect_equal(unique(plot_build$data[[1]][[1]]), c("#c00000", "black", "#1b7837"))
+  expect_equal(unique(plot_build$data[[1]][["colour"]]), c("#c00000", "black", "#1b7837"))
 
   # Data is as expected
-  expect_equal(plot_build$data[[1]][[4]][[1]], 119)
+  expect_equal(plot_build$data[[1]][["y"]][[1]], 119)
 
   # time_unit is functioning
   plot_weekly <- disp_gt_sent_time(df, sentiment, time_unit = "week")

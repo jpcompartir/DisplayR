@@ -4,18 +4,20 @@
 \alias{dr_add_brand}
 \title{Add brand styling to your project}
 \usage{
-dr_add_brand(brand, directory = getwd())
+dr_add_brand(brand, directory = getwd(), overwrite = NULL)
 }
 \arguments{
 \item{brand}{Name of the brand you wish to load, as it appears in \code{dr_list_brands()}}
 
 \item{directory}{The directory you want the brand information to be added to, as a default it uses the current working directory}
+
+\item{overwrite}{Whether to overwrite any existing files}
 }
 \value{
 Invisible
 }
 \description{
-Add a _brand.yml and a logo.png to your project from DisplayR's inst/brands folder. If you need a new brand to be added, contact the Data Science Team
+Add brand files to your project from DisplayR's inst/brands folder. If you need a new brand to be added, contact the Data Science Team
 }
 \examples{
 

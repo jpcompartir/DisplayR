@@ -36,7 +36,7 @@ test_that("theme_boilerplate() returns ggplot object when theme applied", {
   plot_boilerplate <- plot +
     theme_boilerplate()
 
-  expect_true(ggplot2::is.ggplot(plot_boilerplate))
+  expect_true(ggplot2::is_ggplot(plot_boilerplate))
 
 })
 
@@ -139,7 +139,7 @@ test_that("theme_boilerplate() has desired behaviour towards axis aesthetics",
               theme_boilerplate()
 
             # axis ticks
-            expect_type(plot_boilerplate$theme$axis.ticks, "list")
+            expect_s3_class(plot_boilerplate$theme$axis.ticks, "element_line")
             # axis ticks colour
             expect_true(plot_boilerplate$theme$axis.ticks$colour == "grey20")
             # axis line colour
@@ -159,7 +159,7 @@ test_that("theme_boilerplate() has desired behaviour towards legend aesthetics",
               theme_boilerplate()
 
             # legend key
-            expect_type(plot_boilerplate$theme$legend.key, "list")
+            expect_s3_class(plot_boilerplate$theme$legend.key, "element_rect")
             # legend key colour
             expect_true(is.na(plot_boilerplate$theme$legend.key$colour))
             # legend key fill
