@@ -4,7 +4,10 @@
 \alias{dr_list_brands}
 \title{View which brands have styling options available for them}
 \usage{
-dr_list_brands()
+dr_list_brands(quiet = FALSE)
+}
+\arguments{
+\item{quiet}{whether to print the name of detected brands or not.}
 }
 \value{
 A list of folder names relating to brands/

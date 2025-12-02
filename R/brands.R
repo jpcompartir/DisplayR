@@ -31,6 +31,7 @@ dr_list_brands <- function(quiet = FALSE){
 #' @description Add brand files to your project from DisplayR's inst/brands folder. If you need a new brand to be added, contact the Data Science Team
 #' @param brand Name of the brand you wish to load, as it appears in `dr_list_brands()`
 #' @param directory  The directory you want the brand information to be added to, as a default it uses the current working directory
+#' @param overwrite Whether to overwrite any existing files
 #'
 #' @returns Invisible
 #' @export

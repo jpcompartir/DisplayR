@@ -139,7 +139,7 @@ test_that("theme_boilerplate() has desired behaviour towards axis aesthetics",
               theme_boilerplate()
 
             # axis ticks
-            expect_type(plot_boilerplate$theme$axis.ticks, "element_line")
+            expect_s3_class(plot_boilerplate$theme$axis.ticks, "element_line")
             # axis ticks colour
             expect_true(plot_boilerplate$theme$axis.ticks$colour == "grey20")
             # axis line colour
@@ -159,7 +159,7 @@ test_that("theme_boilerplate() has desired behaviour towards legend aesthetics",
               theme_boilerplate()
 
             # legend key
-            expect_type(plot_boilerplate$theme$legend.key, "element_rect")
+            expect_s3_class(plot_boilerplate$theme$legend.key, "element_rect")
             # legend key colour
             expect_true(is.na(plot_boilerplate$theme$legend.key$colour))
             # legend key fill

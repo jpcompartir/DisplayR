@@ -67,11 +67,16 @@ dr_plot_raincloud <- function(data,
       color = NA, ## remove slab interval
       position = ggplot2::position_nudge(x = 0.15)
     ) +
-    gghalves::geom_half_point(
-      side = "l",
-      range_scale = 0.3,
+    ggplot2::geom_jitter(
+      width = 0.05,
+      height = 0,
       alpha = 0.5
     ) +
+    # gghalves::geom_half_point(
+    #   side = "l",
+    #   range_scale = 0.3,
+    #   alpha = 0.5,
+    # ) +
     theme_boilerplate()
 
   return(plot_raincloud)
