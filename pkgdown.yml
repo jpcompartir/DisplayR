@@ -1,8 +1,8 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   plotting_theme_functions: plotting_theme_functions.html
   powerpoint: powerpoint.html
   tables: tables.html
-last_built: 2025-01-06T16:40Z
+last_built: 2025-12-02T14:01Z
