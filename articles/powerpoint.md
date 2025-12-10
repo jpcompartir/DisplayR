@@ -24,8 +24,9 @@ df <- DisplayR::disp_example
 ```
 
 we’ll use the `disp_ms_vot` function, which creates a line chart from a
-data frame. Type [`?disp_ms_vot`](../reference/disp_ms_vot.md) to access
-the documentation.
+data frame. Type
+[`?disp_ms_vot`](https://jpcompartir.github.io/DisplayR/reference/disp_ms_vot.md)
+to access the documentation.
 
 The function counts our date variable for us, and buckets the date
 variable into day, week, month, quarter, or year, according to the input

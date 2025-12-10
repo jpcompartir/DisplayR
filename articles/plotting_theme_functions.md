@@ -53,7 +53,8 @@ df <- DisplayR::disp_example
 We feed the dataset into the `disp_plot_vot` function, setting
 `date = date`, `plot_type` to `line` or `bar` and `time_unit` to
 whatever unit we wish to use (see the function documentation
-([`?dr_plot_vot`](../reference/dr_plot_vot.md)) for available units).
+([`?dr_plot_vot`](https://jpcompartir.github.io/DisplayR/reference/dr_plot_vot.md))
+for available units).
 
 ``` r
 df %>%
@@ -242,7 +243,7 @@ points, and a boxplot to offer maximum utility whilst ensuring the
 underlying data is not hidden by summary statistics.
 
 This plot can be achieved through the
-[`dr_plot_raincloud()`](../reference/dr_plot_raincloud.md)
+[`dr_plot_raincloud()`](https://jpcompartir.github.io/DisplayR/reference/dr_plot_raincloud.md)
 
 ``` r
 set.seed(123)

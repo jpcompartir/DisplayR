@@ -14,7 +14,7 @@ dr_add_brand(brand, directory = getwd(), overwrite = NULL)
 - brand:
 
   Name of the brand you wish to load, as it appears in
-  [`dr_list_brands()`](dr_list_brands.md)
+  [`dr_list_brands()`](https://jpcompartir.github.io/DisplayR/reference/dr_list_brands.md)
 
 - directory:
 

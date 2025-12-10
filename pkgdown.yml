@@ -5,4 +5,7 @@ articles:
   plotting_theme_functions: plotting_theme_functions.html
   powerpoint: powerpoint.html
   tables: tables.html
-last_built: 2025-12-02T14:01Z
+last_built: 2025-12-10T11:56Z
+urls:
+  reference: https://jpcompartir.github.io/DisplayR/reference
+  article: https://jpcompartir.github.io/DisplayR/articles
