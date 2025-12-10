@@ -22,9 +22,9 @@ knitr::opts_chunk$set(
 [![codecov](https://codecov.io/gh/jpcompartir/DisplayR/branch/main/graph/badge.svg?token=J3Z0FP0F53)](https://codecov.io/gh/jpcompartir/DisplayR)
 <!-- badges: end -->
 
-<img src="man/figures/Capture_Intelligence_FullColour.png" align="center" width="100%" style="padding: 25px 50px 25px 0px;"/>
+<img src="man/figures/samy_banner.png" alt="SAMY Data Science" width="100%"/>
 
-DisplayR is Capture Intelligence's comprehensive package for data visualization, offering a wide array of functions tailored to meet various data visualization needs. This versatile package aims to improve data presentation and communication by providing visually engaging and informative graphics.
+DisplayR is SAMY Data Science's comprehensive package for data visualization, offering a wide array of functions tailored to meet various data visualization needs. This versatile package aims to improve data presentation and communication by providing visually engaging and informative graphics.
 
 The package caters to a diverse set of visualization requirements, including static and interactive data visualization, tables, and seamless PowerPoint integration with R. DisplayR streamlines the process of creating and customizing charts and plots, enabling users to efficiently produce visuals that effectively convey the insights and patterns hidden within their data.
 

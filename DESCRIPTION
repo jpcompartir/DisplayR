@@ -43,6 +43,6 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Depends: 
-    R (>= 3.20)
+    R (>= 4.4.0)
 LazyData: true
 Language: en-GB

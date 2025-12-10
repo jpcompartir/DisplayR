@@ -1,16 +1,61 @@
+url: https://jpcompartir.github.io/DisplayR/
+
 template:
   bootstrap: 5
-  params:
-    bootswatch: "cosmo"
-    hljs:
-      style: "tango"
-    toc: true
-    toc_depth: 3
+  bslib:
+    # SAMY Brand Colours
+    bg: "#F5F5F4"
+    fg: "#2C2E35"
+    primary: "#B5651D"
+    secondary: "#D4A574"
+    success: "#7C9885"
+    info: "#5B7C99"
+    warning: "#D4A574"
+    danger: "#8B5A6F"
+
+    # Typography
+    base_font:
+      google: "Lato"
+    heading_font:
+      google: "Merriweather"
+    code_font:
+      google: "Fira Code"
+
+    # Component Styling
+    navbar-bg: "#2C2E35"
+    code-bg: "#FDFDFD"
+    code-color: "#5B7C99"
 
 navbar:
+  bg: dark
   structure:
-    left:  [home, reference, articles]
-    right: [github]
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    intro:
+      text: Get Started
+      href: articles/index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      href: articles/index.html
+    news:
+      text: Changelog
+      href: news/index.html
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with
+
+home:
+  sidebar:
+    structure: [links, license, community, citation, authors, dev]
+  links:
+  - text: Report an issue
+    href: https://github.com/jpcompartir/DisplayR/issues
 
 reference:
 - title: "Plotting in R - ggplot2"
@@ -54,7 +99,5 @@ repo:
     home: https://github.com/jpcompartir/DisplayR
     source: https://github.com/jpcompartir/DisplayR/tree/main
 
-home:
-  links:
-  - text: Report an issue
-    href: https://github.com/jpcompartir/DisplayR/issues
+development:
+  mode: auto
