@@ -1,41 +1,74 @@
+# Quarto does nothing with meta values (LOL love that for us) but including here incase it's useful going forward.
+# Feel free to remove
+meta:
+  name: SAMY
+  links:
+    home: https://samy.com/
+
 color:
   palette:
-    samy-nero-black: "#232323"
-    samy-inferno: "#FF5D17"
-    samy-peach: "#F7AB81"
-    samy-turquoise: "#1C7E76"
-    samy-crimson: "#B80F0A"
-    samy-blue: "#191970"
-    samy-bg: "#F7F7F7"
-    samy-green: "#028A0F"
-  primary: samy-peach
-  background: samy-bg
-  foreground: samy-nero-black
-  secondary: samy-nero-black
-  danger: samy-crimson
+    ink: "#2C2E35"
+    cloud: "#E8E9EB"
+    pearl: "#F5F5F4"
+    snow: "#FDFDFD"
+    cognac: "#B5651D"
+    honey: "#D4A574"
+    sage: "#7C9885"
+    ocean: "#5B7C99"
+    wine: "#8B5A6F"
+
+  foreground: ink
+  background: pearl
+  primary: cognac
+  secondary: cognac
+  tertiary: cloud
+  success: sage
+  info: ocean
+  warning: honey
+  danger: wine
 
 typography:
   fonts:
-    - family: Helvetica
-      source: system
+    - family: Lato
+      source: google
+      weight: [300, 400, 600, 700]
+      style: normal
+    - family: Lato
+      source: google
+      weight: [300, 400, 600, 700]
+      style: italic
+    - family: Merriweather
+      source: google
+      weight: [300, 400, 600, 700]
+      style: normal
+
   base:
-    family: Helvetica
+    family: Lato
     weight: 300
+
   headings:
-    family: Helvetica
-    weight: 400
-    color: samy-nero-black
-  link:
-    color: samy-nero-black
-    decoration: underline
+    family: Merriweather
+    weight: 600
+    style: normal
+    color: ink
 
   monospace:
-    background-color: white
+    family: Monaco
+    size: 0.9em
+
   monospace-inline:
-    color: samy-inferno
-    background-color: white
+    color: ocean
+    background-color: pearl
+
   monospace-block:
-    background-color: white
+    color: ink
+    background-color: snow
+    line-height: 1.2
+
+  link:
+    weight: 400
+    color: ink
+    decoration: underline
 
 logo:
   small: samy_isotype.png
