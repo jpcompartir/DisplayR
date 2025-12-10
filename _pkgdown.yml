@@ -2,6 +2,7 @@ url: https://jpcompartir.github.io/DisplayR/
 
 template:
   bootstrap: 5
+  favicon: man/figures/samy_logo_small.png
   bslib:
     # SAMY Brand Colours
     bg: "#F5F5F4"

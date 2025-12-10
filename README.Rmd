@@ -13,18 +13,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-<br>
-
-<img src="man/figures/samy_banner.png" alt="SAMY Data Science" width="100%"/>
+# DisplayR
 
 ---
-
-# DisplayR
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/jpcompartir/DisplayR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jpcompartir/DisplayR/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/jpcompartir/DisplayR/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/jpcompartir/DisplayR/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
+
+---
 
 DisplayR is SAMY Data Science's comprehensive package for data visualisation, offering a wide array of functions tailored to meet various data visualisation needs. This versatile package aims to improve data presentation and communication by providing visually engaging and informative graphics.
 
@@ -39,4 +37,6 @@ You can install the development version of DisplayR from [GitHub](https://github
 devtools::install_github("jpcompartir/DisplayR")
 ```
 
+---
 
+<img src="man/figures/samy_banner.png" alt="SAMY Data Science" width="100%"/>

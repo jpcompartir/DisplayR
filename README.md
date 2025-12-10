@@ -1,19 +1,17 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<br>
-
-<img src="man/figures/samy_banner.png" alt="SAMY Data Science" width="100%"/>
+# DisplayR
 
 ------------------------------------------------------------------------
-
-# DisplayR
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/jpcompartir/DisplayR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jpcompartir/DisplayR/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/jpcompartir/DisplayR/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/jpcompartir/DisplayR/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
+
+------------------------------------------------------------------------
 
 DisplayR is SAMY Data Science’s comprehensive package for data
 visualisation, offering a wide array of functions tailored to meet
@@ -37,3 +35,7 @@ You can install the development version of DisplayR from
 # install.packages("devtools")
 devtools::install_github("jpcompartir/DisplayR")
 ```
+
+------------------------------------------------------------------------
+
+<img src="man/figures/samy_banner.png" alt="SAMY Data Science" width="100%"/>
