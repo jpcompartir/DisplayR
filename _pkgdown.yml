@@ -1,16 +1,69 @@
+url: https://jpcompartir.github.io/DisplayR/
+
 template:
   bootstrap: 5
-  params:
-    bootswatch: "cosmo"
-    hljs:
-      style: "tango"
-    toc: true
-    toc_depth: 3
+  favicon: man/figures/samy_logo_small.png
+  bslib:
+    # SAMY Brand Colours
+    bg: "#F5F5F4"
+    fg: "#2C2E35"
+    primary: "#B5651D"
+    secondary: "#D4A574"
+    success: "#7C9885"
+    info: "#5B7C99"
+    warning: "#D4A574"
+    danger: "#8B5A6F"
+
+    # Typography
+    base_font:
+      google: "Lato"
+    heading_font:
+      google: "Merriweather"
+    code_font:
+      google: "Fira Code"
+
+    # Component Styling
+    navbar-bg: "#2C2E35"
+    code-bg: "#FDFDFD"
+    code-color: "#5B7C99"
 
 navbar:
+  bg: dark
   structure:
-    left:  [home, reference, articles]
-    right: [github]
+    left: [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    intro:
+      text: Get Started
+      href: articles/plotting_theme_functions.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+      - text: All vignettes
+      - text: Plotting & Theme Functions
+        href: articles/plotting_theme_functions.html
+      - text: Charts for PowerPoint
+        href: articles/powerpoint.html
+      - text: Creating Beautiful Tables
+        href: articles/tables.html
+    news:
+      text: Changelog
+      href: news/index.html
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with
+
+home:
+  sidebar:
+    structure: [links, license, community, citation, authors, dev]
+  links:
+  - text: Report an issue
+    href: https://github.com/jpcompartir/DisplayR/issues
 
 reference:
 - title: "Plotting in R - ggplot2"
@@ -54,7 +107,12 @@ repo:
     home: https://github.com/jpcompartir/DisplayR
     source: https://github.com/jpcompartir/DisplayR/tree/main
 
-home:
-  links:
-  - text: Report an issue
-    href: https://github.com/jpcompartir/DisplayR/issues
+development:
+  mode: auto
+
+news:
+  releases:
+  - text: "Version 0.1.1"
+    href: news/index.html#displayr-011
+  - text: "Version 0.1.0"
+    href: news/index.html#displayr-010
