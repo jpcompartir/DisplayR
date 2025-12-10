@@ -1,6 +1,6 @@
 Package: DisplayR
 Title: Functions for visualising data
-Version: 0.1
+Version: 0.1.1
 Authors@R: 
     c(person("Jack", "Penzer", , "jack.penzer@sharecreative.com", role = c("aut", "cre"),
            comment = c(ORCID = "Capture Intelligence")),

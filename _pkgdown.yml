@@ -34,13 +34,20 @@ navbar:
   components:
     intro:
       text: Get Started
-      href: articles/index.html
+      href: articles/plotting_theme_functions.html
     reference:
       text: Reference
       href: reference/index.html
     articles:
       text: Articles
-      href: articles/index.html
+      menu:
+      - text: All vignettes
+      - text: Plotting & Theme Functions
+        href: articles/plotting_theme_functions.html
+      - text: Charts for PowerPoint
+        href: articles/powerpoint.html
+      - text: Creating Beautiful Tables
+        href: articles/tables.html
     news:
       text: Changelog
       href: news/index.html
@@ -101,3 +108,10 @@ repo:
 
 development:
   mode: auto
+
+news:
+  releases:
+  - text: "Version 0.1.1"
+    href: news/index.html#displayr-011
+  - text: "Version 0.1.0"
+    href: news/index.html#displayr-010
